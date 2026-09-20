@@ -152,6 +152,19 @@ select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid
 td.me{outline:3px solid var(--plum);outline-offset:1px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.karma-mark{color:var(--gold);font-size:2.4rem}
+.kc{flex:none;display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:var(--gold-soft);color:var(--gold);font-family:var(--serif);font-size:1.7rem;line-height:1;font-variant-numeric:lining-nums}
+.kc-sm{width:34px;height:34px;font-size:1.25rem}
+.karma-sum{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 4px}
+.karma-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin-top:12px}
+.karma{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.karma-h{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.karma-k{font-size:.78rem;color:var(--muted);letter-spacing:.04em}
+.karma h4{margin:0;font-family:var(--serif);font-size:1.2rem;font-weight:600;line-height:1.2}
+.karma p{margin:6px 0 0;font-size:.93rem}
+.karma-none{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.rp-karma{display:flex;gap:4mm;align-items:flex-start;margin:0 0 3mm;break-inside:avoid}
+.rp-kc{flex:none;width:10mm;height:10mm;border-radius:50%;border:1px solid #9A7432;background:#F6F0E3;color:#9A7432;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:15pt}
 .synth{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:16px 20px;margin-bottom:10px}
 .synth-h{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .synth h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;margin:0}
@@ -505,6 +518,27 @@ function lectura(r, name){
   if(r.year) p.push(`En ${r.year.cy} vivís un año personal ${r.year.n}. ${PY_DO[r.year.n]}`);
   return p;
 }
+const KARMA_INTRO="Las lecciones kármicas corresponden a los números que no aparecen en las letras de tu nombre. No representan castigos ni acontecimientos negativos, sino cualidades que, según la numerología, venís a desarrollar conscientemente mediante tus experiencias.";
+const KARMA_NONE="En tu nombre aparecen todos los números del 1 al 9, así que no se identificaron lecciones kármicas mediante este método. Tu nombre reúne todas las energías básicas: tu tarea es equilibrarlas.";
+const KARMA={
+ 1:{t:"Independencia y confianza en sí misma",d:"Representa el aprendizaje de tomar decisiones propias, defender tus ideas, dar el primer paso sin esperar aprobación y descubrir que tu propia voluntad es suficiente para empezar."},
+ 2:{t:"Cooperación y sensibilidad",d:"Representa el aprendizaje de la paciencia, de escuchar de verdad, trabajar en equipo, cuidar los detalles, pedir y aceptar apoyo, y comprender que la fuerza también está en la unión y la diplomacia."},
+ 3:{t:"Expresión y alegría",d:"Representa el aprendizaje de comunicar lo que sentís y pensás, confiar en tu creatividad, permitirte disfrutar, mostrarte sin miedo al juicio de los demás y usar la palabra como puente con otras personas."},
+ 4:{t:"Orden y constancia",d:"Representa el aprendizaje de la disciplina, de organizar el tiempo y los recursos, terminar lo que empezás, construir paso a paso y valorar el esfuerzo sostenido por encima de los atajos."},
+ 5:{t:"Libertad y adaptación",d:"Representa el aprendizaje de abrirte al cambio, soltar el miedo a lo desconocido, animarte a experimentar, adaptarte con flexibilidad y vivir la libertad de forma responsable."},
+ 6:{t:"Responsabilidad y amor",d:"Representa el aprendizaje de comprometerte con tus vínculos, cuidar sin controlar, asumir responsabilidades en la familia y la comunidad, y dar y recibir amor en equilibrio, incluyendo el amor hacia vos."},
+ 7:{t:"Introspección y sabiduría interior",d:"Representa el aprendizaje de confiar en la propia percepción, detenerse a reflexionar, cultivar la vida interior, buscar un sentido más profundo en las experiencias y aceptar que no todo puede controlarse o explicarse racionalmente."},
+ 8:{t:"Poder personal y abundancia",d:"Representa el aprendizaje de reconocer el propio valor, ejercer la autoridad con equilibrio, administrar responsablemente el dinero y los recursos, recibir sin culpa y convertir las capacidades personales en resultados materiales."},
+ 9:{t:"Compasión y desapego",d:"Representa el aprendizaje de mirar más allá de vos, perdonar, servir a los demás, cerrar ciclos con gratitud y soltar lo que ya cumplió su propósito en tu vida."}
+};
+function karmaHTML(missing){
+  const body = missing.length
+    ? `<div class="karma-sum" aria-label="Números faltantes">${missing.map(n=>`<span class="kc kc-sm">${n}</span>`).join("")}</div>
+       <div class="karma-grid">${missing.map(n=>`<article class="karma"><div class="karma-h"><span class="kc">${n}</span><div><div class="karma-k">Lección kármica ${n}</div><h4>${KARMA[n].t}</h4></div></div><p>${KARMA[n].d}</p></article>`).join("")}</div>`
+    : `<p class="karma-none">${KARMA_NONE}</p>`;
+  return `<div class="row"><div class="big karma-mark" aria-hidden="true">✦</div><div><h3>Lecciones kármicas</h3>
+    <div class="what">${KARMA_INTRO}</div>${body}</div></div>`;
+}
 function luckyDays(n){ const b = root(n); const out=[]; for(let d=1;d<=31;d++) if(root(reduce(d))===b) out.push(d); return out; }
 
 function render(){
@@ -531,11 +565,7 @@ function render(){
   if(r.year) h += `<div class="row"><div class="big">${r.year.n}</div><div><h3>Tu año personal ${r.year.cy}</h3>
     <div class="what">El tema de tu año, de cumpleaños a cumpleaños según algunas escuelas o de enero a diciembre según otras.</div>
     <p>${PERSONAL_YEAR[r.year.n]}</p><p><strong>Qué hacer:</strong> ${PY_DO[r.year.n]}</p></div></div>`;
-  if(r.missing){
-    h += `<div class="row"><div class="big">${r.missing.length?r.missing.join(""):"✓"}</div><div><h3>Lecciones kármicas</h3>
-      <div class="what">Números que no aparecen en tu nombre: energías que viniste a desarrollar.</div>
-      <p>${r.missing.length? r.missing.map(n=>`<strong>${n}</strong> (${NUM[n].k.slice(0,2).join(", ")})`).join("; ")+"." : "Tu nombre contiene todos los números del 1 al 9: una carta muy completa."}</p></div></div>`;
-  }
+  if(r.missing) h += karmaHTML(r.missing);
   if(!r.life) h += `<div class="row"><div></div><div><p class="shadow">Agrega la fecha de nacimiento para ver el camino de vida, el número de la suerte y tu año personal.</p></div></div>`;
   out.innerHTML = h;
 }
@@ -933,7 +963,7 @@ function printCarta(){
   if(r.bday) h+=rpNum(r.bday.n,"Día de nacimiento","Un talento especial que apoya tu camino.");
   if(r.mat) h+=rpNum(r.mat.n,"Madurez","La energía que se despierta con fuerza después de los 40.");
   if(r.year) h+=`<div class="rp-sec"><h2>Año personal ${r.year.cy}: <em>${r.year.n}</em></h2><p>${PERSONAL_YEAR[r.year.n]} ${PY_DO[r.year.n]}</p></div>`;
-  if(r.missing&&r.missing.length) h+=`<div class="rp-sec"><h2>Lecciones kármicas</h2><p>${r.missing.map(n=>`<strong>${n}</strong> (${NUM[n].k.slice(0,2).join(", ")})`).join("; ")}.</p></div>`;
+  if(r.missing) h+=`<div class="rp-sec"><h2>Lecciones kármicas</h2><p class="rp-muted">${KARMA_INTRO}</p>${r.missing.length? r.missing.map(n=>`<div class="rp-karma"><span class="rp-kc">${n}</span><div><strong>Lección kármica ${n}: ${KARMA[n].t}</strong><br>${KARMA[n].d}</div></div>`).join("") : `<p>${KARMA_NONE}</p>`}</div>`;
   h+=`<div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
   doPrint(h, "Carta numerológica - "+(name||"sin nombre"));
 }
