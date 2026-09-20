@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Numerología — tu carta de números</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EDEAF2; --panel:#F8F6FB; --ink:#231C33; --muted:#6A6180;
+  --line:#D6D0E2; --gold:#9A7432; --gold-soft:#E9DDC4; --plum:#4B3772; --plum-soft:#E3DCF0;
+  --serif:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans:"Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16112A; --panel:#201937; --ink:#EEE8F7; --muted:#A79DBE;
+    --line:#352B52; --gold:#D6B26E; --gold-soft:#3A2F24; --plum:#B9A4E8; --plum-soft:#2C2248;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16112A; --panel:#201937; --ink:#EEE8F7; --muted:#A79DBE;
+  --line:#352B52; --gold:#D6B26E; --gold-soft:#3A2F24; --plum:#B9A4E8; --plum-soft:#2C2248;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:28px 20px 64px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1;margin:0;letter-spacing:-.01em}
+header p{margin:6px 0 0;color:var(--muted);max-width:46ch}
+.theme{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:6px 14px;font:inherit;font-size:.85rem;cursor:pointer}
+nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto}
+nav button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-weight:500;padding:10px 14px;cursor:pointer;white-space:nowrap;margin-bottom:-1px}
+nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.tab{display:none}.tab.on{display:block}
+label{display:block;font-size:.9rem;font-weight:500;margin-bottom:6px}
+.fields{display:grid;grid-template-columns:1.6fr 1fr;gap:14px}
+@media (max-width:600px){.fields{grid-template-columns:1fr}}
+input{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+.hint{font-size:.82rem;color:var(--muted);margin-top:6px}
+
+/* Tabla pitagórica — el elemento protagonista */
+.grid-wrap{margin:26px 0 8px;overflow-x:auto}
+.pgrid{display:grid;grid-template-columns:repeat(9,minmax(58px,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);min-width:540px}
+.col{border-right:1px solid var(--line);text-align:center;padding-bottom:10px;position:relative}
+.col:last-child{border-right:none}
+.col .n{font-family:var(--serif);font-size:2rem;line-height:1;padding:12px 0 8px;border-bottom:1px solid var(--line);color:var(--muted);transition:color .3s,background .3s}
+.col.hit .n{color:var(--gold);background:var(--gold-soft)}
+.col .l{display:block;font-size:.9rem;padding:4px 0;color:var(--muted);opacity:.55;transition:all .25s}
+.col .l.hit{opacity:1;color:var(--ink);font-weight:600}
+.col .cnt{position:absolute;top:6px;right:6px;font-size:.7rem;font-weight:600;color:var(--plum);background:var(--plum-soft);border-radius:999px;min-width:18px;padding:0 5px;display:none}
+.col.hit .cnt{display:block}
+.grid-cap{font-size:.82rem;color:var(--muted)}
+
+/* Resultados */
+.results{margin-top:30px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:none}
+.big{font-family:var(--serif);font-size:3.6rem;line-height:.9;color:var(--plum);text-align:center;font-variant-numeric:oldstyle-nums}
+.big small{display:block;font-family:var(--sans);font-size:.72rem;color:var(--gold);margin-top:6px;line-height:1.2}
+.row h3{margin:0;font-family:var(--serif);font-weight:600;font-size:1.45rem;line-height:1.2}
+.row .what{margin:2px 0 8px;font-size:.88rem;color:var(--muted)}
+.row .calc{font-size:.8rem;color:var(--muted);margin-top:8px;font-variant-numeric:tabular-nums}
+.row p{margin:6px 0;max-width:62ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tag{font-size:.8rem;padding:2px 10px;border-radius:999px;background:var(--plum-soft);color:var(--plum)}
+.shadow{font-size:.9rem;color:var(--muted)}
+.lead{font-family:var(--serif);font-size:1.5rem;line-height:1.35;margin:0 0 6px;max-width:34ch}
+.empty{padding:34px 0;color:var(--muted);font-family:var(--serif);font-size:1.3rem;font-style:italic}
+.saved{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:5px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip.x{color:var(--muted)}
+.btn{background:var(--plum);color:var(--panel);border:none;border-radius:10px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer}
+@media (max-width:520px){.row{grid-template-columns:64px 1fr;gap:12px}.big{font-size:2.8rem}}
+
+/* Números repetidos */
+.mirror-in{display:flex;gap:10px;align-items:stretch}
+.mirror-in input{font-family:var(--serif);font-size:2rem;text-align:center;letter-spacing:.12em}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.mirror-out{margin-top:26px}
+.mirror-num{font-family:var(--serif);font-size:clamp(4rem,16vw,7.5rem);line-height:1;color:var(--gold);letter-spacing:.06em}
+.mirror-out h3{font-family:var(--serif);font-size:1.7rem;font-weight:600;margin:6px 0 10px}
+.mirror-out p{max-width:62ch}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:16px}
+.box strong{font-weight:600}
+
+/* Significados */
+details{border-top:1px solid var(--line);padding:4px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:64px 1fr;align-items:center;gap:14px;padding:10px 0}
+summary::-webkit-details-marker{display:none}
+summary .big{font-size:2.6rem}
+summary b{font-family:var(--serif);font-size:1.35rem;font-weight:600}
+summary span.k{display:block;font-size:.85rem;color:var(--muted)}
+details .body{padding:0 0 16px 78px}
+@media (max-width:520px){details .body{padding-left:0}}
+select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip[aria-pressed="true"]{background:var(--plum);color:var(--panel);border-color:var(--plum)}
+.code{display:grid;grid-template-columns:1fr auto;gap:6px 14px;padding:16px 0;border-top:1px solid var(--line);align-items:center}
+.code .num{font-family:var(--serif);font-size:clamp(1.8rem,6vw,2.4rem);line-height:1.05;color:var(--gold);letter-spacing:.08em;font-variant-numeric:lining-nums}
+.code .desc{grid-column:1/-1;margin:0}
+.code .meta{grid-column:1/-1;font-size:.8rem;color:var(--muted)}
+.code .acts{display:flex;gap:6px}
+.add{margin-top:18px;border:1px solid var(--line)!important;border-radius:12px;padding:4px 16px!important;background:var(--panel)}
+.addform{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:6px 0 16px}
+.addform .wide{grid-column:1/-1}
+@media (max-width:520px){.addform{grid-template-columns:1fr}}
+.h2{font-family:var(--serif);font-weight:500;font-size:1.8rem;margin:40px 0 8px}
+.today{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.slot{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;text-align:center;cursor:pointer;font:inherit;color:var(--ink)}
+.slot .big{font-size:2.6rem;color:var(--muted)}
+.slot span{display:block;font-size:.85rem;color:var(--muted)}
+.slot[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.slot[aria-pressed="true"] .big{color:var(--gold)}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:6px;margin:14px 0}
+.day{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:.78rem;color:var(--muted)}
+.day.l1{background:var(--plum-soft)}.day.l2{background:var(--plum-soft);border-color:var(--plum)}
+.day.l3{background:var(--gold);color:var(--panel);border-color:var(--gold)}
+.day.now{outline:2px solid var(--plum);outline-offset:1px}
+.intent{font-family:var(--serif);font-size:1.7rem;line-height:1.3;font-style:italic;margin:4px 0 0;max-width:34ch}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+@media (max-width:600px){.pair{grid-template-columns:1fr}}
+.person{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.person h3{font-family:var(--serif);font-weight:600;font-size:1.3rem;margin:0 0 10px}
+.quickp{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.quickp .chip{font-size:.78rem;padding:3px 10px}
+.score{display:flex;align-items:baseline;gap:14px;margin:28px 0 6px;flex-wrap:wrap}
+.score .pct{font-family:var(--serif);font-size:clamp(4rem,14vw,6rem);line-height:.9;color:var(--gold)}
+.score .lbl{font-family:var(--serif);font-size:1.5rem}
+.meter{height:6px;border-radius:99px;background:var(--line);overflow:hidden;max-width:420px}
+.meter i{display:block;height:100%;background:var(--gold);transition:width .6s}
+.vs{display:grid;grid-template-columns:auto auto auto 1fr;gap:4px 12px;align-items:center;padding:18px 0;border-top:1px solid var(--line)}
+.vs .big{font-size:2.6rem}
+.vs .amp{color:var(--muted);font-family:var(--serif);font-size:1.4rem}
+.vs h4{margin:0;font-family:var(--serif);font-size:1.3rem;font-weight:600}
+.vs p{grid-column:1/-1;margin:4px 0 0;max-width:64ch}
+.badge{display:inline-block;font-size:.78rem;border-radius:999px;padding:1px 10px;margin-left:6px;font-family:var(--sans);font-weight:500;vertical-align:middle}
+.b-nat{background:var(--gold-soft);color:var(--gold)}.b-comp{background:var(--plum-soft);color:var(--plum)}.b-ret{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.mwrap{overflow-x:auto}
+.matrix{border-collapse:separate;border-spacing:3px;font-family:var(--serif);font-size:1.1rem}
+.matrix th{width:38px;height:34px;color:var(--muted);font-weight:500}
+.matrix td{width:38px;height:34px;text-align:center;border-radius:6px;font-size:.8rem;font-family:var(--sans)}
+.c-nat,td.c-nat{background:var(--gold)}.c-comp,td.c-comp{background:var(--plum-soft)}.c-ret,td.c-ret{background:transparent;border:1px solid var(--line)}
+td.me{outline:3px solid var(--plum);outline-offset:1px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.note{font-size:.8rem;color:var(--muted);margin-top:40px;max-width:62ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Numerología</h1>
+    <p>Descubre los números escondidos en tu nombre y tu fecha de nacimiento, y lo que significan los números que se te repiten.</p>
+  </div>
+  <button class="theme" id="theme" type="button">Cambiar tema</button>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true" data-tab="carta">Mi carta</button>
+  <button role="tab" aria-selected="false" data-tab="espejo">Números repetidos</button>
+  <button role="tab" aria-selected="false" data-tab="compat">Compatibilidad</button>
+  <button role="tab" aria-selected="false" data-tab="codigos">Códigos e intenciones</button>
+  <button role="tab" aria-selected="false" data-tab="diario">Diario 369</button>
+  <button role="tab" aria-selected="false" data-tab="sig">Significados</button>
+</nav>
+
+<!-- MI CARTA -->
+<section class="tab on" id="carta">
+  <div class="fields">
+    <div>
+      <label for="nombre">Nombre completo</label>
+      <input id="nombre" autocomplete="off" placeholder="Como aparece en tu cédula">
+      <div class="hint">Usa el nombre completo de nacimiento. Los acentos se ignoran y la Ñ cuenta como N.</div>
+    </div>
+    <div>
+      <label for="fecha">Fecha de nacimiento</label>
+      <input id="fecha" type="date">
+    </div>
+  </div>
+
+  <div class="grid-wrap"><div class="pgrid" id="pgrid"></div></div>
+  <div class="grid-cap">Tabla pitagórica: cada letra tiene un número del 1 al 9. Se iluminan las de tu nombre.</div>
+
+  <div class="saved" id="saved"></div>
+  <div class="results" id="results"><div class="empty">Escribe un nombre para empezar.</div></div>
+</section>
+
+<!-- NÚMEROS REPETIDOS -->
+<section class="tab" id="espejo">
+  <label for="mirror">¿Qué número te sigue apareciendo?</label>
+  <div class="mirror-in"><input id="mirror" inputmode="numeric" maxlength="6" placeholder="1111"></div>
+  <div class="quick" id="quick"></div>
+  <div class="mirror-out" id="mirrorOut"></div>
+</section>
+
+<!-- COMPATIBILIDAD -->
+<section class="tab" id="compat">
+  <p class="lead">¿Cómo vibran dos personas juntas?</p>
+  <p style="color:var(--muted);max-width:62ch">Sirve para pareja, amistad, familia o socios. Con la fecha basta para lo principal; con el nombre también se comparan el alma y la expresión.</p>
+  <div class="pair">
+    <div class="person"><h3>Persona 1</h3>
+      <label for="p1n">Nombre completo</label><input id="p1n" autocomplete="off">
+      <label for="p1f" style="margin-top:10px">Fecha de nacimiento</label><input id="p1f" type="date">
+      <div class="quickp" data-p="1"></div></div>
+    <div class="person"><h3>Persona 2</h3>
+      <label for="p2n">Nombre completo</label><input id="p2n" autocomplete="off">
+      <label for="p2f" style="margin-top:10px">Fecha de nacimiento</label><input id="p2f" type="date">
+      <div class="quickp" data-p="2"></div></div>
+  </div>
+  <div id="compatOut"><div class="empty">Agregá las fechas de nacimiento de las dos personas.</div></div>
+  <h2 class="h2">Tabla de afinidad entre caminos de vida</h2>
+  <div class="mwrap"><table class="matrix" id="matrix"></table></div>
+  <div class="legend"><span><i class="c-nat"></i>Afinidad natural</span><span><i class="c-comp"></i>Se complementan</span><span><i class="c-ret"></i>Relación retadora</span></div>
+</section>
+
+<!-- CÓDIGOS -->
+<section class="tab" id="codigos">
+  <p class="lead">Tu biblioteca de códigos numéricos.</p>
+  <p style="color:var(--muted);max-width:62ch">Guardá aquí los códigos que usás, ordenados por tema. Ya vienen cargados los códigos de Grabovoi de tu lista para dinero, trabajo, protección, amor, emociones, espiritualidad y armonía.</p>
+
+  <div class="filters" id="filters"></div>
+  <input id="codeSearch" placeholder="Buscar por tema, número o palabra" style="margin-top:10px">
+  <div id="codeList" style="margin-top:18px"></div>
+
+  <details class="add" id="addBox">
+    <summary style="grid-template-columns:1fr"><b>Agregar un código</b></summary>
+    <div class="addform">
+      <div><label for="cNum">Código</label><input id="cNum" inputmode="numeric" placeholder="318 798"></div>
+      <div><label for="cTema">Tema</label><select id="cTema"></select></div>
+      <div class="wide"><label for="cDesc">Para qué es</label><input id="cDesc" placeholder="Ej.: aumentar las ventas del mes"></div>
+      <div class="wide"><label for="cSys">Sistema</label><select id="cSys"><option>Grabovoi</option><option>Agesta</option><option>Otro</option></select></div>
+      <div class="wide"><button class="btn" id="cAdd" type="button">Guardar código</button> <span class="hint" id="cMsg"></span></div>
+    </div>
+  </details>
+
+  <h2 class="h2">Cómo se usan</h2>
+  <details><summary style="grid-template-columns:1fr"><span><b>Códigos de Grabovoi</b><span class="k">Escribir, repetir o visualizar la secuencia</span></span></summary>
+    <div class="body" style="padding-left:0"><p>La práctica más común es escribir el código en un papel, en la muñeca o en la billetera y llevarlo con vos. También se repite mentalmente, cifra por cifra, pensando en lo que se desea. La forma tradicional es imaginar los números dentro de una esfera plateada que brilla y se expande. Se recomienda trabajar con pocos códigos a la vez, con constancia diaria, y leerlos agrupados de tres en tres como aparecen.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Códigos Sagrados de Agesta</b><span class="k">Números asociados a ángeles y peticiones</span></span></summary>
+    <div class="body" style="padding-left:0"><p>Se usan de forma parecida: se escribe o se repite el código mientras se sostiene la petición. Muchos practicantes los repiten tres veces seguidas y los acompañan con una afirmación en positivo y en presente, como si ya se hubiera cumplido.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Método 369</b><span class="k">Escribir una intención 3, 6 y 9 veces al día</span></span></summary>
+    <div class="body" style="padding-left:0"><p>Elegís una sola intención y la escribís en presente: "Mi negocio crece cada mes". La escribís 3 veces al despertar, 6 en la tarde y 9 antes de dormir, durante 21 o 33 días seguidos. Podés llevar tu registro en la pestaña Diario 369.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>El 8 y la prosperidad</b><span class="k">Numerología china</span></span></summary>
+    <div class="body" style="padding-left:0"><p>En la tradición china el 8 suena parecido a "prosperar", por eso se busca en números de teléfono, direcciones, precios y fechas de inauguración. El 888 multiplica esa energía. El 4 se evita porque suena como "muerte".</p></div></details>
+  <p class="note" style="margin-top:20px">Estos códigos son rituales de intención y no reemplazan un tratamiento médico ni un consejo financiero.</p>
+</section>
+
+<!-- DIARIO 369 -->
+<section class="tab" id="diario">
+  <div id="d369"></div>
+</section>
+
+<!-- SIGNIFICADOS -->
+<section class="tab" id="sig">
+  <p class="lead">Del 1 al 9, más los números maestros 11, 22 y 33.</p>
+  <p style="color:var(--muted);max-width:62ch">En numerología pitagórica todo número se reduce sumando sus cifras hasta quedar en un dígito, excepto 11, 22 y 33, que se conservan por considerarse de vibración especial.</p>
+  <div id="sigList"></div>
+</section>
+
+<p class="note">Esta app sigue el sistema pitagórico, el más usado en Occidente. La numerología es una tradición simbólica y de autoconocimiento, no una ciencia; tómala como una herramienta de reflexión.</p>
+</div>
+
+<script>
+/* ---------- DATOS ---------- */
+const VAL = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+const VOWELS = new Set(["A","E","I","O","U"]);
+const MASTER = [11,22,33];
+
+const NUM = {
+ 1:{t:"El iniciador",k:["liderazgo","independencia","valentía","originalidad"],d:"Energía de comienzo. Vino a abrir caminos, tomar decisiones y confiar en su propio criterio. Aprende a estar a gusto consigo mismo y a actuar sin esperar permiso.",s:"Terquedad, impaciencia, dificultad para pedir ayuda."},
+ 2:{t:"El diplomático",k:["cooperación","sensibilidad","paciencia","pareja"],d:"Energía de unión. Percibe lo que otros no dicen, media en conflictos y brilla en equipo. Su fuerza está en la escucha y en los detalles.",s:"Indecisión, dependencia de la aprobación ajena, hipersensibilidad."},
+ 3:{t:"El comunicador",k:["creatividad","alegría","expresión","sociabilidad"],d:"Energía de expresión. Palabra, arte, humor y carisma. Inspira a otros cuando se permite mostrarse tal como es.",s:"Dispersión, dejar cosas a medias, evadir con superficialidad."},
+ 4:{t:"El constructor",k:["orden","disciplina","estabilidad","trabajo"],d:"Energía de base sólida. Convierte ideas en sistemas que funcionan. Es la persona confiable que sostiene los proyectos a largo plazo.",s:"Rigidez, exceso de control, resistencia al cambio."},
+ 5:{t:"El aventurero",k:["libertad","cambio","curiosidad","versatilidad"],d:"Energía de movimiento. Aprende experimentando, viajando y adaptándose. Trae aire fresco a donde llega.",s:"Inquietud, excesos, dificultad para comprometerse."},
+ 6:{t:"El protector",k:["amor","familia","responsabilidad","armonía"],d:"Energía de cuidado. Hogar, belleza y servicio. Es el refugio de otros y tiene un fuerte sentido de la justicia.",s:"Sobreprotección, perfeccionismo, olvidarse de sí mismo."},
+ 7:{t:"El buscador",k:["introspección","sabiduría","espiritualidad","análisis"],d:"Energía de profundidad. Busca la verdad detrás de las cosas: estudia, investiga y medita. Su intuición es muy fina cuando la escucha.",s:"Aislamiento, desconfianza, frialdad aparente."},
+ 8:{t:"El ejecutivo",k:["poder","abundancia","logro","autoridad"],d:"Energía de manifestación material. Talento para los negocios, la gestión y los resultados. Aprende a usar el poder con equilibrio y ética.",s:"Materialismo, autoritarismo, medir el valor solo en logros."},
+ 9:{t:"El humanitario",k:["compasión","generosidad","sabiduría","cierre"],d:"Energía de plenitud. Visión amplia, empatía y deseo de servir a algo mayor. Sabe cerrar ciclos y soltar.",s:"Resentimiento, dispersión emocional, cargar con todos."},
+ 11:{t:"Maestro intuitivo",k:["intuición","inspiración","visión","sensibilidad"],d:"Número maestro. Una versión elevada del 2: canal de ideas e inspiración para otros. Muy intuitivo, a veces más de lo que se permite reconocer.",s:"Nerviosismo, ansiedad, dudar de su propia luz."},
+ 22:{t:"Maestro constructor",k:["visión práctica","gran escala","legado","maestría"],d:"Número maestro. Una versión elevada del 4: capacidad de materializar sueños grandes y crear estructuras que benefician a muchos.",s:"Presión interna, miedo a no estar a la altura."},
+ 33:{t:"Maestro sanador",k:["amor incondicional","enseñanza","servicio","sanación"],d:"Número maestro. Una versión elevada del 6: vocación de guiar, enseñar y sanar desde el amor.",s:"Sacrificio excesivo, cargar el dolor de otros."}
+};
+
+const PERSONAL_YEAR = {
+ 1:"Año de siembra: nuevos comienzos, iniciar proyectos y tomar la iniciativa.",
+ 2:"Año de paciencia: alianzas, relaciones y dejar que lo sembrado germine.",
+ 3:"Año de expresión: creatividad, vida social y comunicar tus ideas.",
+ 4:"Año de trabajo: construir bases, organizar y ser constante.",
+ 5:"Año de cambio: movimiento, viajes, libertad y oportunidades inesperadas.",
+ 6:"Año del hogar: familia, compromisos, responsabilidades y amor.",
+ 7:"Año interior: estudio, reflexión, descanso y crecimiento espiritual.",
+ 8:"Año de cosecha material: dinero, reconocimiento y decisiones de poder.",
+ 9:"Año de cierre: soltar lo que terminó y preparar el próximo ciclo."
+};
+
+const MIRROR = {
+ "000":["Todo es posible","El cero repetido habla de un punto de partida en blanco y de conexión con el todo. Momento para un nuevo comienzo sin cargas del pasado."],
+ "111":["Tus pensamientos se manifiestan","Presta atención a lo que piensas y deseas: se considera una señal de que tu energía está creando realidad rápidamente."],
+ "222":["Confía en el proceso","Equilibrio y paciencia. Lo que estás construyendo va bien, aunque todavía no se vea. Buen momento para cooperar."],
+ "333":["Estás acompañado","Se asocia con guía y apoyo, y con la creatividad. Invita a expresarte y a confiar en tus dones."],
+ "444":["Protección y bases firmes","Estás en el camino correcto y tus esfuerzos tienen respaldo. Sigue construyendo con constancia."],
+ "555":["Se acerca un cambio","Transformación importante en camino. Suelta lo que ya no encaja y ábrete a lo nuevo."],
+ "666":["Reequilibra tu atención","No es de mala suerte en numerología: invita a equilibrar lo material con lo emocional y espiritual, y a cuidar de ti."],
+ "777":["Alineación y buena fortuna","Estás en sintonía con tu propósito. Momento favorable para aprender, estudiar y confiar en tu intuición."],
+ "888":["Abundancia en camino","Flujo de prosperidad y recompensa por el esfuerzo. Recibe con gratitud y administra con sabiduría."],
+ "999":["Cierre de un ciclo","Algo termina para dar paso a lo nuevo. Suelta con gratitud: se abre una etapa distinta."],
+ "1010":["Despertar y avance","Sigue adelante con optimismo. Estás en un proceso de crecimiento personal y espiritual."],
+ "1111":["Un portal de intención","El número espejo más conocido. Se interpreta como un momento de sincronía: tus pensamientos, deseos e intenciones están especialmente alineados con lo que puedes crear. Es tradición pedir un deseo o fijar una intención clara cuando lo ves. Habla de despertar espiritual, de nuevos comienzos (1 repetido) y de la puerta del número maestro 11, la intuición. Pregúntate en qué estabas pensando al verlo: esa suele ser la pista."],
+ "1212":["Sal de tu zona de confort","Confía en ti y da el siguiente paso. Tus hábitos y pensamientos positivos están construyendo tu futuro."],
+ "1221":["Mantén el foco","Tu mundo refleja tu actitud. Cuida tus pensamientos y mantén la fe en lo que estás creando."],
+ "1234":["Paso a paso","Las cosas avanzan en orden. Simplifica y sigue la secuencia natural: vas progresando."],
+ "1313":["Transformación creativa","Crecimiento a través de la creatividad. Algo en ti se está renovando."],
+ "1414":["Ordena tus prioridades","Trabajo con propósito: pon en orden tu vida práctica para liberar espacio a lo nuevo."],
+ "2222":["Todo toma su lugar","Armonía y fe. Las piezas se están acomodando; sigue confiando."],
+ "3333":["Guía muy presente","Energía expansiva de apoyo y creatividad. Exprésate sin miedo."],
+ "4444":["Protección total","Se interpreta como un fuerte respaldo. Tus bases son sólidas."],
+ "5555":["Gran transformación","Un cambio profundo se aproxima. Fluye con él."],
+ "0000":["Un ciclo completo","Vuelta al origen, reinicio total. Página en blanco."]
+};
+
+/* ---------- CÁLCULO ---------- */
+const clean = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().replace(/[^A-Z]/g,"");
+const digitSum = n => String(n).split("").reduce((a,b)=>a+ +b,0);
+function reduce(n, steps){
+  steps = steps || [n];
+  while(n > 9 && !MASTER.includes(n)){ n = digitSum(n); steps.push(n); }
+  return n;
+}
+const chain = n => { const s=[n]; reduce(n,s); return s.join(" → "); };
+const root = n => n>9 ? reduce(digitSum(n)) : n; // raíz de un maestro
+const sumLetters = (letters) => letters.reduce((a,c)=>a+VAL[c],0);
+
+function calc(name, date){
+  const L = clean(name).split("");
+  const r = {};
+  if(L.length){
+    const vow = L.filter(c=>VOWELS.has(c)), con = L.filter(c=>!VOWELS.has(c));
+    const e = sumLetters(L), v = sumLetters(vow), p = sumLetters(con);
+    r.expr = {n:reduce(e), calc:`Todas las letras suman ${chain(e)}`};
+    r.soul = vow.length ? {n:reduce(v), calc:`Vocales (${vow.join("")}) suman ${chain(v)}`} : null;
+    r.pers = con.length ? {n:reduce(p), calc:`Consonantes suman ${chain(p)}`} : null;
+    const present = new Set(L.map(c=>VAL[c]));
+    r.missing = [1,2,3,4,5,6,7,8,9].filter(n=>!present.has(n));
+  }
+  if(date){
+    const [y,m,d] = date.split("-").map(Number);
+    if(y && m && d){
+      const rd = reduce(d), rm = reduce(m), ry = reduce(digitSum(y));
+      const tot = rd + rm + ry;
+      r.life = {n:reduce(tot), calc:`Día ${d} → ${rd}   Mes ${m} → ${rm}   Año ${y} → ${ry}   ${rd}+${rm}+${ry} = ${chain(tot)}`};
+      r.bday = {n:reduce(d), calc:`Día de nacimiento ${chain(d)}`};
+      const cy = new Date().getFullYear();
+      const py = reduce(root(rd)+root(rm)+reduce(digitSum(cy)));
+      r.year = {n: root(py), cy};
+      if(r.expr){ const m2 = root(r.life.n)+root(r.expr.n); r.mat = {n:reduce(m2), calc:`Camino de vida ${r.life.n} + Expresión ${r.expr.n} = ${chain(m2)}`}; }
+    }
+  }
+  return r;
+}
+
+/* ---------- TABLA PITAGÓRICA ---------- */
+const pgrid = document.getElementById("pgrid");
+const cols = {};
+for(let n=1;n<=9;n++){
+  const col = document.createElement("div"); col.className="col";
+  col.innerHTML = `<span class="cnt"></span><div class="n">${n}</div>`;
+  Object.keys(VAL).filter(k=>VAL[k]===n).forEach(k=>{ const s=document.createElement("span"); s.className="l"; s.textContent=k; s.dataset.l=k; col.appendChild(s); });
+  pgrid.appendChild(col); cols[n]=col;
+}
+function paintGrid(name){
+  const L = clean(name).split(""), count={};
+  L.forEach(c=>{count[VAL[c]]=(count[VAL[c]]||0)+1});
+  for(let n=1;n<=9;n++){
+    cols[n].classList.toggle("hit", !!count[n]);
+    cols[n].querySelector(".cnt").textContent = count[n]||"";
+    cols[n].querySelectorAll(".l").forEach(s=>s.classList.toggle("hit", L.includes(s.dataset.l)));
+  }
+}
+
+/* ---------- RENDER CARTA ---------- */
+const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function row(n, title, what, calcText, extra){
+  const m = NUM[n]; const isM = MASTER.includes(n);
+  return `<div class="row"><div class="big">${n}${isM?'<small>número maestro</small>':''}</div><div>
+    <h3>${title}: ${m.t}</h3><div class="what">${what}</div>
+    <div class="tags">${m.k.map(k=>`<span class="tag">${k}</span>`).join("")}</div>
+    <p>${m.d}</p><p class="shadow">A trabajar: ${m.s}</p>${extra||""}
+    ${calcText?`<div class="calc">${calcText}</div>`:""}</div></div>`;
+}
+function luckyDays(n){ const b = root(n); const out=[]; for(let d=1;d<=31;d++) if(root(reduce(d))===b) out.push(d); return out; }
+
+function render(){
+  const name = nombre.value.trim(), date = fecha.value;
+  paintGrid(name);
+  const out = document.getElementById("results");
+  if(!name && !date){ out.innerHTML='<div class="empty">Escribe un nombre para empezar.</div>'; return; }
+  const r = calc(name, date); let h="";
+  if(r.life){
+    const lucky = r.life.n;
+    h += `<div class="row"><div class="big">${lucky}<small>tu número de la suerte</small></div><div>
+      <h3>Número de la suerte</h3><div class="what">En la numerología pitagórica, tu número de la suerte es el mismo de tu camino de vida: es la vibración con la que naciste.</div>
+      <p><strong>Días favorables de cada mes:</strong> ${luckyDays(lucky).join(", ")}.</p>
+      <p><strong>Tus números afines:</strong> ${[...new Set([r.life.n, r.bday.n, r.expr&&r.expr.n].filter(Boolean))].join(", ")}.</p></div></div>`;
+    h += row(r.life.n,"Camino de vida","Tu propósito principal y las lecciones de esta vida. Es el número más importante.",r.life.calc);
+  }
+  if(r.expr) h += row(r.expr.n,"Expresión (destino)","Tus talentos naturales y cómo te proyectas en el mundo. Sale de todas las letras de tu nombre.",r.expr.calc);
+  if(r.soul) h += row(r.soul.n,"Deseo del alma","Lo que tu corazón anhela en el fondo, tu motivación íntima. Sale de las vocales.",r.soul.calc);
+  if(r.pers) h += row(r.pers.n,"Personalidad","Cómo te perciben los demás a primera vista. Sale de las consonantes.",r.pers.calc);
+  if(r.bday) h += row(r.bday.n,"Día de nacimiento","Un talento especial que traes para apoyar tu camino de vida.",r.bday.calc);
+  if(r.mat) h += row(r.mat.n,"Madurez","La energía que se despierta con más fuerza después de los 40 años.",r.mat.calc);
+  if(r.year) h += `<div class="row"><div class="big">${r.year.n}</div><div><h3>Tu año personal ${r.year.cy}</h3>
+    <div class="what">El tema de tu año, de cumpleaños a cumpleaños según algunas escuelas o de enero a diciembre según otras.</div>
+    <p>${PERSONAL_YEAR[r.year.n]}</p></div></div>`;
+  if(r.missing){
+    h += `<div class="row"><div class="big">${r.missing.length?r.missing.join(""):"✓"}</div><div><h3>Lecciones kármicas</h3>
+      <div class="what">Números que no aparecen en tu nombre: energías que viniste a desarrollar.</div>
+      <p>${r.missing.length? r.missing.map(n=>`<strong>${n}</strong> (${NUM[n].k.slice(0,2).join(", ")})`).join("; ")+"." : "Tu nombre contiene todos los números del 1 al 9: una carta muy completa."}</p></div></div>`;
+  }
+  if(!r.life) h += `<div class="row"><div></div><div><p class="shadow">Agrega la fecha de nacimiento para ver el camino de vida, el número de la suerte y tu año personal.</p></div></div>`;
+  out.innerHTML = h;
+}
+
+/* ---------- PERFILES GUARDADOS ---------- */
+const KEY="numerologia_perfiles";
+function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY))||[] }catch(e){ return [] } }
+function setSaved(a){ try{ localStorage.setItem(KEY, JSON.stringify(a)) }catch(e){} }
+function paintSaved(){
+  if(typeof paintQuickP==="function") try{paintQuickP()}catch(e){}
+  const box = document.getElementById("saved"), list = getSaved();
+  const canSave = nombre.value.trim().length>1;
+  box.innerHTML = (canSave?`<button class="btn" id="saveBtn" type="button">Guardar esta carta</button>`:"") +
+    list.map((p,i)=>`<button class="chip" data-i="${i}" type="button">${esc(p.n)}</button><button class="chip x" data-del="${i}" type="button" aria-label="Quitar ${esc(p.n)}">×</button>`).join("");
+}
+document.getElementById("saved").addEventListener("click",e=>{
+  const t=e.target, list=getSaved();
+  if(t.id==="saveBtn"){ const n=nombre.value.trim(); const f=list.filter(p=>p.n!==n); f.unshift({n,f:fecha.value}); setSaved(f.slice(0,12)); paintSaved(); }
+  else if(t.dataset.i){ const p=list[+t.dataset.i]; nombre.value=p.n; fecha.value=p.f||""; render(); paintSaved(); }
+  else if(t.dataset.del){ list.splice(+t.dataset.del,1); setSaved(list); paintSaved(); }
+});
+
+const nombre=document.getElementById("nombre"), fecha=document.getElementById("fecha");
+nombre.addEventListener("input",()=>{render();paintSaved()});
+fecha.addEventListener("input",render);
+
+/* ---------- NÚMEROS REPETIDOS ---------- */
+const mirror=document.getElementById("mirror"), mOut=document.getElementById("mirrorOut");
+const quickList=["111","222","333","444","555","777","888","999","1010","1111","1212","1234"];
+document.getElementById("quick").innerHTML = quickList.map(q=>`<button class="chip" data-q="${q}" type="button">${q}</button>`).join("");
+document.getElementById("quick").addEventListener("click",e=>{ if(e.target.dataset.q){ mirror.value=e.target.dataset.q; showMirror(); }});
+mirror.addEventListener("input",()=>{ mirror.value=mirror.value.replace(/\D/g,""); showMirror(); });
+
+function showMirror(){
+  const v = mirror.value;
+  if(!v){ mOut.innerHTML=""; return; }
+  const n = reduce(digitSum(+v) || 0);
+  const known = MIRROR[v];
+  const digits = [...new Set(v.split(""))];
+  let h = `<div class="mirror-num">${v}</div>`;
+  if(known){ h += `<h3>${known[0]}</h3><p>${known[1]}</p>`; }
+  else {
+    h += `<h3>Lectura por sus cifras</h3><p>Este número no tiene una interpretación tradicional propia, así que se lee por las energías que lo forman.</p>`;
+  }
+  const digitText = digits.filter(d=>d!=="0").map(d=>`<strong>${d}</strong>: ${NUM[d].k.join(", ")}`).join("<br>");
+  h += `<div class="box">${digitText}${v.includes("0")?"<br><strong>0</strong>: potencial, lo infinito, amplifica a los números que acompaña":""}</div>`;
+  if(+v>0 && NUM[n]) h += `<div class="box">Raíz numerológica: ${chain(digitSum(+v))===String(digitSum(+v))?digitSum(+v):chain(digitSum(+v))}. Vibración de fondo: <strong>${n}, ${NUM[n].t.toLowerCase()}</strong>, ${NUM[n].k.slice(0,3).join(", ")}.</div>`;
+  mOut.innerHTML = h;
+}
+
+/* ---------- COMPATIBILIDAD ---------- */
+const AFIN={1:{n:[1,5,7],c:[2,3,9]},2:{n:[2,4,8],c:[1,3,6,9]},3:{n:[3,6,9],c:[1,2,5]},4:{n:[2,4,8],c:[6,7]},5:{n:[1,5,7],c:[3,9]},6:{n:[3,6,9],c:[2,4,8]},7:{n:[1,5,7],c:[4,9]},8:{n:[2,4,8],c:[6]},9:{n:[3,6,9],c:[1,2,5,7]}};
+const rel=(a,b)=>{a=root(a);b=root(b);return AFIN[a].n.includes(b)?"nat":AFIN[a].c.includes(b)?"comp":"ret";};
+const REL={nat:["Afinidad natural",100,"b-nat"],comp:["Se complementan",72,"b-comp"],ret:["Relación retadora",45,"b-ret"]};
+const RELTXT={
+ life:{nat:"Sus caminos de vida vibran en la misma frecuencia: comparten ritmo y visión, y se entienden sin tanto esfuerzo. El cuidado está en no reforzar juntos las mismas sombras.",
+       comp:"Sus caminos de vida se complementan: cada uno aporta lo que al otro le falta. Funciona muy bien cuando valoran esa diferencia en vez de querer cambiarla.",
+       ret:"Sus caminos de vida tienen energías muy distintas. La relación pide paciencia, acuerdos claros y respeto por los tiempos del otro, y justamente por eso puede ser la que más los haga crecer."},
+ soul:{nat:"En lo íntimo desean cosas parecidas: hay una conexión emocional fácil.",comp:"Sus corazones buscan cosas distintas pero compatibles: se nutren mutuamente.",ret:"Lo que cada corazón anhela es diferente; conviene hablar abiertamente de lo que cada uno necesita para sentirse amado."},
+ expr:{nat:"Se expresan de forma parecida y hacen buen equipo en lo práctico.",comp:"Sus talentos se suman: juntos cubren más terreno.",ret:"Tienen estilos muy distintos para actuar y comunicarse; dividirse tareas según las fortalezas de cada uno ayuda mucho."}
+};
+function vsRow(key,title,a,b){
+  const r=rel(a,b), R=REL[r], ma=NUM[a], mb=NUM[b];
+  return `<div class="vs"><div class="big">${a}</div><div class="amp">y</div><div class="big">${b}</div>
+    <h4>${title}<span class="badge ${R[2]}">${R[0]}</span></h4>
+    <p><strong>${ma.t}</strong> (${ma.k.slice(0,2).join(", ")}) con <strong>${mb.t.toLowerCase()}</strong> (${mb.k.slice(0,2).join(", ")}). ${RELTXT[key][r]}</p></div>`;
+}
+function renderCompat(){
+  const a=calc(p1n.value.trim(),p1f.value), b=calc(p2n.value.trim(),p2f.value), out=document.getElementById("compatOut");
+  paintMatrix(a.life&&a.life.n, b.life&&b.life.n);
+  if(!a.life||!b.life){ out.innerHTML='<div class="empty">Agregá las fechas de nacimiento de las dos personas.</div>'; return; }
+  let parts=[[a.life.n,b.life.n,.5]];
+  if(a.soul&&b.soul) parts.push([a.soul.n,b.soul.n,.3]);
+  if(a.expr&&b.expr) parts.push([a.expr.n,b.expr.n,.2]);
+  const w=parts.reduce((s,p)=>s+p[2],0);
+  const pct=Math.round(parts.reduce((s,p)=>s+REL[rel(p[0],p[1])][1]*p[2],0)/w);
+  const lbl=pct>=85?"Conexión muy fluida":pct>=65?"Buena compatibilidad":"Un vínculo de aprendizaje";
+  const n1=p1n.value.trim().split(" ")[0]||"Persona 1", n2=p2n.value.trim().split(" ")[0]||"Persona 2";
+  let h=`<div class="score"><span class="pct">${pct}%</span><span class="lbl">${lbl}</span></div><div class="meter"><i style="width:${pct}%"></i></div>
+    <p class="hint">${esc(n1)} y ${esc(n2)}. El camino de vida pesa la mitad del resultado; el alma y la expresión, el resto.</p>`;
+  h+=vsRow("life","Camino de vida",a.life.n,b.life.n);
+  if(a.soul&&b.soul) h+=vsRow("soul","Deseo del alma",a.soul.n,b.soul.n);
+  if(a.expr&&b.expr) h+=vsRow("expr","Expresión",a.expr.n,b.expr.n);
+  if(!(a.soul&&b.soul)) h+=`<p class="hint" style="margin-top:14px">Agregá los nombres completos para comparar también el alma y la expresión.</p>`;
+  out.innerHTML=h;
+}
+function paintMatrix(x,y){
+  x=x&&root(x); y=y&&root(y);
+  let h="<tr><th></th>"+[1,2,3,4,5,6,7,8,9].map(n=>`<th>${n}</th>`).join("")+"</tr>";
+  for(let i=1;i<=9;i++){ h+=`<tr><th>${i}</th>`+[1,2,3,4,5,6,7,8,9].map(j=>`<td class="c-${rel(i,j)} ${(i===x&&j===y)||(i===y&&j===x)?"me":""}" title="${i} y ${j}: ${REL[rel(i,j)][0]}"></td>`).join("")+"</tr>"; }
+  document.getElementById("matrix").innerHTML=h;
+}
+const p1n=document.getElementById("p1n"),p1f=document.getElementById("p1f"),p2n=document.getElementById("p2n"),p2f=document.getElementById("p2f");
+[p1n,p1f,p2n,p2f].forEach(el=>el.addEventListener("input",renderCompat));
+function paintQuickP(){
+  const list=getSaved();
+  document.querySelectorAll(".quickp").forEach(box=>{
+    box.innerHTML=list.length?list.map((p,i)=>`<button class="chip" type="button" data-i="${i}">${esc(p.n.split(" ")[0])}</button>`).join(""):"";
+  });
+}
+document.querySelectorAll(".quickp").forEach(box=>box.addEventListener("click",e=>{
+  const i=e.target.dataset.i; if(i===undefined) return; const p=getSaved()[+i], k=box.dataset.p;
+  document.getElementById("p"+k+"n").value=p.n; document.getElementById("p"+k+"f").value=p.f||""; renderCompat();
+}));
+paintMatrix(); paintQuickP();
+
+/* ---------- CÓDIGOS ---------- */
+const TEMAS=["Dinero","Trabajo y negocios","Abrecaminos","Protección","Amor y relaciones","Alma y emociones","Espiritualidad","Armonía","Otro"];
+const RAW=[
+["Dinero","318798","Abundancia financiera"],
+["Dinero","5207418","Dinero inesperado"],
+["Dinero","71427321893","Prosperidad y normalizar la situación financiera"],
+["Dinero","4148188","Transformar el tiempo en dinero"],
+["Dinero","137142133914","Normalizar la economía del hogar"],
+["Trabajo y negocios","138","Desarrollo profesional"],
+["Trabajo y negocios","81319719","Eficiencia en la gestión"],
+["Trabajo y negocios","419814","Optimizar el trabajo"],
+["Trabajo y negocios","419818719","Buena reputación en el trabajo"],
+["Trabajo y negocios","914481","Buena reputación en el trabajo (variante)"],
+["Trabajo y negocios","931518641491","Conseguir el trabajo que queremos"],
+["Trabajo y negocios","318514517618","Salir del desempleo"],
+["Trabajo y negocios","214618319917","Carrera profesional"],
+["Trabajo y negocios","212585212","Determinación y foco para aprender"],
+["Abrecaminos","5197148","Todo es posible"],
+["Abrecaminos","918197185","Todo funcionará al 100 %"],
+["Abrecaminos","1888948","Transformar lo negativo en positivo"],
+["Abrecaminos","41948871","Crear circunstancias favorables"],
+["Abrecaminos","8947197848","Alcanzar una meta"],
+["Abrecaminos","942181942","Controlar los acontecimientos y disturbios de cualquier tipo"],
+["Abrecaminos","741","Solución inmediata a problemas (también para aparatos dañados)"],
+["Abrecaminos","212309909","Solución general de preguntas y problemas"],
+["Abrecaminos","25122004","Solución de preguntas y problemas"],
+["Protección","71931","Protección ante peligros y consecuencias negativas"],
+["Protección","9187756981818","Protección general"],
+["Protección","814418719","Escudo"],
+["Protección","817219738","Talismán"],
+["Protección","11179","Evitar accidentes de tránsito"],
+["Protección","52025","Disolver presas y congestionamientos"],
+["Protección","978143218","Reducir la criminalidad en las ciudades"],
+["Protección","718914391","Protección contra terrorismo y bombas"],
+["Protección","3194217","Protección contra armas químicas"],
+["Protección","99817","Protección contra gases venenosos"],
+["Amor y relaciones","8884121289018","Amor"],
+["Amor y relaciones","888912818848","Amor eterno"],
+["Amor y relaciones","285555901","Armonizar el ambiente familiar"],
+["Amor y relaciones","814418719","Relaciones armoniosas con familia y amigos"],
+["Alma y emociones","491718594817","Carisma"],
+["Alma y emociones","498518498","Determinación"],
+["Alma y emociones","51847181211","Archivos del alma"],
+["Alma y emociones","61988184161","Limpiar la memoria emocional"],
+["Alma y emociones","8345444","Armonizar la psique"],
+["Alma y emociones","519515619711","Comportamiento en general"],
+["Alma y emociones","419317064891","Calmar el comportamiento agresivo"],
+["Alma y emociones","39119488061","Comprensión"],
+["Alma y emociones","51968801971","Concentración"],
+["Alma y emociones","58491681997894141","Soltar el egocentrismo"],
+["Alma y emociones","148543293","Ansiedad"],
+["Alma y emociones","48154211","Nerviosismo"],
+["Alma y emociones","48931481961","Pánico"],
+["Alma y emociones","48971281948","Miedo"],
+["Alma y emociones","8421432","Estrés"],
+["Alma y emociones","548491698719","Resistencia del inconsciente"],
+["Alma y emociones","591814918791068","Impulsividad"],
+["Alma y emociones","31841791844","Pereza"],
+["Alma y emociones","71381921","Permanecer centrado"],
+["Alma y emociones","1001105010","Paz y paz interior"],
+["Alma y emociones","31849159614","Emociones"],
+["Alma y emociones","514894719","Libertad"],
+["Alma y emociones","5893240","Mejorar la memoria"],
+["Alma y emociones","5555555","Procesar correctamente la información"],
+["Alma y emociones","417584217888","Fuente de desarrollo"],
+["Alma y emociones","917532178919319","Fuente de desarrollo eterno"],
+["Espiritualidad","6418498989","ADN conforme a la norma del Creador"],
+["Espiritualidad","12370744","Conexión con la luz del Creador"],
+["Espiritualidad","548917818","Consciencia"],
+["Espiritualidad","519377898997","Consciencia elevada"],
+["Espiritualidad","4193188941898","Desarrollo eterno, principio de inmortalidad"],
+["Espiritualidad","58160129471","Norma divina"],
+["Espiritualidad","1231115025","Presencia del Creador"],
+["Espiritualidad","1489999","Vida eterna"],
+["Espiritualidad","35986","Intuición elevada"],
+["Espiritualidad","519317819217","Glándula pineal"],
+["Espiritualidad","881881881","Abrir el tercer ojo"],
+["Espiritualidad","915777918934198","Formar una nueva consciencia colectiva"],
+["Espiritualidad","9721854218","Difundir conocimiento en la Tierra"],
+["Espiritualidad","19725181","Restaurar el estándar original en la Tierra y el cosmos"],
+["Armonía","14111963","Armonía general y salvación general"],
+["Armonía","7819019425","Armonizar el pasado (algunas listas dicen 781909425)"],
+["Armonía","71042","Armonizar el presente"],
+["Armonía","148721091","Armonizar el futuro"],
+["Armonía","91371985","Transformar información negativa del pasado, presente y futuro"],
+["Armonía","14854232190","Armonización universal"],
+["Armonía","97318541218","Armonizar el ambiente"],
+["Armonía","811120218","Armonizar las plantas"],
+["Armonía","555142198110","Armonizar a los animales"],
+["Armonía","218914819","Armonizar los eventos"],
+["Armonía","814418719","Desarrollo armónico"],
+["Armonía","917253481","Que las cosas estén en armonía"],
+["Armonía","5154891","Para armonizarnos"],
+["Armonía","1784121","Salvación del desarrollo armónico"],
+["Otro","91738919","Resultado favorable en trámites de notaría"],
+["Otro","8137142133914","Solución de los problemas sociales"],
+["Otro","519648718","Difundir la luz y el conocimiento en Facebook"]
+];
+const LIB = RAW.map((r,i)=>({id:"g"+(i+1),t:r[0],n:r[1],d:r[2],s:"Grabovoi"}));
+const CKEY="numerologia_codigos_v2", OLDKEY="numerologia_codigos";
+function getCodes(){
+  try{ const c=JSON.parse(localStorage.getItem(CKEY)); if(Array.isArray(c)) return c; }catch(e){}
+  let mine=[];
+  try{ const o=JSON.parse(localStorage.getItem(OLDKEY)); if(Array.isArray(o)) mine=o.filter(x=>!/^s\d$/.test(x.id)); }catch(e){}
+  const all=mine.concat(LIB); setCodes(all); return all;
+}
+function setCodes(c){ try{ localStorage.setItem(CKEY, JSON.stringify(c)) }catch(e){} }
+const fmt = n => n.replace(/\D/g,"").replace(/(\d{3})(?=\d)/g,"$1 ");
+let temaSel="Todos", editId=null;
+document.getElementById("cTema").innerHTML = TEMAS.map(t=>`<option>${t}</option>`).join("");
+function paintFilters(){
+  document.getElementById("filters").innerHTML = ["Todos",...TEMAS].map(t=>`<button class="chip" type="button" data-t="${t}" aria-pressed="${t===temaSel}">${t}</button>`).join("");
+}
+document.getElementById("filters").addEventListener("click",e=>{ if(e.target.dataset.t){ temaSel=e.target.dataset.t; paintFilters(); paintCodes(); }});
+function paintCodes(){
+  const q=document.getElementById("codeSearch").value.trim().toLowerCase().replace(/\s/g,"");
+  const list=getCodes().filter(c=>(temaSel==="Todos"||c.t===temaSel) && (!q || (c.n+c.t+c.d+c.s).toLowerCase().replace(/\s/g,"").includes(q)));
+  const box=document.getElementById("codeList");
+  if(!list.length){ box.innerHTML=`<div class="empty" style="padding:16px 0">No hay códigos en este tema todavía. Agregá uno abajo.</div>`; return; }
+  box.innerHTML=list.map(c=>`<div class="code"><div class="num">${fmt(c.n)}</div>
+    <div class="acts"><button class="chip" type="button" data-copy="${c.n}">Copiar</button><button class="chip" type="button" data-edit="${c.id}">Editar</button><button class="chip x" type="button" data-rm="${c.id}" aria-label="Eliminar código">×</button></div>
+    <p class="desc">${esc(c.d)}</p><div class="meta">${esc(c.t)}, ${esc(c.s)}</div></div>`).join("");
+}
+document.getElementById("codeSearch").addEventListener("input",paintCodes);
+document.getElementById("codeList").addEventListener("click",e=>{
+  const t=e.target, codes=getCodes();
+  if(t.dataset.copy){ const txt=fmt(t.dataset.copy); (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{t.textContent="Copiado";setTimeout(()=>t.textContent="Copiar",1400)}).catch(()=>{t.textContent=txt}); }
+  if(t.dataset.rm){ if(confirm("¿Eliminar este código?")){ setCodes(codes.filter(c=>c.id!==t.dataset.rm)); paintCodes(); } }
+  if(t.dataset.edit){ const c=codes.find(x=>x.id===t.dataset.edit); editId=c.id;
+    cNum.value=fmt(c.n); cTema.value=c.t; cDesc.value=c.d; cSys.value=c.s;
+    document.getElementById("cAdd").textContent="Guardar cambios"; addBox.open=true; addBox.scrollIntoView({behavior:"smooth",block:"center"}); }
+});
+const cNum=document.getElementById("cNum"),cTema=document.getElementById("cTema"),cDesc=document.getElementById("cDesc"),cSys=document.getElementById("cSys"),addBox=document.getElementById("addBox"),cMsg=document.getElementById("cMsg");
+cNum.addEventListener("input",()=>{ cNum.value=fmt(cNum.value); });
+document.getElementById("cAdd").addEventListener("click",()=>{
+  const n=cNum.value.replace(/\D/g,"");
+  if(n.length<2){ cMsg.textContent="Escribí el código con al menos 2 cifras."; return; }
+  if(!cDesc.value.trim()){ cMsg.textContent="Contá para qué es el código."; return; }
+  const codes=getCodes(), item={id:editId||("c"+Date.now()),n,t:cTema.value,d:cDesc.value.trim(),s:cSys.value};
+  const i=codes.findIndex(c=>c.id===item.id);
+  if(i>=0) codes[i]=item; else codes.unshift(item);
+  setCodes(codes);
+  cMsg.textContent= editId?"Cambios guardados.":"Código guardado.";
+  editId=null; document.getElementById("cAdd").textContent="Guardar código";
+  cNum.value=""; cDesc.value=""; paintCodes();
+});
+paintFilters(); paintCodes();
+
+/* ---------- DIARIO 369 ---------- */
+const DKEY="numerologia_369";
+const getD=()=>{ try{ return JSON.parse(localStorage.getItem(DKEY)) }catch(e){ return null } };
+const setD=d=>{ try{ d?localStorage.setItem(DKEY,JSON.stringify(d)):localStorage.removeItem(DKEY) }catch(e){} };
+const dayKey=d=>`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+function dayIndex(start){ const s=new Date(start); s.setHours(0,0,0,0); const t=new Date(); t.setHours(0,0,0,0); return Math.round((t-s)/864e5); }
+function paintD(){
+  const box=document.getElementById("d369"), d=getD();
+  if(!d){
+    box.innerHTML=`<p class="lead">Una intención, 3, 6 y 9 veces al día.</p>
+      <p style="color:var(--muted);max-width:62ch">Escribí tu intención en presente, como si ya fuera real. Después marcá cada momento del día en que la escribiste en tu cuaderno.</p>
+      <label for="dInt">Mi intención</label><input id="dInt" placeholder="Mi negocio crece y atrae clientes cada mes">
+      <label for="dLen" style="margin-top:14px">Duración</label>
+      <select id="dLen"><option value="21">21 días</option><option value="33">33 días</option></select>
+      <p style="margin-top:16px"><button class="btn" id="dStart" type="button">Empezar mi diario</button> <span class="hint" id="dMsg"></span></p>`;
+    return;
+  }
+  const idx=dayIndex(d.start), today=dayKey(new Date()), marks=d.marks[today]||[false,false,false];
+  const done=Object.values(d.marks).filter(m=>m.every(Boolean)).length;
+  const finished=idx>=d.len;
+  let cells="";
+  for(let i=0;i<d.len;i++){ const dt=new Date(d.start); dt.setDate(dt.getDate()+i); const m=d.marks[dayKey(dt)]||[]; const lv=m.filter(Boolean).length;
+    cells+=`<div class="day l${lv} ${i===idx?"now":""}" title="Día ${i+1}">${i+1}</div>`; }
+  box.innerHTML=`<p class="intent">"${esc(d.intent)}"</p>
+    <p style="color:var(--muted)">${finished?`Terminaste tu ciclo de ${d.len} días.`:`Día ${idx+1} de ${d.len}.`} Días completos: ${done}.</p>
+    ${finished?"":`<div class="today">
+      ${[["3","Al despertar"],["6","En la tarde"],["9","Antes de dormir"]].map((s,i)=>`<button class="slot" type="button" data-s="${i}" aria-pressed="${!!marks[i]}"><div class="big">${s[0]}</div><span>${s[1]}</span></button>`).join("")}
+    </div>`}
+    <div class="days">${cells}</div>
+    <p class="hint">Dorado: día completo. Lila: día a medias.</p>
+    <p style="margin-top:22px"><button class="chip x" id="dReset" type="button">Empezar una intención nueva</button></p>`;
+}
+document.getElementById("d369").addEventListener("click",e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.id==="dStart"){ const v=document.getElementById("dInt").value.trim();
+    if(!v){ document.getElementById("dMsg").textContent="Escribí tu intención primero."; return; }
+    setD({intent:v,len:+document.getElementById("dLen").value,start:new Date().toISOString(),marks:{}}); paintD(); }
+  if(t.dataset.s){ const d=getD(), k=dayKey(new Date()); const m=d.marks[k]||[false,false,false]; m[+t.dataset.s]=!m[+t.dataset.s]; d.marks[k]=m; setD(d); paintD(); }
+  if(t.id==="dReset"){ if(confirm("¿Borrar este diario y empezar otro?")){ setD(null); paintD(); } }
+});
+paintD();
+
+/* ---------- SIGNIFICADOS ---------- */
+document.getElementById("sigList").innerHTML = [1,2,3,4,5,6,7,8,9,11,22,33].map(n=>{
+  const m=NUM[n];
+  return `<details><summary><span class="big">${n}</span><span><b>${m.t}</b><span class="k">${m.k.join(", ")}</span></span></summary>
+  <div class="body"><p>${m.d}</p><p class="shadow">A trabajar: ${m.s}</p>${n<=9?`<p class="shadow">Letras: ${Object.keys(VAL).filter(k=>VAL[k]===n).join(" ")}</p>`:""}</div></details>`;
+}).join("");
+
+/* ---------- PESTAÑAS Y TEMA ---------- */
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected", x===b));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on", t.id===b.dataset.tab));
+}));
+const root$ = document.documentElement;
+try{ const t=localStorage.getItem("numerologia_tema"); if(t) root$.dataset.theme=t; }catch(e){}
+document.getElementById("theme").addEventListener("click",()=>{
+  const dark = root$.dataset.theme ? root$.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root$.dataset.theme = dark ? "light" : "dark";
+  try{ localStorage.setItem("numerologia_tema", root$.dataset.theme) }catch(e){}
+});
+paintSaved();
+</script>
+</body>
+</html>
