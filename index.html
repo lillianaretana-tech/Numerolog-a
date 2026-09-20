@@ -152,9 +152,56 @@ select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid
 td.me{outline:3px solid var(--plum);outline-offset:1px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.synth{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:16px 20px;margin-bottom:10px}
+.synth-h{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.synth h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;margin:0}
+.synth p{max-width:66ch}
+.vida{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:12px 0 4px;font-size:.93rem}
+.vida dt{font-weight:600;color:var(--plum)}
+.vida dd{margin:0}
+@media (max-width:520px){.vida{grid-template-columns:1fr}.vida dd{margin-bottom:6px}}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap}
+#acctBtn.on{color:var(--plum);border-color:var(--plum)}
+dialog#acct{border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);padding:22px;width:min(420px,92vw)}
+dialog#acct::backdrop{background:rgba(20,14,40,.45)}
+#acct h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;margin:0 0 12px}
+#acct label{margin-top:10px}
+.acct-close{float:right;margin:0}
+.acct-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.btn.alt{background:transparent;color:var(--plum);border:1px solid var(--plum)}
+#print{display:none}
+@media print{
+  @page{size:A4;margin:14mm 15mm 16mm}
+  :root{padding:0!important}
+  html,body{background:#fff!important}
+  .wrap{display:none!important}
+  #print{display:block}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.rp{font-family:var(--sans);color:#231C33;font-size:10.5pt;line-height:1.5}
+.rp-h{text-align:center;padding:4mm 0 5mm;border-bottom:1px solid #D9CBA8;margin-bottom:6mm}
+.rp-k{font-size:9pt;letter-spacing:.2em;text-transform:uppercase;color:#9A7432}
+.rp h1{font-family:var(--serif);font-weight:500;font-size:28pt;line-height:1.1;margin:2mm 0}
+.rp-sub{font-size:9.5pt;color:#6A6180}
+.rp-core{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-bottom:6mm}
+.rp-cell{border:1px solid #E2DAEE;border-radius:3mm;padding:3mm;text-align:center;background:#F8F6FB}
+.rp-cell b{display:block;font-family:var(--serif);font-size:26pt;line-height:1;color:#4B3772;font-weight:500}
+.rp-cell span{font-size:8.5pt;color:#6A6180}
+.rp-sec{break-inside:avoid;page-break-inside:avoid;margin:0 0 5mm}
+.rp h2{font-family:var(--serif);font-size:15pt;font-weight:600;margin:0 0 1.5mm;color:#231C33}
+.rp h2 em{font-style:normal;color:#9A7432}
+.rp p{margin:0 0 2mm}
+.rp .rp-muted{color:#6A6180;font-size:9.5pt}
+.rp dl{display:grid;grid-template-columns:28mm 1fr;gap:1mm 4mm;margin:2mm 0 0}
+.rp dt{font-weight:600;color:#4B3772}.rp dd{margin:0}
+.rp-box{background:#F6F0E3;border-radius:3mm;padding:4mm 5mm;margin-bottom:6mm;break-inside:avoid}
+.rp-score{text-align:center;margin:2mm 0 6mm}
+.rp-score b{font-family:var(--serif);font-size:48pt;font-weight:500;color:#9A7432;line-height:1}
+.rp-foot{margin-top:8mm;padding-top:3mm;border-top:1px solid #E2DAEE;font-size:8.5pt;color:#6A6180;text-align:center}
 .note{font-size:.8rem;color:var(--muted);margin-top:40px;max-width:62ch}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -163,7 +210,7 @@ td.me{outline:3px solid var(--plum);outline-offset:1px}
     <h1>Numerología</h1>
     <p>Descubre los números escondidos en tu nombre y tu fecha de nacimiento, y lo que significan los números que se te repiten.</p>
   </div>
-  <button class="theme" id="theme" type="button">Cambiar tema</button>
+  <div class="hbtns"><button class="theme" id="acctBtn" type="button">Cuenta: sin sincronizar</button><button class="theme" id="theme" type="button">Cambiar tema</button></div>
 </header>
 
 <nav role="tablist">
@@ -266,11 +313,30 @@ td.me{outline:3px solid var(--plum);outline-offset:1px}
   <p class="lead">Del 1 al 9, más los números maestros 11, 22 y 33.</p>
   <p style="color:var(--muted);max-width:62ch">En numerología pitagórica todo número se reduce sumando sus cifras hasta quedar en un dígito, excepto 11, 22 y 33, que se conservan por considerarse de vibración especial.</p>
   <div id="sigList"></div>
+
+  <h2 class="h2">Cómo usar los números en tu vida</h2>
+  <details><summary style="grid-template-columns:1fr"><span><b>Por dónde empezar</b><span class="k">Qué número mirar primero</span></span></summary>
+    <div class="body" style="padding-left:0"><p>El camino de vida es la base: describe tu propósito y no cambia nunca. Después mirá la expresión (tus talentos), el deseo del alma (lo que te motiva) y la personalidad (cómo te ven). Cuando varios números coinciden o se repiten, esa energía es la que más te define.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Elegir fechas importantes</b><span class="k">Firmar, lanzar, mudarse, celebrar</span></span></summary>
+    <div class="body" style="padding-left:0"><p>Muchas personas eligen para sus decisiones importantes los días del mes que vibran con su número de la suerte (los ves en tu carta). También se puede sumar la fecha completa del evento: un día que reduce a 8 se asocia a negocios y dinero; a 6, a hogar y familia; a 1, a comienzos.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Planear con el año personal</b><span class="k">El ciclo de 9 años</span></span></summary>
+    <div class="body" style="padding-left:0"><p>La vida avanza en ciclos de 9 años. En un año 1 conviene sembrar, en un año 4 construir bases, en un año 8 cosechar y en un año 9 cerrar. Usarlo para planear ayuda a no forzar cosas a destiempo, como lanzar un gran proyecto en un año de cierre.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Nombres de negocio o marca</b><span class="k">La energía de un nombre comercial</span></span></summary>
+    <div class="body" style="padding-left:0"><p>Escribí el nombre comercial en "Mi carta" sin fecha: la expresión que obtengas describe la energía que proyecta la marca. Un 8 se asocia a prosperidad, un 3 a comunicación y ventas, un 6 a servicio y confianza, un 1 a liderazgo e innovación.</p></div></details>
+  <details><summary style="grid-template-columns:1fr"><span><b>Casa, teléfono y placa</b><span class="k">Números del día a día</span></span></summary>
+    <div class="body" style="padding-left:0"><p>Sumá todas las cifras hasta llegar a un dígito. Una casa 6 es muy familiar, una 7 es tranquila e introspectiva, una 5 tiene mucho movimiento y una 8 favorece la prosperidad. Si el número no te convence, la tradición sugiere equilibrarlo con colores, plantas o un número pequeño escrito junto a la puerta.</p></div></details>
 </section>
 
 <p class="note">Esta app sigue el sistema pitagórico, el más usado en Occidente. La numerología es una tradición simbólica y de autoconocimiento, no una ciencia; tómala como una herramienta de reflexión.</p>
 </div>
 
+<dialog id="acct">
+  <form method="dialog" class="acct-close"><button class="chip x" aria-label="Cerrar">×</button></form>
+  <h3>Tu cuenta</h3>
+  <div id="acctBody"></div>
+  <p class="hint" id="acctMsg"></p>
+</dialog>
+<div id="print" aria-hidden="true"></div>
 <script>
 /* ---------- DATOS ---------- */
 const VAL = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
@@ -303,6 +369,22 @@ const PERSONAL_YEAR = {
  8:"Año de cosecha material: dinero, reconocimiento y decisiones de poder.",
  9:"Año de cierre: soltar lo que terminó y preparar el próximo ciclo."
 };
+
+const VIDA = {
+ 1:{w:"Emprender, dirigir equipos o cualquier rol con autonomía y decisiones propias.",l:"Necesita admiración y espacio propio; su reto es compartir el mando.",c:"Empezá aunque no esté perfecto: tu fuerza está en dar el primer paso."},
+ 2:{w:"Mediación, asesoría, recursos humanos, trabajo en equipo y tareas de detalle.",l:"Leal y romántico; necesita reciprocidad, ternura y palabras de afecto.",c:"Tu voz también cuenta: decí lo que necesitás sin esperar que lo adivinen."},
+ 3:{w:"Comunicación, ventas, docencia, arte, redes sociales y todo lo creativo.",l:"Divertido y expresivo; necesita alegría, conversación y admiración.",c:"Terminá lo que empezás antes de abrir el siguiente proyecto."},
+ 4:{w:"Administración, operaciones, ingeniería, finanzas y construcción de sistemas.",l:"Estable y fiel; demuestra el amor con hechos más que con palabras.",c:"Dejá espacio para lo imprevisto: no todo tiene que salir según el plan."},
+ 5:{w:"Marketing, ventas, viajes, turismo y trabajos con variedad y movimiento.",l:"Apasionado; necesita libertad, novedad y una pareja que no lo ate.",c:"Elegí un compromiso importante y sostenelo: la libertad también se construye."},
+ 6:{w:"Educación, salud, servicio al cliente, diseño, hogar y cuidado de personas.",l:"Entregado y protector; el hogar es su centro.",c:"Cuidate a vos con el mismo amor que les das a los demás."},
+ 7:{w:"Investigación, tecnología, análisis, escritura y caminos espirituales.",l:"Necesita confianza, profundidad y respeto por sus silencios.",c:"Compartí lo que sentís, no solo lo que pensás."},
+ 8:{w:"Negocios, gerencia, finanzas, bienes raíces y posiciones de liderazgo.",l:"Protector y generoso; su reto es no controlar.",c:"El éxito se disfruta más cuando se comparte y se usa con ética."},
+ 9:{w:"Causas sociales, arte, sanación, docencia y proyectos que ayudan a muchos.",l:"Generoso e idealista; ama de forma amplia.",c:"Soltá lo que ya cumplió su ciclo: cerrar también es avanzar."},
+ 11:{w:"Inspirar y guiar: enseñanza, terapias, arte, comunicación y espiritualidad.",l:"Busca una conexión de alma, más allá de lo superficial.",c:"Confiá en tu intuición y cuidá tu sistema nervioso: descansar es parte de tu misión."},
+ 22:{w:"Grandes proyectos, empresas, instituciones y obras que perduran.",l:"Busca una pareja que sea también socia de vida.",c:"Un paso firme a la vez construye el gran sueño."},
+ 33:{w:"Enseñanza, sanación, arte y servicio desde el corazón.",l:"Ama de forma incondicional; su reto es poner límites sanos.",c:"Dar sin vaciarte: tu bienestar también es servicio."}
+};
+const PY_DO = {1:"Iniciá ese proyecto que venís posponiendo.",2:"Cultivá alianzas y no forcés resultados.",3:"Mostrá tu trabajo, comunicá y creá.",4:"Ordená finanzas, rutinas y bases.",5:"Decí sí a lo nuevo, con prudencia.",6:"Dedicá tiempo a la familia, el hogar y los compromisos.",7:"Estudiá, descansá y escuchá tu intuición.",8:"Negociá y pedí lo que vale tu trabajo.",9:"Cerrá pendientes y soltá lo que pesa."};
 
 const MIRROR = {
  "000":["Todo es posible","El cero repetido habla de un punto de partida en blanco y de conexión con el todo. Momento para un nuevo comienzo sin cargas del pasado."],
@@ -390,13 +472,38 @@ function paintGrid(name){
 
 /* ---------- RENDER CARTA ---------- */
 const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function row(n, title, what, calcText, extra){
+function vidaHTML(n){ const v=VIDA[n]; return `<dl class="vida"><dt>En el trabajo</dt><dd>${v.w}</dd><dt>En el amor</dt><dd>${v.l}</dd><dt>Consejo</dt><dd>${v.c}</dd></dl>`; }
+function row(n, title, what, calcText, extra, full){
   const m = NUM[n]; const isM = MASTER.includes(n);
+  extra = (extra||"") + (full? vidaHTML(n) : "");
   return `<div class="row"><div class="big">${n}${isM?'<small>número maestro</small>':''}</div><div>
     <h3>${title}: ${m.t}</h3><div class="what">${what}</div>
     <div class="tags">${m.k.map(k=>`<span class="tag">${k}</span>`).join("")}</div>
     <p>${m.d}</p><p class="shadow">A trabajar: ${m.s}</p>${extra||""}
     ${calcText?`<div class="calc">${calcText}</div>`:""}</div></div>`;
+}
+function lectura(r, name){
+  const p=[];
+  if(r.life&&r.expr){ const L=r.life.n,E=r.expr.n,k=rel(L,E);
+    p.push({nat:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) van en la misma dirección: lo que viniste a hacer y lo que sabés hacer se refuerzan. Es una carta con mucha coherencia.`,
+      comp:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) se complementan: tenés herramientas distintas a tu misión, y eso te da recursos para cumplirla de formas creativas.`,
+      ret:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) empujan en direcciones distintas. Es una tensión creativa: lo que te sale fácil no siempre es lo que viniste a aprender, y ahí está tu mayor crecimiento.`}[k]); }
+  if(r.soul&&r.pers){ const S=r.soul.n,P=r.pers.n;
+    if(root(S)===root(P)) p.push(`Lo que sentís por dentro (alma ${S}) y lo que los demás ven (personalidad ${P}) coinciden: sos transparente y la gente te lee con facilidad.`);
+    else if(rel(S,P)==="ret") p.push(`Por dentro buscás ${NUM[S].k[0]} y ${NUM[S].k[1]} (alma ${S}), pero por fuera mostrás ${NUM[P].k[0]} (personalidad ${P}). A veces los demás no adivinan lo que realmente necesitás: decilo con palabras.`);
+    else p.push(`Tu mundo interior (alma ${S}, ${NUM[S].k[0]}) y tu imagen (personalidad ${P}, ${NUM[P].k[0]}) conversan bien: lo que mostrás te ayuda a conseguir lo que deseás.`); }
+  const pos=[["camino de vida",r.life],["expresión",r.expr],["alma",r.soul],["personalidad",r.pers],["día de nacimiento",r.bday]].filter(x=>x[1]);
+  const masters=pos.filter(x=>MASTER.includes(x[1].n));
+  if(masters.length) p.push(`Tenés ${masters.length>1?"números maestros":"un número maestro"} en ${masters.map(x=>`${x[0]} (${x[1].n})`).join(" y ")}: una vibración intensa que pide confiar en tus dones y cuidar el equilibrio emocional.`);
+  const cnt={}; pos.forEach(x=>{const k=root(x[1].n); cnt[k]=(cnt[k]||0)+1});
+  const dom=Object.keys(cnt).filter(k=>cnt[k]>=2).sort((a,b)=>cnt[b]-cnt[a]);
+  if(dom.length){ const d=+dom[0]; p.push(`El ${d} aparece ${cnt[d]} veces en tu carta: su energía (${NUM[d].k.slice(0,3).join(", ")}) es un sello personal muy fuerte.`); }
+  const L=clean(name||"").split("").filter(Boolean);
+  if(L.length>=6){ const c={}; L.forEach(x=>c[VAL[x]]=(c[VAL[x]]||0)+1); const top=Object.keys(c).sort((a,b)=>c[b]-c[a])[0];
+    if(c[top]>=3) p.push(`En tu nombre abunda el ${top} (${c[top]} letras): facilidad natural para ${NUM[top].k[0]} y ${NUM[top].k[1]}.`); }
+  if(r.missing&&r.missing.length>=3) p.push(`A tu nombre le faltan ${r.missing.length} números: esta vida trae aprendizajes variados. Revisá tus lecciones kármicas más abajo.`);
+  if(r.year) p.push(`En ${r.year.cy} vivís un año personal ${r.year.n}. ${PY_DO[r.year.n]}`);
+  return p;
 }
 function luckyDays(n){ const b = root(n); const out=[]; for(let d=1;d<=31;d++) if(root(reduce(d))===b) out.push(d); return out; }
 
@@ -406,22 +513,24 @@ function render(){
   const out = document.getElementById("results");
   if(!name && !date){ out.innerHTML='<div class="empty">Escribe un nombre para empezar.</div>'; return; }
   const r = calc(name, date); let h="";
+  const lec = lectura(r, name);
+  if(lec.length) h += `<div class="synth"><div class="synth-h"><h3>Lectura integrada</h3><button class="btn" type="button" id="pdfCarta">Guardar en PDF</button></div>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
   if(r.life){
     const lucky = r.life.n;
     h += `<div class="row"><div class="big">${lucky}<small>tu número de la suerte</small></div><div>
       <h3>Número de la suerte</h3><div class="what">En la numerología pitagórica, tu número de la suerte es el mismo de tu camino de vida: es la vibración con la que naciste.</div>
       <p><strong>Días favorables de cada mes:</strong> ${luckyDays(lucky).join(", ")}.</p>
       <p><strong>Tus números afines:</strong> ${[...new Set([r.life.n, r.bday.n, r.expr&&r.expr.n].filter(Boolean))].join(", ")}.</p></div></div>`;
-    h += row(r.life.n,"Camino de vida","Tu propósito principal y las lecciones de esta vida. Es el número más importante.",r.life.calc);
+    h += row(r.life.n,"Camino de vida","Tu propósito principal y las lecciones de esta vida. Es el número más importante.",r.life.calc,"",true);
   }
-  if(r.expr) h += row(r.expr.n,"Expresión (destino)","Tus talentos naturales y cómo te proyectas en el mundo. Sale de todas las letras de tu nombre.",r.expr.calc);
+  if(r.expr) h += row(r.expr.n,"Expresión (destino)","Tus talentos naturales y cómo te proyectas en el mundo. Sale de todas las letras de tu nombre.",r.expr.calc,"",!r.life);
   if(r.soul) h += row(r.soul.n,"Deseo del alma","Lo que tu corazón anhela en el fondo, tu motivación íntima. Sale de las vocales.",r.soul.calc);
   if(r.pers) h += row(r.pers.n,"Personalidad","Cómo te perciben los demás a primera vista. Sale de las consonantes.",r.pers.calc);
   if(r.bday) h += row(r.bday.n,"Día de nacimiento","Un talento especial que traes para apoyar tu camino de vida.",r.bday.calc);
   if(r.mat) h += row(r.mat.n,"Madurez","La energía que se despierta con más fuerza después de los 40 años.",r.mat.calc);
   if(r.year) h += `<div class="row"><div class="big">${r.year.n}</div><div><h3>Tu año personal ${r.year.cy}</h3>
     <div class="what">El tema de tu año, de cumpleaños a cumpleaños según algunas escuelas o de enero a diciembre según otras.</div>
-    <p>${PERSONAL_YEAR[r.year.n]}</p></div></div>`;
+    <p>${PERSONAL_YEAR[r.year.n]}</p><p><strong>Qué hacer:</strong> ${PY_DO[r.year.n]}</p></div></div>`;
   if(r.missing){
     h += `<div class="row"><div class="big">${r.missing.length?r.missing.join(""):"✓"}</div><div><h3>Lecciones kármicas</h3>
       <div class="what">Números que no aparecen en tu nombre: energías que viniste a desarrollar.</div>
@@ -431,10 +540,12 @@ function render(){
   out.innerHTML = h;
 }
 
+document.getElementById("results").addEventListener("click",e=>{ if(e.target.id==="pdfCarta") printCarta(); });
+
 /* ---------- PERFILES GUARDADOS ---------- */
 const KEY="numerologia_perfiles";
 function getSaved(){ try{ return JSON.parse(localStorage.getItem(KEY))||[] }catch(e){ return [] } }
-function setSaved(a){ try{ localStorage.setItem(KEY, JSON.stringify(a)) }catch(e){} }
+function setSaved(a){ try{ localStorage.setItem(KEY, JSON.stringify(a)) }catch(e){} cloudPush("perfiles",a); }
 function paintSaved(){
   if(typeof paintQuickP==="function") try{paintQuickP()}catch(e){}
   const box = document.getElementById("saved"), list = getSaved();
@@ -474,6 +585,7 @@ function showMirror(){
   const digitText = digits.filter(d=>d!=="0").map(d=>`<strong>${d}</strong>: ${NUM[d].k.join(", ")}`).join("<br>");
   h += `<div class="box">${digitText}${v.includes("0")?"<br><strong>0</strong>: potencial, lo infinito, amplifica a los números que acompaña":""}</div>`;
   if(+v>0 && NUM[n]) h += `<div class="box">Raíz numerológica: ${chain(digitSum(+v))===String(digitSum(+v))?digitSum(+v):chain(digitSum(+v))}. Vibración de fondo: <strong>${n}, ${NUM[n].t.toLowerCase()}</strong>, ${NUM[n].k.slice(0,3).join(", ")}.</div>`;
+  h += `<div class="box"><strong>Qué hacer cuando lo ves:</strong> detenete un momento y notá qué estabas pensando o sintiendo. Respirá, formulá una intención en positivo y en presente, y anotala. Con el tiempo vas a descubrir patrones: el número suele aparecer alrededor de un mismo tema.</div>`;
   mOut.innerHTML = h;
 }
 
@@ -511,8 +623,10 @@ function renderCompat(){
   if(a.soul&&b.soul) h+=vsRow("soul","Deseo del alma",a.soul.n,b.soul.n);
   if(a.expr&&b.expr) h+=vsRow("expr","Expresión",a.expr.n,b.expr.n);
   if(!(a.soul&&b.soul)) h+=`<p class="hint" style="margin-top:14px">Agregá los nombres completos para comparar también el alma y la expresión.</p>`;
+  h+=`<p style="margin-top:20px"><button class="btn" type="button" id="pdfCompat">Guardar en PDF</button></p>`;
   out.innerHTML=h;
 }
+document.getElementById("compatOut").addEventListener("click",e=>{ if(e.target.id==="pdfCompat") printCompat(); });
 function paintMatrix(x,y){
   x=x&&root(x); y=y&&root(y);
   let h="<tr><th></th>"+[1,2,3,4,5,6,7,8,9].map(n=>`<th>${n}</th>`).join("")+"</tr>";
@@ -639,7 +753,7 @@ function getCodes(){
   try{ const o=JSON.parse(localStorage.getItem(OLDKEY)); if(Array.isArray(o)) mine=o.filter(x=>!/^s\d$/.test(x.id)); }catch(e){}
   const all=mine.concat(LIB); setCodes(all); return all;
 }
-function setCodes(c){ try{ localStorage.setItem(CKEY, JSON.stringify(c)) }catch(e){} }
+function setCodes(c){ try{ localStorage.setItem(CKEY, JSON.stringify(c)) }catch(e){} cloudPush("codigos",c); }
 const fmt = n => n.replace(/\D/g,"").replace(/(\d{3})(?=\d)/g,"$1 ");
 let temaSel="Todos", editId=null;
 document.getElementById("cTema").innerHTML = TEMAS.map(t=>`<option>${t}</option>`).join("");
@@ -684,7 +798,7 @@ paintFilters(); paintCodes();
 /* ---------- DIARIO 369 ---------- */
 const DKEY="numerologia_369";
 const getD=()=>{ try{ return JSON.parse(localStorage.getItem(DKEY)) }catch(e){ return null } };
-const setD=d=>{ try{ d?localStorage.setItem(DKEY,JSON.stringify(d)):localStorage.removeItem(DKEY) }catch(e){} };
+const setD=d=>{ try{ d?localStorage.setItem(DKEY,JSON.stringify(d)):localStorage.removeItem(DKEY) }catch(e){} cloudPush("diario369",d||null); };
 const dayKey=d=>`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
 function dayIndex(start){ const s=new Date(start); s.setHours(0,0,0,0); const t=new Date(); t.setHours(0,0,0,0); return Math.round((t-s)/864e5); }
 function paintD(){
@@ -722,6 +836,125 @@ document.getElementById("d369").addEventListener("click",e=>{
   if(t.id==="dReset"){ if(confirm("¿Borrar este diario y empezar otro?")){ setD(null); paintD(); } }
 });
 paintD();
+
+/* ---------- SINCRONIZACIÓN (Supabase: proyecto cslmwmiahbtcuucwknjv, tabla num_datos) ---------- */
+var SB_URL="https://cslmwmiahbtcuucwknjv.supabase.co";
+var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzbG13bWlhaGJ0Y3V1Y3drbmp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ3NzE3MDEsImV4cCI6MjEwMDM0NzcwMX0.DhSoVt10uZQhp2vsgaQIPUluC6G-jJMtAZ2bQCm-pBM";
+var SB_TABLE="num_datos";
+var sb=null, sbUser=null, cloudMuted=false, pushTimers={};
+function cloudPush(tipo, datos){
+  if(!sb||!sbUser||cloudMuted) return;
+  clearTimeout(pushTimers[tipo]);
+  pushTimers[tipo]=setTimeout(async()=>{
+    const {error}=await sb.from(SB_TABLE).upsert({user_id:sbUser.id,tipo,datos,actualizado:new Date().toISOString()});
+    setAcctBtn(error?"error":"ok");
+  },700);
+}
+function setAcctBtn(state){
+  const b=document.getElementById("acctBtn");
+  b.classList.toggle("on", !!sbUser && state!=="error");
+  b.textContent = !sb ? "Cuenta: sin conexión" : !sbUser ? "Cuenta: sin sincronizar" : state==="error" ? "Cuenta: error al guardar" : "Cuenta: sincronizada";
+}
+function mergeBy(cloud, local, key){ const seen=new Set(cloud.map(x=>x[key])); return cloud.concat(local.filter(x=>!seen.has(x[key]))); }
+async function cloudPull(){
+  if(!sb||!sbUser) return;
+  const {data,error}=await sb.from(SB_TABLE).select("tipo,datos");
+  if(error){ acctMsg("No pude leer tus datos: "+error.message); setAcctBtn("error"); return; }
+  const cloud={}; (data||[]).forEach(r=>cloud[r.tipo]=r.datos);
+  const perf = mergeBy(cloud.perfiles||[], getSaved(), "n").slice(0,40);
+  const cods = cloud.codigos ? mergeBy(cloud.codigos, getCodes().filter(c=>/^c\d/.test(c.id)), "id") : getCodes();
+  let dia = getD();
+  if(cloud.diario369){ const c=cloud.diario369;
+    if(dia && dia.intent===c.intent && dia.start===c.start){ const m={...c.marks}; Object.keys(dia.marks).forEach(k=>{ m[k]=(m[k]||[false,false,false]).map((v,i)=>v||dia.marks[k][i]); }); dia={...c,marks:m}; }
+    else dia=c; }
+  setSaved(perf); setCodes(cods); if(dia) setD(dia);   // sube la versión unificada
+  paintSaved(); paintCodes(); paintD(); paintQuickP(); setAcctBtn("ok");
+}
+function acctMsg(t){ document.getElementById("acctMsg").textContent=t||""; }
+function paintAcct(){
+  const body=document.getElementById("acctBody");
+  if(!sb){ body.innerHTML=`<p>La sincronización necesita internet y funciona desde tu página de GitHub. Aquí tus datos se guardan solo en este navegador.</p>`; return; }
+  if(sbUser){ body.innerHTML=`<p>Conectada como <strong>${esc(sbUser.email||"")}</strong>. Tus cartas, códigos y diario 369 se guardan en la nube y se comparten entre tus dispositivos.</p>
+    <div class="acct-acts"><button class="btn" type="button" id="aSync">Sincronizar ahora</button><button class="btn alt" type="button" id="aOut">Salir</button></div>`; return; }
+  body.innerHTML=`<p>Entrá con tu correo para tener tus datos en el celular y la computadora.</p>
+    <label for="aMail">Correo</label><input id="aMail" type="email" autocomplete="email">
+    <label for="aPass">Contraseña</label><input id="aPass" type="password" autocomplete="current-password" minlength="6">
+    <div class="acct-acts"><button class="btn" type="button" id="aIn">Entrar</button><button class="btn alt" type="button" id="aUp">Crear cuenta</button></div>`;
+}
+document.getElementById("acctBtn").addEventListener("click",()=>{ paintAcct(); acctMsg(""); document.getElementById("acct").showModal(); });
+document.getElementById("acctBody").addEventListener("click",async e=>{
+  const id=e.target.id; if(!id) return;
+  if(id==="aIn"||id==="aUp"){
+    const email=document.getElementById("aMail").value.trim(), password=document.getElementById("aPass").value;
+    if(!email||password.length<6){ acctMsg("Escribí tu correo y una contraseña de al menos 6 caracteres."); return; }
+    acctMsg("Conectando…");
+    const res = id==="aIn" ? await sb.auth.signInWithPassword({email,password})
+      : await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
+    if(res.error){ acctMsg(res.error.message==="Invalid login credentials"?"Correo o contraseña incorrectos.":res.error.message); return; }
+    if(id==="aUp" && !res.data.session){ acctMsg("Te envié un correo de confirmación. Confirmalo y luego tocá Entrar."); return; }
+    acctMsg("");
+  }
+  if(id==="aSync"){ acctMsg("Sincronizando…"); await cloudPull(); acctMsg("Todo al día."); }
+  if(id==="aOut"){ await sb.auth.signOut(); acctMsg("Sesión cerrada. Tus datos siguen en este navegador."); }
+});
+window.addEventListener("load",()=>{
+  try{ if(window.supabase && SB_KEY) sb=window.supabase.createClient(SB_URL,SB_KEY); }catch(e){ sb=null; }
+  setAcctBtn();
+  if(!sb) return;
+  sb.auth.onAuthStateChange((ev,session)=>{
+    const was=sbUser&&sbUser.id; sbUser=session?session.user:null; setAcctBtn("ok");
+    if(document.getElementById("acct").open) paintAcct();
+    if(sbUser && sbUser.id!==was) setTimeout(cloudPull,0);
+  });
+});
+
+/* ---------- IMPRESIÓN / PDF ---------- */
+const fmtDate = d => { if(!d) return ""; const [y,m,dd]=d.split("-").map(Number); return new Date(y,m-1,dd).toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"}); };
+const todayStr = () => new Date().toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"});
+function rpNum(n,title,what,full){ const m=NUM[n];
+  return `<div class="rp-sec"><h2>${title}: <em>${n}</em>, ${m.t}</h2><p class="rp-muted">${what}</p><p>${m.d}</p><p class="rp-muted">A trabajar: ${m.s}</p>${full?`<dl><dt>Trabajo</dt><dd>${VIDA[n].w}</dd><dt>Amor</dt><dd>${VIDA[n].l}</dd><dt>Consejo</dt><dd>${VIDA[n].c}</dd></dl>`:""}</div>`; }
+function doPrint(html, title){
+  const pr=document.getElementById("print"); pr.innerHTML=html;
+  const old=document.title; document.title=title;
+  setTimeout(()=>{ try{ window.print(); }catch(e){ alert("Tu navegador no permitió abrir la impresión. Probá desde la versión publicada en GitHub."); } document.title=old; },60);
+}
+function printCarta(){
+  const name=nombre.value.trim(), date=fecha.value, r=calc(name,date), lec=lectura(r,name);
+  const cells=[["Camino de vida",r.life],["Expresión",r.expr],["Deseo del alma",r.soul],["Personalidad",r.pers],["Día de nacimiento",r.bday],["Año personal "+(r.year?r.year.cy:""),r.year]].filter(c=>c[1]);
+  let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Carta numerológica</div><h1>${esc(name||"Sin nombre")}</h1>
+    <div class="rp-sub">${date?`Nacimiento: ${fmtDate(date)}. `:""}Generada el ${todayStr()}.</div></div>
+    <div class="rp-core">${cells.map(c=>`<div class="rp-cell"><b>${c[1].n}</b><span>${c[0]}</span></div>`).join("")}</div>`;
+  if(lec.length) h+=`<div class="rp-box"><h2>Lectura integrada</h2>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
+  if(r.life) h+=`<div class="rp-sec"><h2>Número de la suerte: <em>${r.life.n}</em></h2><p>Días favorables de cada mes: ${luckyDays(r.life.n).join(", ")}.</p></div>`;
+  if(r.life) h+=rpNum(r.life.n,"Camino de vida","Tu propósito principal y las lecciones de esta vida.",true);
+  if(r.expr) h+=rpNum(r.expr.n,"Expresión","Tus talentos naturales y cómo te proyectás en el mundo.",true);
+  if(r.soul) h+=rpNum(r.soul.n,"Deseo del alma","Lo que tu corazón anhela en el fondo.");
+  if(r.pers) h+=rpNum(r.pers.n,"Personalidad","Cómo te perciben los demás a primera vista.");
+  if(r.bday) h+=rpNum(r.bday.n,"Día de nacimiento","Un talento especial que apoya tu camino.");
+  if(r.mat) h+=rpNum(r.mat.n,"Madurez","La energía que se despierta con fuerza después de los 40.");
+  if(r.year) h+=`<div class="rp-sec"><h2>Año personal ${r.year.cy}: <em>${r.year.n}</em></h2><p>${PERSONAL_YEAR[r.year.n]} ${PY_DO[r.year.n]}</p></div>`;
+  if(r.missing&&r.missing.length) h+=`<div class="rp-sec"><h2>Lecciones kármicas</h2><p>${r.missing.map(n=>`<strong>${n}</strong> (${NUM[n].k.slice(0,2).join(", ")})`).join("; ")}.</p></div>`;
+  h+=`<div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
+  doPrint(h, "Carta numerológica - "+(name||"sin nombre"));
+}
+function printCompat(){
+  const a=calc(p1n.value.trim(),p1f.value), b=calc(p2n.value.trim(),p2f.value);
+  const n1=p1n.value.trim()||"Persona 1", n2=p2n.value.trim()||"Persona 2";
+  const scoreEl=document.querySelector("#compatOut .pct"), lblEl=document.querySelector("#compatOut .lbl");
+  const sec=(t,x,y,key)=>{ const k=rel(x,y); return `<div class="rp-sec"><h2>${t}: <em>${x} y ${y}</em>, ${REL[k][0].toLowerCase()}</h2><p><strong>${NUM[x].t}</strong> con <strong>${NUM[y].t.toLowerCase()}</strong>. ${RELTXT[key][k]}</p></div>`; };
+  let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Compatibilidad numerológica</div><h1>${esc(n1.split(" ")[0])} y ${esc(n2.split(" ")[0])}</h1>
+    <div class="rp-sub">Generada el ${todayStr()}.</div></div>
+    <div class="rp-score"><b>${scoreEl?scoreEl.textContent:""}</b><div>${lblEl?lblEl.textContent:""}</div></div>
+    <div class="rp-core" style="grid-template-columns:1fr 1fr">
+      <div class="rp-cell"><b>${a.life.n}</b><span>${esc(n1)}${p1f.value?"<br>"+fmtDate(p1f.value):""}</span></div>
+      <div class="rp-cell"><b>${b.life.n}</b><span>${esc(n2)}${p2f.value?"<br>"+fmtDate(p2f.value):""}</span></div></div>`;
+  h+=sec("Camino de vida",a.life.n,b.life.n,"life");
+  if(a.soul&&b.soul) h+=sec("Deseo del alma",a.soul.n,b.soul.n,"soul");
+  if(a.expr&&b.expr) h+=sec("Expresión",a.expr.n,b.expr.n,"expr");
+  h+=`<div class="rp-box"><h2>Consejos para la relación</h2><p><strong>${esc(n1.split(" ")[0])}:</strong> ${VIDA[a.life.n].l}</p><p><strong>${esc(n2.split(" ")[0])}:</strong> ${VIDA[b.life.n].l}</p></div>`;
+  h+=`<div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
+  doPrint(h, "Compatibilidad - "+n1.split(" ")[0]+" y "+n2.split(" ")[0]);
+}
 
 /* ---------- SIGNIFICADOS ---------- */
 document.getElementById("sigList").innerHTML = [1,2,3,4,5,6,7,8,9,11,22,33].map(n=>{
