@@ -152,6 +152,73 @@ select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid
 td.me{outline:3px solid var(--plum);outline-offset:1px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.yo-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;color:var(--muted)}
+.yo-bar strong{color:var(--ink)}
+.daycard{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:16px;padding:18px 20px}
+.daycard.m-rel{border-top-color:var(--plum)}.daycard.m-pause{border-top-color:var(--muted)}
+.day-top{display:flex;gap:16px;align-items:center}
+.day-num{font-family:var(--serif);font-size:clamp(4rem,15vw,5.6rem);line-height:.85;color:var(--gold);min-width:1ch;text-align:center}
+.m-rel .day-num{color:var(--plum)}.m-pause .day-num{color:var(--muted)}
+.day-date{font-size:.85rem;color:var(--muted)}
+.daycard h3{margin:2px 0 6px;font-family:var(--serif);font-size:1.7rem;font-weight:600;line-height:1.1}
+.mode{display:inline-block;font-size:.78rem;border-radius:999px;padding:2px 10px;margin:0 6px 4px 0}
+.mode.m-act{background:var(--gold-soft);color:var(--gold)}.mode.m-rel{background:var(--plum-soft);color:var(--plum)}.mode.m-pause{border:1px solid var(--line);color:var(--muted)}
+.mode.m-lucky{background:var(--gold);color:var(--panel)}
+.daycard>p{max-width:64ch}
+.fe{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+@media (max-width:560px){.fe{grid-template-columns:1fr}}
+.fe>div{border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.fe h4{margin:0 0 4px;font-size:.85rem;color:var(--plum)}
+.fe p{margin:0;font-size:.93rem}
+.ctx{font-size:.9rem;color:var(--muted);margin:8px 0 0}
+.bd-res{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.bd-res h4{margin:14px 0 6px;font-size:.9rem}
+.verd{display:inline-block;font-weight:600;font-size:.9rem;border-radius:999px;padding:4px 14px}
+.v-ideal{background:var(--gold);color:var(--panel)}.v-bien{background:var(--gold-soft);color:var(--gold)}.v-neutro{background:var(--plum-soft);color:var(--plum)}.v-evitar{border:1px solid var(--line);color:var(--muted)}
+.chip-gold{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.mood-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.mood span{font-size:1rem;color:var(--ink);font-weight:500}
+.mood-b{background:var(--gold)}.mood-r{background:var(--plum)}.mood-d{background:var(--muted)}
+.slot.mood{background:var(--panel)}
+.slot.mood[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.sub{font-family:var(--serif);font-size:1.35rem;font-weight:600;margin:22px 0 8px}
+.pat{display:grid;gap:6px;max-width:520px}
+.pat-row{display:grid;grid-template-columns:28px 1fr 28px;gap:10px;align-items:center}
+.pat-n{font-family:var(--serif);font-size:1.3rem;text-align:center}
+.pat-bar{display:flex;height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+.pat-bar i{display:block;height:100%}
+.pat-c{font-size:.8rem;color:var(--muted)}
+.bita-list{display:grid;gap:8px}
+.bita-item{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.bita-item strong{font-weight:600}
+.mood-tag{font-size:.75rem;border-radius:999px;padding:1px 8px;color:var(--panel);margin-left:4px}
+.cal-h{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:center}
+.cal-h h3{margin:0;font-family:var(--serif);font-size:1.7rem;font-weight:600}
+.cal-h .chip{font-size:1.3rem;padding:4px 14px}
+.cal-w,.cal-g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-w{margin:16px 0 6px;text-align:center;font-size:.78rem;color:var(--muted)}
+.cal-d{position:relative;min-width:0;height:clamp(46px,12vw,72px);overflow:hidden;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;cursor:pointer;padding:4px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between}
+.cal-d.m-act{background:var(--gold-soft)}.cal-d.m-rel{background:var(--plum-soft)}.cal-d.m-pause{background:var(--panel)}
+.cal-n{font-size:.85rem;font-weight:600}
+.cal-pd{align-self:flex-end;font-family:var(--serif);font-size:1.2rem;line-height:1;color:var(--muted)}
+.cal-d.m-act .cal-pd{color:var(--gold)}.cal-d.m-rel .cal-pd{color:var(--plum)}
+.cal-star{position:absolute;top:3px;right:5px;font-size:.7rem;color:var(--gold)}
+.cal-dot{position:absolute;bottom:5px;left:6px;width:7px;height:7px;border-radius:50%}
+.cal-d.cal-today{outline:2px solid var(--ink);outline-offset:1px}
+.cal-d.sel{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold) inset}
+#calDetail{margin-top:18px}
+.legend i.m-act{background:var(--gold-soft);border:1px solid var(--gold)}.legend i.m-rel{background:var(--plum-soft);border:1px solid var(--plum)}.legend i.m-pause{background:var(--panel);border:1px solid var(--line)}
+.etapas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px;margin-top:16px}
+.etapa{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.etapa.now{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.et-h{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.etapa h4{margin:0;font-family:var(--serif);font-size:1.15rem;font-weight:600}
+.etapa p{margin:6px 0 0;font-size:.93rem}
+.reto{color:var(--muted)}
+
+.pdfbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pdf-stage{position:fixed;left:-10000px;top:0;width:794px;padding:44px 52px;background:#fff;color:#231C33;z-index:-1}
+.pdf-stage .rp{display:block}
 .karma-mark{color:var(--gold);font-size:2.4rem}
 .kc{flex:none;display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--gold);background:var(--gold-soft);color:var(--gold);font-family:var(--serif);font-size:1.7rem;line-height:1;font-variant-numeric:lining-nums}
 .kc-sm{width:34px;height:34px;font-size:1.25rem}
@@ -227,7 +294,10 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
 </header>
 
 <nav role="tablist">
-  <button role="tab" aria-selected="true" data-tab="carta">Mi carta</button>
+  <button role="tab" aria-selected="true" data-tab="hoy">Hoy</button>
+  <button role="tab" aria-selected="false" data-tab="carta">Mi carta</button>
+  <button role="tab" aria-selected="false" data-tab="cal">Calendario</button>
+  <button role="tab" aria-selected="false" data-tab="etapas">Etapas de vida</button>
   <button role="tab" aria-selected="false" data-tab="espejo">Números repetidos</button>
   <button role="tab" aria-selected="false" data-tab="compat">Compatibilidad</button>
   <button role="tab" aria-selected="false" data-tab="codigos">Códigos e intenciones</button>
@@ -236,7 +306,31 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
 </nav>
 
 <!-- MI CARTA -->
-<section class="tab on" id="carta">
+<!-- HOY -->
+<section class="tab on" id="hoy">
+  <div id="hoyPerfil"></div>
+  <div id="hoyMain"></div>
+  <div id="hoyExtra" style="display:none">
+    <h2 class="h2">¿Es buen día para…?</h2>
+    <div id="bdForm"></div>
+    <div id="bdOut"></div>
+    <h2 class="h2">Bitácora del día</h2>
+    <div id="bitaBox"></div>
+  </div>
+</section>
+
+<!-- CALENDARIO -->
+<section class="tab" id="cal">
+  <div id="calBox"></div>
+  <div id="calDetail"></div>
+</section>
+
+<!-- ETAPAS -->
+<section class="tab" id="etapas">
+  <div id="etBox"></div>
+</section>
+
+<section class="tab" id="carta">
   <div class="fields">
     <div>
       <label for="nombre">Nombre completo</label>
@@ -548,7 +642,7 @@ function render(){
   if(!name && !date){ out.innerHTML='<div class="empty">Escribe un nombre para empezar.</div>'; return; }
   const r = calc(name, date); let h="";
   const lec = lectura(r, name);
-  if(lec.length) h += `<div class="synth"><div class="synth-h"><h3>Lectura integrada</h3><button class="btn" type="button" id="pdfCarta">Guardar en PDF</button></div>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
+  if(lec.length) h += `<div class="synth"><div class="synth-h"><h3>Lectura integrada</h3><div class="pdfbtns"><button class="btn" type="button" id="pdfCarta">Compartir PDF</button><button class="btn alt" type="button" id="dlCarta">Descargar</button><button class="chip" type="button" id="prCarta">Imprimir</button></div></div>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
   if(r.life){
     const lucky = r.life.n;
     h += `<div class="row"><div class="big">${lucky}<small>tu número de la suerte</small></div><div>
@@ -570,7 +664,7 @@ function render(){
   out.innerHTML = h;
 }
 
-document.getElementById("results").addEventListener("click",e=>{ if(e.target.id==="pdfCarta") printCarta(); });
+document.getElementById("results").addEventListener("click",e=>{ const i=e.target.id; if(i==="pdfCarta") pdfCarta("share",e.target); else if(i==="dlCarta") pdfCarta("download",e.target); else if(i==="prCarta") printCarta(); });
 
 /* ---------- PERFILES GUARDADOS ---------- */
 const KEY="numerologia_perfiles";
@@ -653,10 +747,10 @@ function renderCompat(){
   if(a.soul&&b.soul) h+=vsRow("soul","Deseo del alma",a.soul.n,b.soul.n);
   if(a.expr&&b.expr) h+=vsRow("expr","Expresión",a.expr.n,b.expr.n);
   if(!(a.soul&&b.soul)) h+=`<p class="hint" style="margin-top:14px">Agregá los nombres completos para comparar también el alma y la expresión.</p>`;
-  h+=`<p style="margin-top:20px"><button class="btn" type="button" id="pdfCompat">Guardar en PDF</button></p>`;
+  h+=`<div class="pdfbtns" style="margin-top:22px"><button class="btn" type="button" id="pdfCompat">Compartir PDF</button><button class="btn alt" type="button" id="dlCompat">Descargar</button><button class="chip" type="button" id="prCompat">Imprimir</button></div>`;
   out.innerHTML=h;
 }
-document.getElementById("compatOut").addEventListener("click",e=>{ if(e.target.id==="pdfCompat") printCompat(); });
+document.getElementById("compatOut").addEventListener("click",e=>{ const i=e.target.id; if(i==="pdfCompat") pdfCompat("share",e.target); else if(i==="dlCompat") pdfCompat("download",e.target); else if(i==="prCompat") printCompat(); });
 function paintMatrix(x,y){
   x=x&&root(x); y=y&&root(y);
   let h="<tr><th></th>"+[1,2,3,4,5,6,7,8,9].map(n=>`<th>${n}</th>`).join("")+"</tr>";
@@ -898,7 +992,9 @@ async function cloudPull(){
     if(dia && dia.intent===c.intent && dia.start===c.start){ const m={...c.marks}; Object.keys(dia.marks).forEach(k=>{ m[k]=(m[k]||[false,false,false]).map((v,i)=>v||dia.marks[k][i]); }); dia={...c,marks:m}; }
     else dia=c; }
   setSaved(perf); setCodes(cods); if(dia) setD(dia);   // sube la versión unificada
-  paintSaved(); paintCodes(); paintD(); paintQuickP(); setAcctBtn("ok");
+  const yo = cloud.yo || getYo() || null; if(yo) setYo(yo);
+  setBita(Object.assign({}, cloud.bitacora||{}, getBita()));
+  paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia(); setAcctBtn("ok");
 }
 function acctMsg(t){ document.getElementById("acctMsg").textContent=t||""; }
 function paintAcct(){
@@ -948,7 +1044,7 @@ function doPrint(html, title){
   const old=document.title; document.title=title;
   setTimeout(()=>{ try{ window.print(); }catch(e){ alert("Tu navegador no permitió abrir la impresión. Probá desde la versión publicada en GitHub."); } document.title=old; },60);
 }
-function printCarta(){
+function cartaHTML(){
   const name=nombre.value.trim(), date=fecha.value, r=calc(name,date), lec=lectura(r,name);
   const cells=[["Camino de vida",r.life],["Expresión",r.expr],["Deseo del alma",r.soul],["Personalidad",r.pers],["Día de nacimiento",r.bday],["Año personal "+(r.year?r.year.cy:""),r.year]].filter(c=>c[1]);
   let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Carta numerológica</div><h1>${esc(name||"Sin nombre")}</h1>
@@ -965,9 +1061,11 @@ function printCarta(){
   if(r.year) h+=`<div class="rp-sec"><h2>Año personal ${r.year.cy}: <em>${r.year.n}</em></h2><p>${PERSONAL_YEAR[r.year.n]} ${PY_DO[r.year.n]}</p></div>`;
   if(r.missing) h+=`<div class="rp-sec"><h2>Lecciones kármicas</h2><p class="rp-muted">${KARMA_INTRO}</p>${r.missing.length? r.missing.map(n=>`<div class="rp-karma"><span class="rp-kc">${n}</span><div><strong>Lección kármica ${n}: ${KARMA[n].t}</strong><br>${KARMA[n].d}</div></div>`).join("") : `<p>${KARMA_NONE}</p>`}</div>`;
   h+=`<div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
-  doPrint(h, "Carta numerológica - "+(name||"sin nombre"));
+  return {html:h, title:"Carta numerológica - "+(name||"sin nombre")};
 }
-function printCompat(){
+function printCarta(){ const r=cartaHTML(); doPrint(r.html, r.title); }
+function pdfCarta(mode,btn){ const r=cartaHTML(); pdfFrom(r.html, r.title, mode, btn); }
+function compatHTML(){
   const a=calc(p1n.value.trim(),p1f.value), b=calc(p2n.value.trim(),p2f.value);
   const n1=p1n.value.trim()||"Persona 1", n2=p2n.value.trim()||"Persona 2";
   const scoreEl=document.querySelector("#compatOut .pct"), lblEl=document.querySelector("#compatOut .lbl");
@@ -983,7 +1081,288 @@ function printCompat(){
   if(a.expr&&b.expr) h+=sec("Expresión",a.expr.n,b.expr.n,"expr");
   h+=`<div class="rp-box"><h2>Consejos para la relación</h2><p><strong>${esc(n1.split(" ")[0])}:</strong> ${VIDA[a.life.n].l}</p><p><strong>${esc(n2.split(" ")[0])}:</strong> ${VIDA[b.life.n].l}</p></div>`;
   h+=`<div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
-  doPrint(h, "Compatibilidad - "+n1.split(" ")[0]+" y "+n2.split(" ")[0]);
+  return {html:h, title:"Compatibilidad - "+n1.split(" ")[0]+" y "+n2.split(" ")[0]};
+}
+function printCompat(){ const r=compatHTML(); doPrint(r.html, r.title); }
+function pdfCompat(mode,btn){ const r=compatHTML(); pdfFrom(r.html, r.title, mode, btn); }
+
+/* ==================== TU DÍA, CALENDARIO, ETAPAS, BITÁCORA ==================== */
+const pad2 = n => String(n).padStart(2,"0");
+const ymd = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+const parseYmd = s => { const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); };
+const one = n => { while(n>9) n=digitSum(n); return n; };
+const longDate = d => d.toLocaleDateString("es-CR",{weekday:"long",day:"numeric",month:"long"});
+const cap1 = t => t.charAt(0).toUpperCase()+t.slice(1);
+
+/* Perfil principal ("yo") y bitácora, con sincronización */
+const YKEY="numerologia_yo", BKEY="numerologia_bitacora";
+function getYo(){ try{ return JSON.parse(localStorage.getItem(YKEY)) }catch(e){ return null } }
+function setYo(v){ try{ v?localStorage.setItem(YKEY,JSON.stringify(v)):localStorage.removeItem(YKEY) }catch(e){} cloudPush("yo",v||null); }
+function getBita(){ try{ return JSON.parse(localStorage.getItem(BKEY))||{} }catch(e){ return {} } }
+function setBita(v){ try{ localStorage.setItem(BKEY,JSON.stringify(v)) }catch(e){} cloudPush("bitacora",v); }
+
+/* Cálculo personal de año, mes y día (sistema pitagórico, año calendario) */
+function personalFor(birth, date){
+  const [,bm,bd]=birth.split("-").map(Number);
+  const y=date.getFullYear(), m=date.getMonth()+1, d=date.getDate();
+  const py=one(one(bd)+one(bm)+one(digitSum(y)));
+  const pm=one(py+m), pd=one(pm+d);
+  return {py,pm,pd};
+}
+
+const DIA={
+ 1:{t:"Día de inicio",mode:"act",f:"Empezar algo, tomar decisiones, presentarte, dar el primer paso.",e:"Esperar aprobación ajena o dejar todo para después.",d:"La energía favorece la iniciativa. Lo que arranques hoy tiene impulso."},
+ 2:{t:"Día de cooperación",mode:"rel",f:"Acuerdos, escuchar, trabajo en equipo, pareja, negociar con paciencia.",e:"Forzar resultados, confrontar o apurar a los demás.",d:"Un día suave, para sumar voluntades más que para imponer."},
+ 3:{t:"Día de expresión",mode:"rel",f:"Comunicar, vender, crear, reuniones, redes sociales, celebrar.",e:"Dispersarte, compras por impulso y chismes.",d:"Tu palabra tiene brillo hoy: buen momento para mostrarte."},
+ 4:{t:"Día de trabajo",mode:"rel",f:"Ordenar, planificar, trámites, rutinas, finanzas y detalles.",e:"Improvisar, tomar atajos o descuidar lo pequeño.",d:"Día para construir con constancia. Lo que ordenes hoy te sostiene mañana."},
+ 5:{t:"Día de cambio",mode:"act",f:"Viajar, probar algo nuevo, moverte, promocionar, salir de la rutina.",e:"Decisiones impulsivas, excesos y firmar sin leer.",d:"Energía inquieta y dinámica: abrite a lo nuevo, con prudencia."},
+ 6:{t:"Día de hogar",mode:"rel",f:"Familia, cuidar, compromisos, reconciliaciones, embellecer tu espacio.",e:"Cargar con todo o querer controlar a los demás.",d:"Día para el amor y la responsabilidad. Cuidá y dejate cuidar."},
+ 7:{t:"Día de reflexión",mode:"pause",f:"Estudiar, analizar, meditar, descansar, investigar antes de decidir.",e:"Firmar, lanzar proyectos, gastos grandes o discusiones.",d:"Día para mirar hacia adentro. Lo que hoy pensés con calma, mañana lo ejecutás mejor."},
+ 8:{t:"Día de resultados",mode:"act",f:"Negocios, dinero, negociar, pedir lo que vale tu trabajo, decisiones importantes.",e:"Imponerte o gastar para aparentar.",d:"Energía de poder y concreción: buen día para mover asuntos materiales."},
+ 9:{t:"Día de cierre",mode:"pause",f:"Terminar pendientes, soltar, perdonar, limpiar, donar.",e:"Empezar proyectos nuevos o aferrarte a lo que ya terminó.",d:"Día para cerrar ciclos. Soltar hoy te deja espacio para lo que viene."}
+};
+const MODE={act:["Día para actuar","m-act"],rel:["Día para construir y relacionarte","m-rel"],pause:["Día para pausar","m-pause"]};
+const PM_TXT={1:"un mes para iniciar",2:"un mes de paciencia y alianzas",3:"un mes para expresarte y socializar",4:"un mes de trabajo y orden",5:"un mes de cambios y movimiento",6:"un mes de familia y compromisos",7:"un mes para reflexionar y descansar",8:"un mes de resultados y dinero",9:"un mes de cierres y limpieza"};
+
+const ACT={
+ firmar:{t:"Firmar un contrato o acuerdo",i:[8,4],b:[1,6,2],x:[5,7,9]},
+ empezar:{t:"Empezar un proyecto",i:[1,8],b:[3,4,5],x:[7,9]},
+ lanzar:{t:"Lanzar o presentar algo al público",i:[3,1],b:[5,8],x:[7,9]},
+ aumento:{t:"Pedir aumento o negociar dinero",i:[8],b:[1,4,2],x:[7,9]},
+ entrevista:{t:"Entrevista de trabajo",i:[1,8],b:[3,4],x:[7,9]},
+ compra:{t:"Compra grande o inversión",i:[8,4],b:[6],x:[3,5,7,9]},
+ conversacion:{t:"Conversación difícil",i:[2,6],b:[4,7,9],x:[5,8]},
+ cita:{t:"Cita o momento romántico",i:[2,6],b:[3,5,9],x:[7,8]},
+ viaje:{t:"Viajar",i:[5,3],b:[1,9],x:[4,8]},
+ mudanza:{t:"Mudanza",i:[6,4],b:[1,5],x:[7,9]},
+ cerrar:{t:"Terminar algo o soltar",i:[9],b:[5,7],x:[1]},
+ descanso:{t:"Descansar o hacer un retiro",i:[7],b:[2,9],x:[]}
+};
+function verdict(act, pd){ const a=ACT[act]; return a.i.includes(pd)?"ideal":a.b.includes(pd)?"bien":a.x.includes(pd)?"evitar":"neutro"; }
+const VERD={ideal:["Muy favorable","v-ideal"],bien:["Favorable","v-bien"],neutro:["Neutral","v-neutro"],evitar:["Mejor otro día","v-evitar"]};
+
+/* ---------- PERFIL ---------- */
+function yoLife(yo){ const r=calc(yo.n||"", yo.f); return r.life?r.life.n:null; }
+function goTab(id){ const b=document.querySelector(`nav button[data-tab="${id}"]`); if(b) b.click(); }
+function paintPerfil(){
+  const box=document.getElementById("hoyPerfil"), yo=getYo();
+  if(yo && yo.f){
+    box.innerHTML=`<div class="yo-bar"><span>Tu día, <strong>${esc((yo.n||"").split(" ")[0]||"sin nombre")}</strong></span><button class="chip" type="button" id="yoEdit">Cambiar perfil</button></div>`;
+    return true;
+  }
+  const saved=getSaved().filter(p=>p.f);
+  box.innerHTML=`<div class="yo-set"><p class="lead">Tu energía de cada día.</p>
+    <p style="color:var(--muted);max-width:60ch">Para calcular tu día, tu calendario y tus etapas necesito tu fecha de nacimiento. Se guarda como tu perfil principal.</p>
+    <div class="fields"><div><label for="yoN">Nombre</label><input id="yoN" autocomplete="off" value="${esc(nombre.value||"")}"></div>
+    <div><label for="yoF">Fecha de nacimiento</label><input id="yoF" type="date" value="${fecha.value||""}"></div></div>
+    ${saved.length?`<div class="quickp">${saved.map((p,i)=>`<button class="chip" type="button" data-yo="${i}">${esc(p.n.split(" ")[0])}</button>`).join("")}</div>`:""}
+    <p style="margin-top:14px"><button class="btn" type="button" id="yoSave">Guardar mi perfil</button> <span class="hint" id="yoMsg"></span></p></div>`;
+  return false;
+}
+document.getElementById("hoyPerfil").addEventListener("click",e=>{
+  const t=e.target;
+  if(t.id==="yoEdit"){ const yo=getYo(); setYo(null); paintAllDia(); if(yo){ document.getElementById("yoN").value=yo.n||""; document.getElementById("yoF").value=yo.f||""; } }
+  if(t.dataset.yo!==undefined){ const p=getSaved().filter(p=>p.f)[+t.dataset.yo]; document.getElementById("yoN").value=p.n; document.getElementById("yoF").value=p.f; }
+  if(t.id==="yoSave"){ const n=document.getElementById("yoN").value.trim(), f=document.getElementById("yoF").value;
+    if(!f){ document.getElementById("yoMsg").textContent="Falta la fecha de nacimiento."; return; }
+    setYo({n,f}); paintAllDia(); }
+});
+
+/* ---------- HOY ---------- */
+function dayCard(yo, date, big){
+  const {py,pm,pd}=personalFor(yo.f,date), D=DIA[pd], M=MODE[D.mode];
+  const life=yoLife(yo), lucky=life && luckyDays(life).includes(date.getDate());
+  return `<div class="daycard ${M[1]}">
+    <div class="day-top"><div class="day-num">${pd}</div><div>
+      <div class="day-date">${cap1(longDate(date))}</div>
+      <h3>${D.t}</h3><span class="mode ${M[1]}">${M[0]}</span>${lucky?`<span class="mode m-lucky">✦ Día favorable para vos</span>`:""}
+    </div></div>
+    <p>${D.d}</p>
+    <div class="fe"><div><h4>Favorece</h4><p>${D.f}</p></div><div><h4>Mejor evitar</h4><p>${D.e}</p></div></div>
+    ${big?`<p class="ctx">Estás en tu <strong>mes personal ${pm}</strong>, ${PM_TXT[pm]}, dentro de tu <strong>año personal ${py}</strong>. ${PERSONAL_YEAR[py]}</p>`:`<p class="ctx">Mes personal ${pm}, año personal ${py}.</p>`}
+  </div>`;
+}
+function paintHoy(){
+  const yo=getYo(), main=document.getElementById("hoyMain"), extra=document.getElementById("hoyExtra");
+  if(!yo||!yo.f){ main.innerHTML=""; extra.style.display="none"; return; }
+  extra.style.display="";
+  main.innerHTML=dayCard(yo,new Date(),true);
+  paintBuenDia(); paintBita();
+}
+
+/* ---------- ¿ES BUEN DÍA PARA...? ---------- */
+function paintBuenDiaForm(){
+  document.getElementById("bdForm").innerHTML=`<div class="fields">
+    <div><label for="bdAct">Quiero…</label><select id="bdAct">${Object.keys(ACT).map(k=>`<option value="${k}">${ACT[k].t}</option>`).join("")}</select></div>
+    <div><label for="bdDate">¿Qué día?</label><input id="bdDate" type="date" value="${ymd(new Date())}"></div></div>`;
+  document.getElementById("bdAct").addEventListener("change",paintBuenDia);
+  document.getElementById("bdDate").addEventListener("input",paintBuenDia);
+}
+function paintBuenDia(){
+  const yo=getYo(); if(!yo||!yo.f) return;
+  const act=document.getElementById("bdAct").value, ds=document.getElementById("bdDate").value||ymd(new Date());
+  const date=parseYmd(ds), {pd}=personalFor(yo.f,date), v=verdict(act,pd), V=VERD[v];
+  const why={ideal:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) es de los que más apoyan esta actividad.`,
+    bien:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) acompaña bien esta actividad.`,
+    neutro:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) no la impulsa ni la frena: depende más de tu preparación.`,
+    evitar:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) pide otra cosa: ${DIA[pd].f.toLowerCase()} Si podés elegir, mirá las fechas sugeridas.`}[v];
+  const best=[], today=new Date(); today.setHours(0,0,0,0);
+  for(let i=0;i<=30 && best.length<6;i++){ const d=new Date(today); d.setDate(d.getDate()+i); if(verdict(act,personalFor(yo.f,d).pd)==="ideal") best.push(d); }
+  for(let i=0;i<=30 && best.length<6;i++){ const d=new Date(today); d.setDate(d.getDate()+i); if(verdict(act,personalFor(yo.f,d).pd)==="bien" && !best.some(b=>+b===+d)) best.push(d); }
+  best.sort((a,b)=>a-b);
+  document.getElementById("bdOut").innerHTML=`<div class="bd-res"><span class="verd ${V[1]}">${V[0]}</span>
+    <p><strong>${ACT[act].t}</strong> el ${longDate(date)}. ${why}</p>
+    <h4>Mejores fechas en los próximos 30 días</h4>
+    <div class="quickp">${best.map(d=>`<button class="chip ${verdict(act,personalFor(yo.f,d).pd)==="ideal"?"chip-gold":""}" type="button" data-bd="${ymd(d)}">${d.toLocaleDateString("es-CR",{weekday:"short",day:"numeric",month:"short"})}</button>`).join("")}</div>
+    <p class="hint">Las fechas doradas son las más favorables. Es una guía para reflexionar: en decisiones de salud, dinero o legales, apoyate también en información y asesoría concreta.</p></div>`;
+}
+document.getElementById("bdOut").addEventListener("click",e=>{ const d=e.target.dataset.bd; if(d){ document.getElementById("bdDate").value=d; paintBuenDia(); }});
+
+/* ---------- BITÁCORA ---------- */
+const MOOD={b:["Bien","mood-b"],r:["Regular","mood-r"],d:["Difícil","mood-d"]};
+function paintBita(){
+  const yo=getYo(); if(!yo||!yo.f) return;
+  const all=getBita(), key=ymd(new Date()), today=all[key];
+  const entries=Object.keys(all).sort().reverse();
+  let h=`<p style="color:var(--muted);max-width:62ch">Anotá cómo te fue cada día. Con el tiempo vas a ver si tus días buenos coinciden con ciertos números: así comprobás por vos misma qué tanto te resuena.</p>
+    <div class="mood-row">${Object.keys(MOOD).map(k=>`<button class="slot mood ${MOOD[k][1]}" type="button" data-mood="${k}" aria-pressed="${today&&today.m===k}"><span>${MOOD[k][0]}</span></button>`).join("")}</div>
+    <label for="bitaNote" style="margin-top:12px">Nota del día (opcional)</label>
+    <input id="bitaNote" placeholder="Algo que pasó, cómo te sentiste…" value="${today&&today.n?esc(today.n):""}">
+    <p style="margin-top:10px"><button class="btn" type="button" id="bitaSave">Guardar el día</button> <span class="hint" id="bitaMsg"></span></p>`;
+  // patrones
+  const stats={}; entries.forEach(k=>{ const e=all[k]; (stats[e.pd]=stats[e.pd]||{b:0,r:0,d:0})[e.m]++; });
+  h+=`<h3 class="sub">Tus patrones</h3>`;
+  if(entries.length<7){ h+=`<p class="hint">Llevás ${entries.length} ${entries.length===1?"día anotado":"días anotados"}. Con al menos 7 empiezan a verse los patrones.</p>`; }
+  else{
+    h+=`<div class="pat">${[1,2,3,4,5,6,7,8,9].map(n=>{ const s=stats[n]||{b:0,r:0,d:0}, t=s.b+s.r+s.d;
+      return `<div class="pat-row"><span class="pat-n">${n}</span><div class="pat-bar">${t?`<i class="mood-b" style="width:${s.b/t*100}%"></i><i class="mood-r" style="width:${s.r/t*100}%"></i><i class="mood-d" style="width:${s.d/t*100}%"></i>`:""}</div><span class="pat-c">${t}</span></div>`; }).join("")}</div>
+      <div class="legend"><span><i class="mood-b"></i>Bien</span><span><i class="mood-r"></i>Regular</span><span><i class="mood-d"></i>Difícil</span></div>`;
+    const cand=Object.keys(stats).filter(n=>{const s=stats[n];return s.b+s.r+s.d>=2}).map(n=>{const s=stats[n];return [+n,s.b/(s.b+s.r+s.d),s.d/(s.b+s.r+s.d)]});
+    if(cand.length){ const good=cand.slice().sort((a,b)=>b[1]-a[1])[0], hard=cand.slice().sort((a,b)=>b[2]-a[2])[0];
+      h+=`<p style="margin-top:12px">${good[1]>0?`Hasta ahora, tus días personales <strong>${good[0]}</strong> son los que mejor te van. `:""}${hard[2]>0&&hard[0]!==good[0]?`Los días <strong>${hard[0]}</strong> suelen ser los más retadores: esos días conviene bajar el ritmo.`:""}</p>`; }
+  }
+  if(entries.length) h+=`<h3 class="sub">Últimos días</h3><div class="bita-list">${entries.slice(0,7).map(k=>{ const e=all[k];
+    return `<div class="bita-item"><span class="kc kc-sm">${e.pd}</span><div><strong>${cap1(longDate(parseYmd(k)))}</strong> <span class="mood-tag ${MOOD[e.m][1]}">${MOOD[e.m][0]}</span>${e.n?`<br><span class="hint">${esc(e.n)}</span>`:""}</div></div>`; }).join("")}</div>`;
+  document.getElementById("bitaBox").innerHTML=h;
+}
+let bitaSel=null;
+document.getElementById("bitaBox").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.mood){ bitaSel=b.dataset.mood; document.querySelectorAll("#bitaBox .mood").forEach(x=>x.setAttribute("aria-pressed", x===b)); }
+  if(b.id==="bitaSave"){
+    const yo=getYo(), all=getBita(), key=ymd(new Date());
+    const m=bitaSel||(all[key]&&all[key].m);
+    if(!m){ document.getElementById("bitaMsg").textContent="Elegí cómo te fue: bien, regular o difícil."; return; }
+    all[key]={m,n:document.getElementById("bitaNote").value.trim(),pd:personalFor(yo.f,new Date()).pd};
+    setBita(all); bitaSel=null; paintBita(); document.getElementById("bitaMsg").textContent="Guardado.";
+  }
+});
+
+/* ---------- CALENDARIO ---------- */
+let calRef=new Date(); calRef.setDate(1);
+function paintCal(){
+  const yo=getYo(), box=document.getElementById("calBox"), det=document.getElementById("calDetail");
+  if(!yo||!yo.f){ box.innerHTML=`<div class="empty">Primero guardá tu perfil en la pestaña Hoy. <button class="chip" type="button" data-go="hoy">Ir a Hoy</button></div>`; det.innerHTML=""; return; }
+  const y=calRef.getFullYear(), m=calRef.getMonth(), first=new Date(y,m,1), days=new Date(y,m+1,0).getDate();
+  const life=yoLife(yo), lucky=life?luckyDays(life):[], todayK=ymd(new Date()), bita=getBita();
+  const offset=(first.getDay()+6)%7; // lunes primero
+  const {pm,py}=personalFor(yo.f,first);
+  let cells=""; for(let i=0;i<offset;i++) cells+=`<div></div>`;
+  for(let d=1; d<=days; d++){ const dt=new Date(y,m,d), {pd}=personalFor(yo.f,dt), k=ymd(dt), mo=DIA[pd].mode;
+    cells+=`<button class="cal-d ${MODE[mo][1]} ${k===todayK?"cal-today":""}" type="button" data-cal="${k}" aria-label="${longDate(dt)}, día personal ${pd}">
+      <span class="cal-n">${d}</span><span class="cal-pd">${pd}</span>${lucky.includes(d)?`<span class="cal-star">✦</span>`:""}${bita[k]?`<span class="cal-dot ${MOOD[bita[k].m][1]}"></span>`:""}</button>`; }
+  box.innerHTML=`<div class="cal-h"><button class="chip" type="button" data-mv="-1" aria-label="Mes anterior">‹</button>
+    <div><h3>${cap1(first.toLocaleDateString("es-CR",{month:"long",year:"numeric"}))}</h3><div class="hint">Mes personal ${pm}: ${PM_TXT[pm]}. Año personal ${py}.</div></div>
+    <button class="chip" type="button" data-mv="1" aria-label="Mes siguiente">›</button></div>
+    <div class="cal-w">${["L","K","M","J","V","S","D"].map(x=>`<span>${x}</span>`).join("")}</div>
+    <div class="cal-g">${cells}</div>
+    <div class="legend"><span><i class="m-act"></i>Para actuar</span><span><i class="m-rel"></i>Construir y relacionarte</span><span><i class="m-pause"></i>Para pausar</span><span>✦ Día favorable</span></div>
+    <p class="hint">El número pequeño es tu día personal. Tocá un día para ver su detalle.</p>`;
+  if(!det.dataset.sel || det.dataset.sel.slice(0,7)!==`${y}-${pad2(m+1)}`) det.dataset.sel = (ymd(new Date()).slice(0,7)===`${y}-${pad2(m+1)}`)?ymd(new Date()):ymd(first);
+  det.innerHTML=dayCard(yo,parseYmd(det.dataset.sel),false);
+  box.querySelectorAll(".cal-d").forEach(b=>b.classList.toggle("sel", b.dataset.cal===det.dataset.sel));
+}
+document.getElementById("calBox").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.mv){ calRef.setMonth(calRef.getMonth()+ +b.dataset.mv); document.getElementById("calDetail").dataset.sel=""; paintCal(); }
+  if(b.dataset.cal){ document.getElementById("calDetail").dataset.sel=b.dataset.cal; paintCal(); }
+  if(b.dataset.go) goTab(b.dataset.go);
+});
+
+/* ---------- ETAPAS DE VIDA: PINÁCULOS Y DESAFÍOS ---------- */
+const PIN={1:"Etapa de independencia: aprender a valerte por vos misma, tomar decisiones y abrirte camino.",2:"Etapa de vínculos y paciencia: cooperación, pareja, sensibilidad y trabajo en equipo.",3:"Etapa de expresión: creatividad, vida social, comunicación y disfrute.",4:"Etapa de construcción: trabajo sostenido, bases materiales, orden y esfuerzo.",5:"Etapa de cambios: movimiento, viajes, libertad y experiencias nuevas.",6:"Etapa de hogar y responsabilidad: familia, compromisos y cuidado de otros.",7:"Etapa interior: estudio, espiritualidad, especialización y búsqueda de sentido.",8:"Etapa de logros materiales: carrera, dinero, autoridad y reconocimiento.",9:"Etapa de servicio y cierres: generosidad, visión amplia y soltar el pasado.",11:"Etapa maestra de inspiración: intuición elevada, guiar a otros y exposición pública.",22:"Etapa maestra de construcción: capacidad para concretar proyectos de gran escala.",33:"Etapa maestra de servicio: enseñar y sanar desde el amor."};
+const RETO={0:"La elección: tenés todas las herramientas y el reto es decidir cuál desarrollar.",1:"Afirmarte sin imponerte y confiar en tu voluntad sin depender de la aprobación ajena.",2:"Manejar la sensibilidad: no tomar todo personal ni perderte en los demás.",3:"Expresarte con libertad y con foco, venciendo la timidez o la dispersión.",4:"Ser constante sin volverte rígida; organizar sin querer controlarlo todo.",5:"Usar la libertad con responsabilidad, sin huir ni caer en excesos.",6:"Cuidar sin cargar con todos y aceptar a los demás como son.",7:"Confiar en la vida y en los demás, sin aislarte ni desconfiar de todo.",8:"Relacionarte sanamente con el dinero y el poder: ni ambición excesiva ni miedo a tenerlo."};
+function paintEtapas(){
+  const yo=getYo(), box=document.getElementById("etBox");
+  if(!yo||!yo.f){ box.innerHTML=`<div class="empty">Primero guardá tu perfil en la pestaña Hoy. <button class="chip" type="button" data-go="hoy">Ir a Hoy</button></div>`; return; }
+  const [by,bm,bd]=yo.f.split("-").map(Number), M=one(bm), D=one(bd), Y=one(digitSum(by));
+  const LP=one(yoLife(yo)), end1=36-LP;
+  const P=[reduce(M+D),reduce(D+Y),0,reduce(M+Y)]; P[2]=reduce(one(P[0])+one(P[1]));
+  const C=[Math.abs(M-D),Math.abs(D-Y),0,Math.abs(M-Y)]; C[2]=Math.abs(C[0]-C[1]);
+  const now=new Date(); let age=now.getFullYear()-by; if(now.getMonth()+1<bm||(now.getMonth()+1===bm&&now.getDate()<bd)) age--;
+  const ranges=[[0,end1],[end1+1,end1+9],[end1+10,end1+18],[end1+19,null]];
+  const names=["Primera etapa","Segunda etapa","Tercera etapa","Cuarta etapa"];
+  const cur=ranges.findIndex(r=>age>=r[0]&&(r[1]===null||age<=r[1]));
+  box.innerHTML=`<p class="lead">Tu vida en cuatro grandes etapas.</p>
+    <p style="color:var(--muted);max-width:62ch">En numerología, la vida se divide en cuatro períodos llamados pináculos. Cada uno trae una energía que marca el clima de esos años, y un desafío: la lección que más te toca trabajar en ese tiempo. Hoy tenés ${age} años.</p>
+    <div class="etapas">${ranges.map((r,i)=>`<article class="etapa ${i===cur?"now":""}">
+      <div class="et-h"><span class="kc">${P[i]}</span><div><div class="karma-k">${names[i]}${i===cur?" · estás aquí":""}</div><h4>${r[1]===null?`Desde los ${r[0]} años`:`De los ${r[0]} a los ${r[1]} años`}</h4></div></div>
+      <p>${PIN[P[i]]||PIN[one(P[i])]}</p>
+      <p class="reto"><strong>Desafío ${C[i]}:</strong> ${RETO[C[i]]}</p></article>`).join("")}</div>
+    ${cur>=0?`<div class="synth" style="margin-top:18px"><h3>Tu momento actual</h3><p>Estás en tu ${names[cur].toLowerCase()}, con energía de <strong>${NUM[P[cur]]?NUM[P[cur]].t.toLowerCase():""}</strong>. ${PIN[P[cur]]||PIN[one(P[cur])]} Tu desafío de estos años: ${RETO[C[cur]].charAt(0).toLowerCase()+RETO[C[cur]].slice(1)}</p></div>`:""}`;
+}
+document.getElementById("etBox").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b&&b.dataset.go) goTab(b.dataset.go); });
+
+function paintAllDia(){ paintPerfil(); paintHoy(); paintCal(); paintEtapas(); }
+paintBuenDiaForm();
+paintAllDia();
+
+/* ---------- PDF REAL: COMPARTIR O DESCARGAR ---------- */
+const CDN_H2C="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+const CDN_JSPDF="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+function loadScript(src){ return new Promise((ok,no)=>{ if(document.querySelector(`script[src="${src}"]`)) return ok();
+  const t=document.createElement("script"); t.src=src; t.onload=()=>ok(); t.onerror=()=>no(new Error("No se pudo cargar "+src)); document.head.appendChild(t); }); }
+const slug = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9 _-]/g,"").trim().replace(/\s+/g,"-");
+async function pdfFrom(html, title, mode, btn){
+  const label = btn?btn.textContent:"", set = t => { if(btn){ btn.textContent=t; btn.disabled = t!==label; } };
+  set("Preparando…");
+  let stage;
+  try{
+    await loadScript(CDN_H2C); await loadScript(CDN_JSPDF);
+    stage=document.createElement("div");
+    stage.className="pdf-stage"; stage.innerHTML=html;
+    document.body.appendChild(stage);
+    if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+    const canvas=await html2canvas(stage,{scale:2,backgroundColor:"#ffffff",useCORS:true,windowWidth:stage.offsetWidth});
+    const {jsPDF}=window.jspdf, pdf=new jsPDF("p","mm","a4"), pw=210, ph=297;
+    const sliceH=Math.floor(canvas.width*ph/pw);
+    let y=0, first=true;
+    while(y<canvas.height){
+      const h=Math.min(sliceH, canvas.height-y);
+      const c=document.createElement("canvas"); c.width=canvas.width; c.height=h;
+      const cx=c.getContext("2d"); cx.fillStyle="#ffffff"; cx.fillRect(0,0,c.width,c.height);
+      cx.drawImage(canvas,0,y,canvas.width,h,0,0,canvas.width,h);
+      if(!first) pdf.addPage();
+      pdf.addImage(c.toDataURL("image/jpeg",0.92),"JPEG",0,0,pw,h*pw/canvas.width);
+      first=false; y+=h;
+    }
+    const blob=pdf.output("blob"), name=slug(title)+".pdf";
+    const file=new File([blob],name,{type:"application/pdf"});
+    if(mode==="share" && navigator.canShare && navigator.canShare({files:[file]})){
+      set("Abriendo…");
+      try{ await navigator.share({files:[file], title}); }
+      catch(err){ if(err && err.name!=="AbortError") saveBlob(blob,name); }
+    } else saveBlob(blob,name);
+    set(label);
+  }catch(e){
+    set(label);
+    alert("No pude generar el PDF aquí ("+e.message+"). Probá con el botón Imprimir y elegí «Guardar como PDF».");
+  }finally{ if(stage) stage.remove(); }
+}
+function saveBlob(blob,name){
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
 }
 
 /* ---------- SIGNIFICADOS ---------- */
