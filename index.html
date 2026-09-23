@@ -35,15 +35,20 @@ header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
 h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1;margin:0;letter-spacing:-.01em}
 header p{margin:6px 0 0;color:var(--muted);max-width:46ch}
 .theme{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:6px 14px;font:inherit;font-size:.85rem;cursor:pointer}
-nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto}
-nav button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-weight:500;padding:10px 14px;cursor:pointer;white-space:nowrap;margin-bottom:-1px}
-nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.grp-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.grp-nav button{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;font-size:.92rem;color:var(--muted);cursor:pointer}
+.grp-nav button[aria-selected="true"]{background:var(--plum);color:var(--panel);border-color:var(--plum)}
+.sub-nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto}
+.sub-nav button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font:inherit;font-weight:500;padding:10px 14px;cursor:pointer;white-space:nowrap;margin-bottom:-1px}
+.sub-nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.sub-nav[hidden]{display:none}
 button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .tab{display:none}.tab.on{display:block}
 label{display:block;font-size:.9rem;font-weight:500;margin-bottom:6px}
 .fields{display:grid;grid-template-columns:1.6fr 1fr;gap:14px}
 @media (max-width:600px){.fields{grid-template-columns:1fr}}
 input{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)}
+input[type="checkbox"]{width:auto;padding:0;border-radius:4px;accent-color:var(--plum)}
 .hint{font-size:.82rem;color:var(--muted);margin-top:6px}
 
 /* Tabla pitagórica — el elemento protagonista */
@@ -164,6 +169,63 @@ textarea{width:100%;font:inherit;font-size:1rem;padding:11px 13px;border:1px sol
 .segs{display:grid;gap:8px;margin-top:10px}
 .seg{border-top:1px solid var(--line);padding-top:8px}
 .seg p{margin:2px 0 0}
+
+/* Comparación nombre de nacimiento vs nombre de uso */
+.cmp-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0}
+.cmp-box h3{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:0 0 8px}
+.cmp-row{display:grid;grid-template-columns:1fr auto auto auto;gap:6px 12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.cmp-row:first-of-type{border-top:none}
+.cmp-row .cmp-lbl{font-weight:600;font-size:.9rem}
+.cmp-row .cmp-n{font-family:var(--serif);font-size:1.5rem;text-align:center;min-width:2ch}
+.cmp-row .cmp-n.o{color:var(--muted)}
+.cmp-row .cmp-n.h{color:var(--gold)}
+.cmp-arrow{color:var(--muted);font-size:.85rem;text-align:center}
+.cmp-foot{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:6px}
+
+/* Disclaimers */
+.disclaimer{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;font-size:.86rem;color:var(--ink);margin:10px 0}
+.disclaimer.soft{background:var(--panel);border-color:var(--line);color:var(--muted)}
+
+/* Plan de acción */
+.accion-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.accion-card.chosen{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.acc-h{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.acc-h h4{margin:0;font-family:var(--serif);font-size:1.25rem;font-weight:600}
+.accion-card p{margin:4px 0}
+.plan-active{background:var(--panel);border:1px solid var(--gold);border-radius:14px;padding:16px 18px}
+.plan-active h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0 0 6px}
+.plan-estado{display:inline-block;font-size:.78rem;border-radius:999px;padding:2px 10px;background:var(--plum-soft);color:var(--plum);margin-left:6px}
+.plan-hist{border-top:1px solid var(--line);padding-top:10px;margin-top:14px}
+.plan-hist-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0}
+
+/* Aprender */
+.apr-bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:10px 0 4px;max-width:420px}
+.apr-bar i{display:block;height:100%;background:var(--gold)}
+.lesson{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:var(--panel);overflow:hidden}
+.lesson summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px}
+.lesson summary::-webkit-details-marker{display:none}
+.lesson summary b{font-family:var(--serif);font-size:1.2rem;font-weight:600}
+.lesson summary .done{font-size:.78rem;border-radius:999px;padding:2px 10px;background:var(--gold);color:var(--panel)}
+.lesson summary .pend{font-size:.78rem;color:var(--muted)}
+.lesson .lbody{padding:0 18px 18px}
+.lesson .lbody h5{margin:14px 0 4px;font-size:.85rem;color:var(--plum)}
+.lesson .lbody p{margin:2px 0}
+.qcheck{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px}
+.qcheck details{margin:4px 0}
+.qcheck summary{cursor:pointer;font-size:.9rem;color:var(--ink);padding:0}
+
+/* Tradiciones */
+.trad-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.trad-card h3{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0 0 4px}
+.trad-card .origen{font-size:.82rem;color:var(--muted);margin-bottom:8px}
+
+/* Bitácora ampliada */
+.bita-mini{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+.bita-mini h3{font-family:var(--serif);font-size:1.25rem;font-weight:600;margin:0 0 8px}
+.coin-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.coin-cell{text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px}
+.coin-cell b{display:block;font-family:var(--serif);font-size:1.6rem}
+.bita-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .yo-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;color:var(--muted)}
 .yo-bar strong{color:var(--ink)}
 .daycard{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:16px;padding:18px 20px}
@@ -256,6 +318,8 @@ textarea{width:100%;font:inherit;font-size:1rem;padding:11px 13px;border:1px sol
 #acctBtn.on{color:var(--plum);border-color:var(--plum)}
 dialog#acct{border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);padding:22px;width:min(420px,92vw)}
 dialog#acct::backdrop{background:rgba(20,14,40,.45)}
+dialog#guiada{border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);padding:26px;width:min(640px,94vw);max-height:85vh;overflow:auto}
+dialog#guiada::backdrop{background:rgba(20,14,40,.45)}
 #acct h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;margin:0 0 12px}
 #acct label{margin-top:10px}
 .acct-close{float:right;margin:0}
@@ -305,17 +369,31 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <div class="hbtns"><button class="theme" id="acctBtn" type="button">Cuenta: sin sincronizar</button><button class="theme" id="theme" type="button">Cambiar tema</button></div>
 </header>
 
-<nav role="tablist">
+<nav class="grp-nav" aria-label="Grupos de secciones">
+  <button class="grp" type="button" data-grp="vida" aria-selected="true">Mi vida</button>
+  <button class="grp" type="button" data-grp="explorar" aria-selected="false">Explorar</button>
+  <button class="grp" type="button" data-grp="practicar" aria-selected="false">Aprender y practicar</button>
+</nav>
+
+<nav class="sub-nav" data-forgrp="vida" role="tablist" aria-label="Mi vida">
   <button role="tab" aria-selected="true" data-tab="hoy">Hoy</button>
   <button role="tab" aria-selected="false" data-tab="carta">Mi carta</button>
   <button role="tab" aria-selected="false" data-tab="cal">Calendario</button>
   <button role="tab" aria-selected="false" data-tab="etapas">Etapas de vida</button>
+  <button role="tab" aria-selected="false" data-tab="plan">Plan de acción</button>
+</nav>
+<nav class="sub-nav" data-forgrp="explorar" role="tablist" aria-label="Explorar" hidden>
+  <button role="tab" aria-selected="true" data-tab="compat">Compatibilidad</button>
   <button role="tab" aria-selected="false" data-tab="espejo">Números repetidos</button>
-  <button role="tab" aria-selected="false" data-tab="compat">Compatibilidad</button>
+  <button role="tab" aria-selected="false" data-tab="sig">Significados</button>
+  <button role="tab" aria-selected="false" data-tab="trad">Tradiciones y prácticas</button>
+</nav>
+<nav class="sub-nav" data-forgrp="practicar" role="tablist" aria-label="Aprender y practicar" hidden>
+  <button role="tab" aria-selected="true" data-tab="aprender">Aprender</button>
   <button role="tab" aria-selected="false" data-tab="casos">Casos</button>
+  <button role="tab" aria-selected="false" data-tab="bita">Bitácora</button>
   <button role="tab" aria-selected="false" data-tab="codigos">Códigos e intenciones</button>
   <button role="tab" aria-selected="false" data-tab="diario">Diario 369</button>
-  <button role="tab" aria-selected="false" data-tab="sig">Significados</button>
 </nav>
 
 <!-- MI CARTA -->
@@ -323,12 +401,11 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
 <section class="tab on" id="hoy">
   <div id="hoyPerfil"></div>
   <div id="hoyMain"></div>
+  <div id="hoyAccion"></div>
   <div id="hoyExtra" style="display:none">
     <h2 class="h2">¿Es buen día para…?</h2>
     <div id="bdForm"></div>
     <div id="bdOut"></div>
-    <h2 class="h2">Bitácora del día</h2>
-    <div id="bitaBox"></div>
   </div>
 </section>
 
@@ -343,28 +420,40 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <div id="etBox"></div>
 </section>
 
+<!-- PLAN DE ACCIÓN -->
+<section class="tab" id="plan">
+  <div id="planBox"></div>
+</section>
+
 <section class="tab" id="carta">
   <div class="fields">
     <div>
-      <label for="nombre">Nombre completo</label>
-      <input id="nombre" autocomplete="off" placeholder="Como aparece en tu cédula">
-      <div class="hint">Usa el nombre completo de nacimiento. Los acentos se ignoran y la Ñ cuenta como N.</div>
+      <label for="nombre">Nombre completo de nacimiento</label>
+      <input id="nombre" autocomplete="off" placeholder="Como aparece en tu acta de nacimiento">
+      <div class="hint">Es la base de tu carta. Los acentos se ignoran y la Ñ cuenta como N.</div>
     </div>
     <div>
       <label for="fecha">Fecha de nacimiento</label>
       <input id="fecha" type="date">
     </div>
   </div>
+  <div style="margin-top:12px">
+    <label for="nombreUso">Nombre que usás habitualmente (opcional)</label>
+    <input id="nombreUso" autocomplete="off" placeholder="Nombre profesional, de casada, apodo…">
+    <div class="hint">Dejalo vacío si es igual a tu nombre de nacimiento. Si es distinto, vas a ver cómo cambia tu carta con cada uno.</div>
+  </div>
 
   <div class="grid-wrap"><div class="pgrid" id="pgrid"></div></div>
-  <div class="grid-cap">Tabla pitagórica: cada letra tiene un número del 1 al 9. Se iluminan las de tu nombre.</div>
+  <div class="grid-cap">Tabla pitagórica: cada letra tiene un número del 1 al 9. Se iluminan las de tu nombre de nacimiento.</div>
 
   <div class="saved" id="saved"></div>
+  <p style="margin-top:6px"><button class="chip" type="button" id="guiadaBtn">Iniciar lectura guiada</button> <span class="hint" id="guiadaMsg"></span></p>
   <div class="results" id="results"><div class="empty">Escribe un nombre para empezar.</div></div>
 </section>
 
 <!-- NÚMEROS REPETIDOS -->
 <section class="tab" id="espejo">
+  <div class="disclaimer soft">Los números repetidos son una práctica simbólica popular, distinta de la numerología pitagórica. Sin evidencia científica comprobada. <button class="chip" type="button" data-go="trad" style="margin-left:6px">Ver más en Tradiciones y prácticas</button></div>
   <label for="mirror">¿Qué número te sigue apareciendo?</label>
   <div class="mirror-in"><input id="mirror" inputmode="numeric" maxlength="6" placeholder="1111"></div>
   <div class="quick" id="quick"></div>
@@ -388,7 +477,24 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <div id="compatOut"><div class="empty">Agregá las fechas de nacimiento de las dos personas.</div></div>
   <h2 class="h2">Tabla de afinidad entre caminos de vida</h2>
   <div class="mwrap"><table class="matrix" id="matrix"></table></div>
-  <div class="legend"><span><i class="c-nat"></i>Afinidad natural</span><span><i class="c-comp"></i>Se complementan</span><span><i class="c-ret"></i>Relación retadora</span></div>
+  <div class="legend"><span><i class="c-nat"></i>Afinidad natural</span><span><i class="c-comp"></i>Energías complementarias</span><span><i class="c-ret"></i>Diferencias que requieren comunicación</span></div>
+</section>
+
+<!-- TRADICIONES Y PRÁCTICAS -->
+<section class="tab" id="trad">
+  <div id="tradBox"></div>
+</section>
+
+<!-- APRENDER -->
+<section class="tab" id="aprender">
+  <div id="aprBox"></div>
+</section>
+
+<!-- BITÁCORA (propia pestaña) -->
+<section class="tab" id="bita">
+  <p class="lead">Tu bitácora de reflexión.</p>
+  <p style="color:var(--muted);max-width:64ch">Anotá tu estado antes y después del día, y si lo que la carta sugería se cumplió o no. Con el tiempo vas a ver patrones reales, no solo lo que querés creer.</p>
+  <div id="bitaBox"></div>
 </section>
 
 <!-- CASOS -->
@@ -432,7 +538,7 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
     <div class="body" style="padding-left:0"><p>Elegís una sola intención y la escribís en presente: "Mi negocio crece cada mes". La escribís 3 veces al despertar, 6 en la tarde y 9 antes de dormir, durante 21 o 33 días seguidos. Podés llevar tu registro en la pestaña Diario 369.</p></div></details>
   <details><summary style="grid-template-columns:1fr"><span><b>El 8 y la prosperidad</b><span class="k">Numerología china</span></span></summary>
     <div class="body" style="padding-left:0"><p>En la tradición china el 8 suena parecido a "prosperar", por eso se busca en números de teléfono, direcciones, precios y fechas de inauguración. El 888 multiplica esa energía. El 4 se evita porque suena como "muerte".</p></div></details>
-  <p class="note" style="margin-top:20px">Estos códigos son rituales de intención y no reemplazan un tratamiento médico ni un consejo financiero.</p>
+  <p class="note" style="margin-top:20px">Estos códigos son rituales de intención y no reemplazan un tratamiento médico ni un consejo financiero. <button class="chip" type="button" data-go="trad">Ver más en Tradiciones y prácticas</button></p>
 </section>
 
 <!-- DIARIO 369 -->
@@ -452,7 +558,8 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <details><summary style="grid-template-columns:1fr"><span><b>Elegir fechas importantes</b><span class="k">Firmar, lanzar, mudarse, celebrar</span></span></summary>
     <div class="body" style="padding-left:0"><p>Muchas personas eligen para sus decisiones importantes los días del mes que vibran con su número de la suerte (los ves en tu carta). También se puede sumar la fecha completa del evento: un día que reduce a 8 se asocia a negocios y dinero; a 6, a hogar y familia; a 1, a comienzos.</p></div></details>
   <details><summary style="grid-template-columns:1fr"><span><b>Planear con el año personal</b><span class="k">El ciclo de 9 años</span></span></summary>
-    <div class="body" style="padding-left:0"><p>La vida avanza en ciclos de 9 años. En un año 1 conviene sembrar, en un año 4 construir bases, en un año 8 cosechar y en un año 9 cerrar. Usarlo para planear ayuda a no forzar cosas a destiempo, como lanzar un gran proyecto en un año de cierre.</p></div></details>
+    <div class="body" style="padding-left:0"><p>La vida avanza en ciclos de 9 años. En un año 1 conviene sembrar, en un año 4 construir bases, en un año 8 cosechar y en un año 9 cerrar. Usarlo para planear ayuda a no forzar cosas a destiempo, como lanzar un gran proyecto en un año de cierre.</p>
+    <p class="hint">Esta aplicación calcula tu año personal de enero a diciembre. Algunas escuelas usan el ciclo de cumpleaños a cumpleaños; ninguno es "el correcto", pero acá no mezclamos ambos métodos dentro de un mismo resultado.</p></div></details>
   <details><summary style="grid-template-columns:1fr"><span><b>Nombres de negocio o marca</b><span class="k">La energía de un nombre comercial</span></span></summary>
     <div class="body" style="padding-left:0"><p>Escribí el nombre comercial en "Mi carta" sin fecha: la expresión que obtengas describe la energía que proyecta la marca. Un 8 se asocia a prosperidad, un 3 a comunicación y ventas, un 6 a servicio y confianza, un 1 a liderazgo e innovación.</p></div></details>
   <details><summary style="grid-template-columns:1fr"><span><b>Casa, teléfono y placa</b><span class="k">Números del día a día</span></span></summary>
@@ -467,6 +574,11 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <h3>Tu cuenta</h3>
   <div id="acctBody"></div>
   <p class="hint" id="acctMsg"></p>
+</dialog>
+
+<dialog id="guiada" aria-labelledby="guiadaTitulo">
+  <form method="dialog" class="acct-close"><button class="chip x" aria-label="Salir de la lectura guiada" id="guiadaSalir">×</button></form>
+  <div id="guiadaCuerpo"></div>
 </dialog>
 <div id="print" aria-hidden="true"></div>
 <script>
@@ -614,16 +726,20 @@ function row(n, title, what, calcText, extra, full){
     <p>${m.d}</p><p class="shadow">A trabajar: ${m.s}</p>${extra||""}
     ${calcText?`<div class="calc">${calcText}</div>`:""}</div></div>`;
 }
-function lectura(r, name){
-  const p=[];
+function selfTensions(r){
+  const out=[];
   if(r.life&&r.expr){ const L=r.life.n,E=r.expr.n,k=rel(L,E);
-    p.push({nat:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) van en la misma dirección: lo que viniste a hacer y lo que sabés hacer se refuerzan. Es una carta con mucha coherencia.`,
+    out.push({nat:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) van en la misma dirección: lo que viniste a hacer y lo que sabés hacer se refuerzan. Es una carta con mucha coherencia.`,
       comp:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) se complementan: tenés herramientas distintas a tu misión, y eso te da recursos para cumplirla de formas creativas.`,
       ret:`Tu propósito (camino de vida ${L}) y tus talentos (expresión ${E}) empujan en direcciones distintas. Es una tensión creativa: lo que te sale fácil no siempre es lo que viniste a aprender, y ahí está tu mayor crecimiento.`}[k]); }
   if(r.soul&&r.pers){ const S=r.soul.n,P=r.pers.n;
-    if(root(S)===root(P)) p.push(`Lo que sentís por dentro (alma ${S}) y lo que los demás ven (personalidad ${P}) coinciden: sos transparente y la gente te lee con facilidad.`);
-    else if(rel(S,P)==="ret") p.push(`Por dentro buscás ${NUM[S].k[0]} y ${NUM[S].k[1]} (alma ${S}), pero por fuera mostrás ${NUM[P].k[0]} (personalidad ${P}). A veces los demás no adivinan lo que realmente necesitás: decilo con palabras.`);
-    else p.push(`Tu mundo interior (alma ${S}, ${NUM[S].k[0]}) y tu imagen (personalidad ${P}, ${NUM[P].k[0]}) conversan bien: lo que mostrás te ayuda a conseguir lo que deseás.`); }
+    if(root(S)===root(P)) out.push(`Lo que sentís por dentro (alma ${S}) y lo que los demás ven (personalidad ${P}) coinciden: sos transparente y la gente te lee con facilidad.`);
+    else if(rel(S,P)==="ret") out.push(`Por dentro buscás ${NUM[S].k[0]} y ${NUM[S].k[1]} (alma ${S}), pero por fuera mostrás ${NUM[P].k[0]} (personalidad ${P}). A veces los demás no adivinan lo que realmente necesitás: decilo con palabras.`);
+    else out.push(`Tu mundo interior (alma ${S}, ${NUM[S].k[0]}) y tu imagen (personalidad ${P}, ${NUM[P].k[0]}) conversan bien: lo que mostrás te ayuda a conseguir lo que deseás.`); }
+  return out;
+}
+function lectura(r, name){
+  const p=[...selfTensions(r)];
   const pos=[["camino de vida",r.life],["expresión",r.expr],["alma",r.soul],["personalidad",r.pers],["día de nacimiento",r.bday]].filter(x=>x[1]);
   const masters=pos.filter(x=>MASTER.includes(x[1].n));
   if(masters.length) p.push(`Tenés ${masters.length>1?"números maestros":"un número maestro"} en ${masters.map(x=>`${x[0]} (${x[1].n})`).join(" y ")}: una vibración intensa que pide confiar en tus dones y cuidar el equilibrio emocional.`);
@@ -661,13 +777,14 @@ function karmaHTML(missing){
 function luckyDays(n){ const b = root(n); const out=[]; for(let d=1;d<=31;d++) if(root(reduce(d))===b) out.push(d); return out; }
 
 function render(){
-  const name = nombre.value.trim(), date = fecha.value;
+  const name = nombre.value.trim(), date = fecha.value, name2 = nombreUso.value.trim();
   paintGrid(name);
   const out = document.getElementById("results");
   if(!name && !date){ out.innerHTML='<div class="empty">Escribe un nombre para empezar.</div>'; return; }
   const r = calc(name, date); let h="";
   const lec = lectura(r, name);
   if(lec.length) h += `<div class="synth"><div class="synth-h"><h3>Lectura integrada</h3><div class="pdfbtns"><button class="btn" type="button" id="pdfCarta">Compartir PDF</button><button class="btn alt" type="button" id="dlCarta">Descargar</button><button class="chip" type="button" id="prCarta">Imprimir</button></div></div>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
+  h += nombresHTML(name, name2, date);
   if(r.life){
     const lucky = r.life.n;
     h += `<div class="row"><div class="big">${lucky}<small>tu número de la suerte</small></div><div>
@@ -686,10 +803,12 @@ function render(){
     <p>${PERSONAL_YEAR[r.year.n]}</p><p><strong>Qué hacer:</strong> ${PY_DO[r.year.n]}</p></div></div>`;
   if(r.missing) h += karmaHTML(r.missing);
   if(!r.life) h += `<div class="row"><div></div><div><p class="shadow">Agrega la fecha de nacimiento para ver el camino de vida, el número de la suerte y tu año personal.</p></div></div>`;
+  h += vidaRealHTML(r, getAccion().actual);
   out.innerHTML = h;
 }
 
 document.getElementById("results").addEventListener("click",e=>{ const i=e.target.id; if(i==="pdfCarta") pdfCarta("share",e.target); else if(i==="dlCarta") pdfCarta("download",e.target); else if(i==="prCarta") printCarta(); });
+document.getElementById("results").addEventListener("click",e=>{ const b=e.target.closest("[data-elegir]"); if(b && !b.disabled) chooseAccion(b.dataset.elegir); });
 
 /* ---------- PERFILES GUARDADOS ---------- */
 const KEY="numerologia_perfiles";
@@ -704,17 +823,19 @@ function paintSaved(){
 }
 document.getElementById("saved").addEventListener("click",e=>{
   const t=e.target, list=getSaved();
-  if(t.id==="saveBtn"){ const n=nombre.value.trim(); const f=list.filter(p=>p.n!==n); f.unshift({n,f:fecha.value}); setSaved(f.slice(0,12)); paintSaved(); }
-  else if(t.dataset.i){ const p=list[+t.dataset.i]; nombre.value=p.n; fecha.value=p.f||""; render(); paintSaved(); }
+  if(t.id==="saveBtn"){ const n=nombre.value.trim(), n2=nombreUso.value.trim(); const f=list.filter(p=>p.n!==n); f.unshift({n,f:fecha.value,n2:n2||undefined}); setSaved(f.slice(0,12)); paintSaved(); }
+  else if(t.dataset.i){ const p=list[+t.dataset.i]; nombre.value=p.n; fecha.value=p.f||""; nombreUso.value=p.n2||""; render(); paintSaved(); }
   else if(t.dataset.del){ list.splice(+t.dataset.del,1); setSaved(list); paintSaved(); }
 });
 
-const nombre=document.getElementById("nombre"), fecha=document.getElementById("fecha");
+const nombre=document.getElementById("nombre"), fecha=document.getElementById("fecha"), nombreUso=document.getElementById("nombreUso");
 nombre.addEventListener("input",()=>{render();paintSaved()});
 fecha.addEventListener("input",render);
+nombreUso.addEventListener("input",render);
 
 /* ---------- NÚMEROS REPETIDOS ---------- */
 const mirror=document.getElementById("mirror"), mOut=document.getElementById("mirrorOut");
+document.getElementById("espejo").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(b) goTab(b.dataset.go); });
 const quickList=["111","222","333","444","555","777","888","999","1010","1111","1212","1234"];
 document.getElementById("quick").innerHTML = quickList.map(q=>`<button class="chip" data-q="${q}" type="button">${q}</button>`).join("");
 document.getElementById("quick").addEventListener("click",e=>{ if(e.target.dataset.q){ mirror.value=e.target.dataset.q; showMirror(); }});
@@ -741,7 +862,7 @@ function showMirror(){
 /* ---------- COMPATIBILIDAD ---------- */
 const AFIN={1:{n:[1,5,7],c:[2,3,9]},2:{n:[2,4,8],c:[1,3,6,9]},3:{n:[3,6,9],c:[1,2,5]},4:{n:[2,4,8],c:[6,7]},5:{n:[1,5,7],c:[3,9]},6:{n:[3,6,9],c:[2,4,8]},7:{n:[1,5,7],c:[4,9]},8:{n:[2,4,8],c:[6]},9:{n:[3,6,9],c:[1,2,5,7]}};
 const rel=(a,b)=>{a=root(a);b=root(b);return AFIN[a].n.includes(b)?"nat":AFIN[a].c.includes(b)?"comp":"ret";};
-const REL={nat:["Afinidad natural",100,"b-nat"],comp:["Se complementan",72,"b-comp"],ret:["Relación retadora",45,"b-ret"]};
+const REL={nat:["Afinidad natural",100,"b-nat"],comp:["Energías complementarias",72,"b-comp"],ret:["Diferencias que requieren comunicación",45,"b-ret"]};
 const RELTXT={
  life:{nat:"Sus caminos de vida vibran en la misma frecuencia: comparten ritmo y visión, y se entienden sin tanto esfuerzo. El cuidado está en no reforzar juntos las mismas sombras.",
        comp:"Sus caminos de vida se complementan: cada uno aporta lo que al otro le falta. Funciona muy bien cuando valoran esa diferencia en vez de querer cambiarla.",
@@ -764,14 +885,20 @@ function renderCompat(){
   if(a.expr&&b.expr) parts.push([a.expr.n,b.expr.n,.2]);
   const w=parts.reduce((s,p)=>s+p[2],0);
   const pct=Math.round(parts.reduce((s,p)=>s+REL[rel(p[0],p[1])][1]*p[2],0)/w);
-  const lbl=pct>=85?"Conexión muy fluida":pct>=65?"Buena compatibilidad":"Un vínculo de aprendizaje";
+  const lbl=pct>=85?"Conexión muy fluida":pct>=65?"Energías que se acompañan bien":"Áreas potenciales de aprendizaje";
   const n1=p1n.value.trim().split(" ")[0]||"Persona 1", n2=p2n.value.trim().split(" ")[0]||"Persona 2";
-  let h=`<div class="score"><span class="pct">${pct}%</span><span class="lbl">${lbl}</span></div><div class="meter"><i style="width:${pct}%"></i></div>
+  let h=`<h3 style="font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:0 0 4px">Índice simbólico de afinidad</h3>
+    <div class="disclaimer">Este índice se genera mediante reglas interpretativas de esta aplicación. No mide científicamente la calidad, duración o futuro de una relación.</div>
+    <div class="score"><span class="pct">${pct}%</span><span class="lbl">${lbl}</span></div><div class="meter"><i style="width:${pct}%"></i></div>
     <p class="hint">${esc(n1)} y ${esc(n2)}. El camino de vida pesa la mitad del resultado; el alma y la expresión, el resto.</p>`;
   h+=vsRow("life","Camino de vida",a.life.n,b.life.n);
   if(a.soul&&b.soul) h+=vsRow("soul","Deseo del alma",a.soul.n,b.soul.n);
   if(a.expr&&b.expr) h+=vsRow("expr","Expresión",a.expr.n,b.expr.n);
   if(!(a.soul&&b.soul)) h+=`<p class="hint" style="margin-top:14px">Agregá los nombres completos para comparar también el alma y la expresión.</p>`;
+  h+=`<div class="synth" style="margin-top:16px"><h3>Para la comunicación y la convivencia</h3>
+    <p><strong>${esc(n1)}:</strong> ${VIDA[a.life.n].l}</p>
+    <p><strong>${esc(n2)}:</strong> ${VIDA[b.life.n].l}</p>
+    <p class="hint" style="margin-top:8px">Estas sugerencias son para conversar límites y formas de colaborar, no una indicación de si conviene iniciar o terminar una relación.</p></div>`;
   h+=`<div class="pdfbtns" style="margin-top:22px"><button class="btn" type="button" id="pdfCompat">Compartir PDF</button><button class="btn alt" type="button" id="dlCompat">Descargar</button><button class="chip" type="button" id="prCompat">Imprimir</button></div>`;
   out.innerHTML=h;
 }
@@ -872,6 +999,121 @@ document.querySelectorAll(".quickp").forEach(box=>box.addEventListener("click",e
 paintMatrix(); paintQuickP();
 
 /* ---------- CÓDIGOS ---------- */
+/* ==================== NOMBRE DE NACIMIENTO VS NOMBRE DE USO ==================== */
+function domNum(name){
+  const L=clean(name||"").split("").filter(Boolean); if(!L.length) return null;
+  const c={}; L.forEach(x=>c[VAL[x]]=(c[VAL[x]]||0)+1);
+  return +Object.keys(c).sort((a,b)=>c[b]-c[a])[0];
+}
+function cmpRow(label,a,b){
+  const same = a===b;
+  return `<div class="cmp-row"><span class="cmp-lbl">${label}</span><span class="cmp-n o">${a??"—"}</span><span class="cmp-arrow">${same?"= igual":"→ cambia"}</span><span class="cmp-n h">${b??"—"}</span></div>`;
+}
+function nombresHTML(name1, name2, date){
+  if(!name2 || !name2.trim()) return "";
+  const r1=calc(name1,date), r2=calc(name2,date);
+  const rows = [
+    ["Expresión", r1.expr&&r1.expr.n, r2.expr&&r2.expr.n],
+    ["Deseo del alma", r1.soul&&r1.soul.n, r2.soul&&r2.soul.n],
+    ["Personalidad", r1.pers&&r1.pers.n, r2.pers&&r2.pers.n],
+    ["Número dominante", domNum(name1), domNum(name2)]
+  ];
+  const k1=(r1.missing||[]).join(", ")||"ninguna", k2=(r2.missing||[]).join(", ")||"ninguna";
+  return `<div class="cmp-box"><h3>Tu nombre de origen y el nombre que utilizás hoy</h3>
+    <p>El nombre de nacimiento representa, dentro de la numerología, tu configuración de origen. El nombre que utilizás habitualmente refleja la energía con la que actualmente te presentás y te relacionás con el mundo. Ninguno invalida al otro: juntos pueden mostrar distintas facetas de tu identidad.</p>
+    <div class="cmp-foot"><span>${esc(name1)}</span><span>${esc(name2)}</span></div>
+    ${rows.map(x=>cmpRow(x[0],x[1],x[2])).join("")}
+    <div class="cmp-row"><span class="cmp-lbl">Lecciones kármicas</span><span class="cmp-n o" style="font-size:.85rem;font-family:var(--sans)">${k1}</span><span class="cmp-arrow">→</span><span class="cmp-n h" style="font-size:.85rem;font-family:var(--sans)">${k2}</span></div>
+    <p class="hint" style="margin-top:10px">El camino de vida no cambia: depende solo de tu fecha de nacimiento. Lo que ves aquí es cómo se expresa tu identidad de una forma o de otra, no cuál es "la correcta".</p></div>`;
+}
+
+/* ==================== LLEVA TU CARTA A LA VIDA REAL ==================== */
+const ACCION={
+ 1:{f:"Iniciativa y capacidad de decidir rápido.",s:"Actuar sin consultar, imponerte, o abandonar por impaciencia.",p:"¿Qué decisión estoy posponiendo por miedo a equivocarme?",a:"Tomar hoy una decisión pequeña que vengo aplazando, sin pedir permiso.",g:"Actué sin esperar la aprobación de nadie y me sentí bien con eso."},
+ 2:{f:"Escucha, diplomacia y capacidad de sostener acuerdos.",s:"Callar lo que necesito por miedo al conflicto.",p:"¿Qué le estoy pidiendo, sin usar palabras, a alguien que no puede adivinarlo?",a:"Decir en voz alta una necesidad concreta a la persona indicada.",g:"Lo dije con calma y sin disculparme de más."},
+ 3:{f:"Creatividad y capacidad de comunicar con gracia.",s:"Dispersarme entre muchas ideas sin terminar ninguna.",p:"¿Qué proyecto o idea tengo a medias por falta de foco?",a:"Elegir una sola cosa creativa y darle un cierre esta semana.",g:"Terminé algo y lo mostré, aunque no estuviera perfecto."},
+ 4:{f:"Orden, disciplina y capacidad de construir sistemas duraderos.",s:"Rigidez o control excesivo sobre los detalles.",p:"¿Dónde estoy sacrificando flexibilidad por mantener todo bajo control?",a:"Delegar o simplificar una tarea que vengo haciendo siempre igual.",g:"Solté el control de una tarea y funcionó de todas formas."},
+ 5:{f:"Adaptabilidad y apertura al cambio.",s:"Huir del compromiso o dispersarte en exceso.",p:"¿Qué cambio estoy evitando por miedo a perder algo conocido?",a:"Probar algo nuevo esta semana, aunque sea pequeño.",g:"Hice algo distinto a mi rutina y no pasó nada malo."},
+ 6:{f:"Cuidado, responsabilidad y sentido de comunidad.",s:"Sobrecargarte cuidando a otros y descuidarte a vos misma.",p:"¿A quién estoy cuidando hoy a costa de mi propio descanso?",a:"Reservar un espacio de la semana solo para vos, sin negociarlo.",g:"Sostuve ese espacio aunque alguien más lo pidió."},
+ 7:{f:"Capacidad de análisis y conexión con tu mundo interior.",s:"Aislarte o sobre-analizar en vez de actuar.",p:"¿Qué decisión estoy posponiendo con la excusa de \"pensarlo más\"?",a:"Dedicar 15 minutos de silencio o reflexión antes de decidir algo pendiente.",g:"Tomé la decisión después de reflexionar, sin seguir dándole vueltas."},
+ 8:{f:"Capacidad de gestión y materialización.",s:"Regalar el trabajo, temer cobrar o confundir autoridad con control.",p:"¿Dónde estoy entregando valor sin reconocerlo económicamente?",a:"Poner precio a una capacidad o negociar una condición concreta.",g:"Expresar mi precio o petición sin disculparme ni minimizar mi aporte."},
+ 9:{f:"Visión amplia y capacidad de dar sin esperar nada a cambio.",s:"Cargar con lo que ya no te corresponde o postergar el cierre de un ciclo.",p:"¿Qué estoy sosteniendo que ya cumplió su propósito en mi vida?",a:"Soltar, donar o cerrar formalmente algo que ya terminó.",g:"Sentí alivio, no culpa, después de soltarlo."},
+ 11:{f:"Intuición aguda y capacidad de inspirar a otras personas.",s:"Ansiedad o desgaste nervioso por vivir todo con intensidad.",p:"¿Estoy cuidando mi energía tanto como cuido mis ideas?",a:"Elegir una práctica de descanso o conexión intuitiva (meditar, escribir, caminar) y hacerla hoy.",g:"Bajé un poco la intensidad y seguí funcionando igual de bien."},
+ 22:{f:"Capacidad de convertir ideas grandes en estructuras reales.",s:"Sentir que nada es suficiente o paralizarte por la magnitud del proyecto.",p:"¿Qué paso pequeño, y solo uno, puedo dar hoy hacia ese proyecto grande?",a:"Definir y ejecutar ese único paso pequeño, sin esperar tener todo resuelto.",g:"Avancé una parte concreta, aunque el proyecto completo siga sin terminar."},
+ 33:{f:"Capacidad de enseñar y sanar desde el amor incondicional.",s:"Sacrificarte de más o cargar con el dolor ajeno.",p:"¿Estoy dando desde la abundancia o desde el vacío?",a:"Poner un límite amoroso y concreto en una relación donde das más de lo que recibís.",g:"Puse el límite y la relación no se rompió por eso."}
+};
+function accionCard(n, label, current){
+  const A=ACCION[n]; if(!A) return "";
+  const chosen = current && current.n===n && current.label===label;
+  return `<article class="accion-card ${chosen?"chosen":""}"><div class="acc-h"><span class="kc">${n}</span><div><div class="karma-k">${esc(label)}</div><h4>${NUM[n]?NUM[n].t:""}</h4></div></div>
+    <p><strong>Fortaleza:</strong> ${A.f}</p>
+    <p><strong>A observar:</strong> ${A.s}</p>
+    <p><strong>Pregunta:</strong> ${A.p}</p>
+    <p><strong>Acción:</strong> ${A.a}</p>
+    <p><strong>Señal de progreso:</strong> ${A.g}</p>
+    <p style="margin-top:10px"><button class="btn" type="button" data-elegir="${n}|${esc(label)}" ${chosen?"disabled":""}>${chosen?"Ya es tu acción actual":"Elegir esta acción"}</button></p></article>`;
+}
+function accionAspectos(r){
+  const list=[]; const seen=new Set();
+  const add=(n,label)=>{ if(n && ACCION[n] && !seen.has(n)){ seen.add(n); list.push([n,label]); } };
+  if(r.life) add(r.life.n,"Camino de vida");
+  if(r.expr) add(r.expr.n,"Expresión");
+  (r.missing||[]).forEach(n=>add(n,"Lección kármica "+n));
+  if(r.year) add(r.year.n,"Año personal "+r.year.cy);
+  return list;
+}
+function vidaRealHTML(r, current){
+  const asp=accionAspectos(r); if(!asp.length) return "";
+  return `<div class="synth" style="margin-top:16px"><h3>Lleva tu carta a la vida real</h3>
+    <p>A partir de tus números, elegí una acción pequeña y concreta para esta semana.</p>
+    ${asp.map(([n,label])=>accionCard(n,label,current)).join("")}</div>`;
+}
+
+/* ---- almacenamiento del plan de acción ---- */
+const ACCKEY="numerologia_accion";
+function getAccion(){ try{ const v=JSON.parse(localStorage.getItem(ACCKEY)); if(v&&typeof v==="object") return v; }catch(e){} return {actual:null,historial:[]}; }
+function setAccion(v){ try{ localStorage.setItem(ACCKEY, JSON.stringify(v)) }catch(e){} cloudPush("accion", v); }
+function chooseAccion(spec){
+  const [nStr,label]=spec.split("|"), n=+nStr, plan=getAccion();
+  if(plan.actual){ plan.historial=plan.historial||[]; plan.historial.unshift({...plan.actual, cerrado:ymd(new Date())}); }
+  plan.actual={n,label,fecha:ymd(new Date()),nota:"",estado:"pendiente"};
+  setAccion(plan); paintPlan(); paintAccionHoy();
+  const r=document.getElementById("results"); if(r) render();
+}
+function paintAccionHoy(){
+  const box=document.getElementById("hoyAccion"); if(!box) return;
+  const plan=getAccion(), a=plan.actual;
+  box.innerHTML = a ? `<div class="plan-active"><h3>Tu acción actual<span class="plan-estado">${a.estado}</span></h3>
+      <p><span class="kc kc-sm">${a.n}</span> ${esc(a.label)}: ${ACCION[a.n]?ACCION[a.n].a:""}</p>
+      <p><button class="chip" type="button" data-go="plan">Ver plan de acción</button></p></div>` : "";
+}
+const ESTADOS=["pendiente","en proceso","completada"];
+function paintPlan(){
+  const box=document.getElementById("planBox"), plan=getAccion(), a=plan.actual;
+  let h = `<p class="lead">Llevá tu carta a la vida real.</p><p style="color:var(--muted);max-width:62ch">Elegí una acción concreta desde "Mi carta" y hacé seguimiento acá.</p>`;
+  if(!a){ h+=`<div class="empty" style="padding:16px 0">Todavía no elegiste una acción. <button class="chip" type="button" data-go="carta">Ir a Mi carta</button></div>`; }
+  else{
+    h += `<div class="plan-active"><h3>${esc(a.label)} <span class="kc kc-sm">${a.n}</span><span class="plan-estado">${a.estado}</span></h3>
+      <p><strong>Acción:</strong> ${ACCION[a.n]?ACCION[a.n].a:""}</p>
+      <p><strong>Señal de progreso:</strong> ${ACCION[a.n]?ACCION[a.n].g:""}</p>
+      <p class="hint">Iniciada el ${fmtDate(a.fecha)}.</p>
+      <label for="planEstado">Estado</label><select id="planEstado">${ESTADOS.map(e=>`<option value="${e}" ${e===a.estado?"selected":""}>${cap1(e)}</option>`).join("")}</select>
+      <label for="planNota" style="margin-top:10px">Nota</label><input id="planNota" value="${esc(a.nota||"")}" placeholder="Cómo va, qué notaste…">
+      <p style="margin-top:10px"><button class="btn" type="button" id="planGuardar">Guardar</button> <button class="chip" type="button" data-go="carta">Elegir otra acción</button></p></div>`;
+  }
+  if(plan.historial && plan.historial.length){
+    h += `<div class="plan-hist"><h3 class="sub">Acciones anteriores</h3>${plan.historial.slice(0,10).map(x=>
+      `<div class="plan-hist-item"><span class="kc kc-sm">${x.n}</span><div><strong>${esc(x.label)}</strong> — ${x.estado}${x.nota?`<br><span class="hint">${esc(x.nota)}</span>`:""}</div></div>`).join("")}</div>`;
+  }
+  box.innerHTML=h;
+}
+document.getElementById("planBox").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.go) goTab(b.dataset.go);
+  if(b.id==="planGuardar"){ const plan=getAccion(); if(plan.actual){ plan.actual.estado=document.getElementById("planEstado").value; plan.actual.nota=document.getElementById("planNota").value.trim(); setAccion(plan); paintPlan(); paintAccionHoy(); } }
+});
+document.getElementById("hoyAccion").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(b) goTab(b.dataset.go); });
+
 const TEMAS=["Dinero","Trabajo y negocios","Abrecaminos","Protección","Amor y relaciones","Alma y emociones","Espiritualidad","Armonía","Otro"];
 const RAW=[
 ["Dinero","318798","Abundancia financiera"],
@@ -985,6 +1227,7 @@ function paintFilters(){
   document.getElementById("filters").innerHTML = ["Todos",...TEMAS].map(t=>`<button class="chip" type="button" data-t="${t}" aria-pressed="${t===temaSel}">${t}</button>`).join("");
 }
 document.getElementById("filters").addEventListener("click",e=>{ if(e.target.dataset.t){ temaSel=e.target.dataset.t; paintFilters(); paintCodes(); }});
+document.getElementById("codigos").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(b) goTab(b.dataset.go); });
 function paintCodes(){
   const q=document.getElementById("codeSearch").value.trim().toLowerCase().replace(/\s/g,"");
   const list=getCodes().filter(c=>(temaSel==="Todos"||c.t===temaSel) && (!q || (c.n+c.t+c.d+c.s).toLowerCase().replace(/\s/g,"").includes(q)));
@@ -1080,6 +1323,16 @@ function setAcctBtn(state){
   b.textContent = !sb ? "Cuenta: sin conexión" : !sbUser ? "Cuenta: sin sincronizar" : state==="error" ? "Cuenta: error al guardar" : "Cuenta: sincronizada";
 }
 function mergeBy(cloud, local, key){ const seen=new Set(cloud.map(x=>x[key])); return cloud.concat(local.filter(x=>!seen.has(x[key]))); }
+function mergeAccion(cloud, local){
+  if(!cloud) return local;
+  if(!local || !local.actual) return cloud;
+  if(!cloud.actual) return {actual:local.actual, historial:mergeBy(cloud.historial||[], local.historial||[], "fecha")};
+  const cloudNewer = new Date(cloud.actual.fecha) >= new Date(local.actual.fecha);
+  const kept = cloudNewer?cloud.actual:local.actual, discarded = cloudNewer?local.actual:cloud.actual;
+  const hist = mergeBy(cloud.historial||[], local.historial||[], "fecha");
+  if(discarded && discarded.fecha!==kept.fecha && !hist.some(h=>h.fecha===discarded.fecha)) hist.unshift(discarded);
+  return {actual:kept, historial:hist};
+}
 async function cloudPull(){
   if(!sb||!sbUser) return;
   const {data,error}=await sb.from(SB_TABLE).select("tipo,datos");
@@ -1091,22 +1344,48 @@ async function cloudPull(){
   if(cloud.diario369){ const c=cloud.diario369;
     if(dia && dia.intent===c.intent && dia.start===c.start){ const m={...c.marks}; Object.keys(dia.marks).forEach(k=>{ m[k]=(m[k]||[false,false,false]).map((v,i)=>v||dia.marks[k][i]); }); dia={...c,marks:m}; }
     else dia=c; }
-  setSaved(perf); setCodes(cods); if(dia) setD(dia);   // sube la versión unificada
-  const yo = cloud.yo || getYo() || null; if(yo) setYo(yo);
-  setBita(Object.assign({}, cloud.bitacora||{}, getBita()));
-  const casos = cloud.casos ? mergeBy(cloud.casos, getCasos(), "id") : getCasos(); setCasos(casos);
-  paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia(); if(typeof paintCasos==="function") paintCasos(); setAcctBtn("ok");
+  const yo = cloud.yo || getYo() || null;
+  const casos = cloud.casos ? mergeBy(cloud.casos, getCasos(), "id") : getCasos();
+  const bita = Object.assign({}, cloud.bitacora||{}, getBita());
+  const accion = mergeAccion(cloud.accion, getAccion());
+  const apr = Object.assign({}, cloud.aprendizaje||{}, getApr());
+  // aplicar todo sin re-emitir escrituras a la nube (ya vienen de ahí, o son la fusión que se sube una sola vez abajo)
+  cloudMuted = true;
+  setSaved(perf); setCodes(cods); if(dia) setD(dia);
+  if(yo) setYo(yo);
+  setBita(bita); setCasos(casos); setAccion(accion); setApr(apr);
+  cloudMuted = false;
+  // subir la versión ya fusionada, una sola vez por tipo
+  cloudPush("perfiles",perf); cloudPush("codigos",cods); if(dia) cloudPush("diario369",dia);
+  if(yo) cloudPush("yo",yo); cloudPush("bitacora",bita); cloudPush("casos",casos); cloudPush("accion",accion); cloudPush("aprendizaje",apr);
+  paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia();
+  if(typeof paintCasos==="function") paintCasos();
+  if(typeof paintPlan==="function") paintPlan();
+  if(typeof paintAprender==="function") paintAprender();
+  setAcctBtn("ok");
 }
 function acctMsg(t){ document.getElementById("acctMsg").textContent=t||""; }
+const PRIVACY_KEYS = ["numerologia_perfiles","numerologia_codigos_v2","numerologia_codigos","numerologia_369","numerologia_yo","numerologia_bitacora","numerologia_casos","numerologia_accion","numerologia_aprendizaje"];
+function privacyHTML(){
+  return `<h3 style="font-size:1.2rem;margin-top:18px">Privacidad y tus datos</h3>
+    <p class="hint">Lo que escribís (cartas, códigos, diario, bitácora, casos, plan de acción, tu avance en Aprender) se guarda primero en este navegador. Si iniciás sesión, además se sincroniza en la nube para verlo en otros dispositivos.</p>
+    <div class="disclaimer soft">Antes de registrar información de otra persona en Casos, asegurate de contar con su autorización.</div>
+    <div class="acct-acts">
+      <button class="chip" type="button" id="pExport">Exportar mis datos (JSON)</button>
+      <button class="chip" type="button" id="pWipeLocal">Borrar datos locales</button>
+      ${sbUser?`<button class="chip x" type="button" id="pWipeCloud">Eliminar datos sincronizados</button>`:""}
+    </div>
+    <p class="hint" style="margin-top:10px">Eliminar por completo tu cuenta de acceso (correo y contraseña) requiere una acción administrativa en el panel de Supabase; esta app no puede borrarla por sí sola.</p>`;
+}
 function paintAcct(){
   const body=document.getElementById("acctBody");
-  if(!sb){ body.innerHTML=`<p>La sincronización necesita internet y funciona desde tu página de GitHub. Aquí tus datos se guardan solo en este navegador.</p>`; return; }
-  if(sbUser){ body.innerHTML=`<p>Conectada como <strong>${esc(sbUser.email||"")}</strong>. Tus cartas, códigos y diario 369 se guardan en la nube y se comparten entre tus dispositivos.</p>
-    <div class="acct-acts"><button class="btn" type="button" id="aSync">Sincronizar ahora</button><button class="btn alt" type="button" id="aOut">Salir</button></div>`; return; }
+  if(!sb){ body.innerHTML=`<p>La sincronización necesita internet y funciona desde tu página de GitHub. Aquí tus datos se guardan solo en este navegador.</p>` + privacyHTML(); return; }
+  if(sbUser){ body.innerHTML=`<p>Conectada como <strong>${esc(sbUser.email||"")}</strong>. Tus cartas, códigos, diario, bitácora, casos, plan de acción y avance en Aprender se guardan en la nube y se comparten entre tus dispositivos.</p>
+    <div class="acct-acts"><button class="btn" type="button" id="aSync">Sincronizar ahora</button><button class="btn alt" type="button" id="aOut">Salir</button></div>` + privacyHTML(); return; }
   body.innerHTML=`<p>Entrá con tu correo para tener tus datos en el celular y la computadora.</p>
     <label for="aMail">Correo</label><input id="aMail" type="email" autocomplete="email">
     <label for="aPass">Contraseña</label><input id="aPass" type="password" autocomplete="current-password" minlength="6">
-    <div class="acct-acts"><button class="btn" type="button" id="aIn">Entrar</button><button class="btn alt" type="button" id="aUp">Crear cuenta</button></div>`;
+    <div class="acct-acts"><button class="btn" type="button" id="aIn">Entrar</button><button class="btn alt" type="button" id="aUp">Crear cuenta</button></div>` + privacyHTML();
 }
 document.getElementById("acctBtn").addEventListener("click",()=>{ paintAcct(); acctMsg(""); document.getElementById("acct").showModal(); });
 document.getElementById("acctBody").addEventListener("click",async e=>{
@@ -1123,6 +1402,26 @@ document.getElementById("acctBody").addEventListener("click",async e=>{
   }
   if(id==="aSync"){ acctMsg("Sincronizando…"); await cloudPull(); acctMsg("Todo al día."); }
   if(id==="aOut"){ await sb.auth.signOut(); acctMsg("Sesión cerrada. Tus datos siguen en este navegador."); }
+  if(id==="pExport"){
+    const datos = {perfiles:getSaved(), codigos:getCodes(), diario369:getD(), yo:getYo(), bitacora:getBita(), casos:getCasos(), accion:getAccion(), aprendizaje:getApr()};
+    saveBlob(new Blob([JSON.stringify(datos,null,2)],{type:"application/json"}), "numerologia-datos-"+ymd(new Date())+".json");
+  }
+  if(id==="pWipeLocal"){
+    if(confirm("¿Borrar todos tus datos guardados en este navegador? Esto no se puede deshacer. Si tenés cuenta y sincronizás, tus datos en la nube no se ven afectados hasta la próxima sincronización.")){
+      PRIVACY_KEYS.forEach(k=>{ try{ localStorage.removeItem(k) }catch(e){} });
+      paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia();
+      if(typeof paintCasos==="function") paintCasos();
+      if(typeof paintPlan==="function") paintPlan();
+      if(typeof paintAprender==="function") paintAprender();
+      acctMsg("Datos locales borrados.");
+    }
+  }
+  if(id==="pWipeCloud"){
+    if(sbUser && confirm("¿Eliminar todos tus datos sincronizados en la nube? Tus datos locales en este navegador no se borran.")){
+      const {error}=await sb.from(SB_TABLE).delete().eq("user_id", sbUser.id);
+      acctMsg(error?("No pude borrar: "+error.message):"Datos sincronizados eliminados.");
+    }
+  }
 });
 window.addEventListener("load",()=>{
   try{ if(window.supabase && SB_KEY) sb=window.supabase.createClient(SB_URL,SB_KEY); }catch(e){ sb=null; }
@@ -1135,6 +1434,56 @@ window.addEventListener("load",()=>{
   });
 });
 
+/* ==================== LECTURA GUIADA ==================== */
+function guidedSteps(r, name){
+  const steps=[];
+  if(r.life) steps.push({t:"Camino de vida", b:`<div class="row"><div class="big">${r.life.n}</div><div><h3>${NUM[r.life.n].t}</h3><p>${NUM[r.life.n].d}</p><p class="calc">${r.life.calc}</p></div></div><p class="lead" style="font-size:1.1rem;margin-top:14px">¿Sentís que esto describe tu propósito?</p>`});
+  if(r.expr) steps.push({t:"Expresión", b:`<div class="row"><div class="big">${r.expr.n}</div><div><h3>${NUM[r.expr.n].t}</h3><p>${NUM[r.expr.n].d}</p><p class="calc">${r.expr.calc}</p></div></div><p class="lead" style="font-size:1.1rem;margin-top:14px">¿Reconocés estos talentos en vos?</p>`});
+  if(r.soul) steps.push({t:"Deseo del alma", b:`<div class="row"><div class="big">${r.soul.n}</div><div><h3>${NUM[r.soul.n].t}</h3><p>${NUM[r.soul.n].d}</p><p class="calc">${r.soul.calc}</p></div></div><p class="lead" style="font-size:1.1rem;margin-top:14px">¿Es esto lo que tu corazón busca de verdad?</p>`});
+  if(r.pers) steps.push({t:"Personalidad", b:`<div class="row"><div class="big">${r.pers.n}</div><div><h3>${NUM[r.pers.n].t}</h3><p>${NUM[r.pers.n].d}</p><p class="calc">${r.pers.calc}</p></div></div><p class="lead" style="font-size:1.1rem;margin-top:14px">¿Es así como te ven los demás a primera vista?</p>`});
+  const tens=selfTensions(r);
+  if(tens.length) steps.push({t:"Coincidencias y tensiones de la carta", b: tens.map(x=>`<p>${x}</p>`).join("")+`<p class="lead" style="font-size:1.1rem;margin-top:14px">¿Notás estas coincidencias o tensiones en tu día a día?</p>`});
+  if(r.mat) steps.push({t:"Madurez", b:`<div class="row"><div class="big">${r.mat.n}</div><div><h3>${NUM[r.mat.n].t}</h3><p>La energía que se despierta con más fuerza después de los 40 años.</p><p>${r.mat.calc}</p></div></div>`});
+  { const miss=r.missing||[];
+    const kb = miss.length
+      ? `<div class="karma-sum">${miss.map(n=>`<span class="kc kc-sm">${n}</span>`).join("")}</div><div class="karma-grid">${miss.map(n=>`<article class="karma"><div class="karma-h"><span class="kc">${n}</span><div><div class="karma-k">Lección kármica ${n}</div><h4>${KARMA[n].t}</h4></div></div><p>${KARMA[n].d}</p></article>`).join("")}</div>`
+      : `<p class="karma-none">${KARMA_NONE}</p>`;
+    steps.push({t:"Lecciones kármicas", b: `<p>${KARMA_INTRO}</p>${kb}` }); }
+  if(r.year) steps.push({t:"Ciclo actual", b:`<div class="row"><div class="big">${r.year.n}</div><div><h3>Año personal ${r.year.cy}</h3><p>${PERSONAL_YEAR[r.year.n]}</p><p><strong>Qué hacer:</strong> ${PY_DO[r.year.n]}</p></div></div>`});
+  const asp=accionAspectos(r);
+  steps.push({t:"Plan de acción", b: asp.length? asp.slice(0,2).map(([n,l])=>accionCard(n,l,getAccion().actual)).join("") : `<p>No encontramos aspectos suficientes para sugerir una acción todavía.</p>` });
+  const resumen=lectura(r,name);
+  steps.push({t:"Resumen de tu lectura guiada", b: resumen.length? resumen.map(x=>`<p>${x}</p>`).join("") : "<p>Agregá más datos en Mi carta para un resumen más completo.</p>"});
+  return steps;
+}
+let gSteps=[], gIdx=0;
+function openGuiada(){
+  const name=nombre.value.trim(), date=fecha.value;
+  if(!date || !name){ document.getElementById("guiadaMsg").textContent="Necesitás el nombre y la fecha de nacimiento en Mi carta para iniciar la lectura guiada."; return; }
+  document.getElementById("guiadaMsg").textContent="";
+  gSteps=guidedSteps(calc(name,date), name); gIdx=0;
+  renderGuiada();
+  document.getElementById("guiada").showModal();
+}
+function renderGuiada(){
+  const s=gSteps[gIdx], body=document.getElementById("guiadaCuerpo");
+  body.innerHTML=`<div class="hint">Paso ${gIdx+1} de ${gSteps.length}</div>
+    <h3 id="guiadaTitulo" style="font-family:var(--serif);font-size:1.6rem;font-weight:600;margin:4px 0 14px">${s.t}</h3>
+    ${s.b}
+    <div class="acct-acts" style="margin-top:20px">
+      ${gIdx>0?'<button class="chip" type="button" id="gPrev">Atrás</button>':''}
+      <button class="chip" type="button" id="gExit">Salir</button>
+      ${gIdx<gSteps.length-1?'<button class="btn" type="button" id="gNext">Adelante</button>':'<button class="btn" type="button" id="gFin">Finalizar</button>'}
+    </div>`;
+}
+document.getElementById("guiadaCuerpo").addEventListener("click",e=>{
+  if(e.target.id==="gNext" && gIdx<gSteps.length-1){ gIdx++; renderGuiada(); }
+  if(e.target.id==="gPrev" && gIdx>0){ gIdx--; renderGuiada(); }
+  if(e.target.id==="gExit"||e.target.id==="gFin"){ document.getElementById("guiada").close(); }
+  const b=e.target.closest("[data-elegir]"); if(b && !b.disabled){ chooseAccion(b.dataset.elegir); renderGuiada(); }
+});
+document.getElementById("guiadaBtn").addEventListener("click", openGuiada);
+
 /* ---------- IMPRESIÓN / PDF ---------- */
 const fmtDate = d => { if(!d) return ""; const [y,m,dd]=d.split("-").map(Number); return new Date(y,m-1,dd).toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"}); };
 const todayStr = () => new Date().toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"});
@@ -1146,12 +1495,13 @@ function doPrint(html, title){
   setTimeout(()=>{ try{ window.print(); }catch(e){ alert("Tu navegador no permitió abrir la impresión. Probá desde la versión publicada en GitHub."); } document.title=old; },60);
 }
 function cartaHTML(){
-  const name=nombre.value.trim(), date=fecha.value, r=calc(name,date), lec=lectura(r,name);
+  const name=nombre.value.trim(), date=fecha.value, name2=nombreUso.value.trim(), r=calc(name,date), lec=lectura(r,name);
   const cells=[["Camino de vida",r.life],["Expresión",r.expr],["Deseo del alma",r.soul],["Personalidad",r.pers],["Día de nacimiento",r.bday],["Año personal "+(r.year?r.year.cy:""),r.year]].filter(c=>c[1]);
   let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Carta numerológica</div><h1>${esc(name||"Sin nombre")}</h1>
     <div class="rp-sub">${date?`Nacimiento: ${fmtDate(date)}. `:""}Generada el ${todayStr()}.</div></div>
     <div class="rp-core">${cells.map(c=>`<div class="rp-cell"><b>${c[1].n}</b><span>${c[0]}</span></div>`).join("")}</div>`;
   if(lec.length) h+=`<div class="rp-box"><h2>Lectura integrada</h2>${lec.map(x=>`<p>${x}</p>`).join("")}</div>`;
+  h += nombresHTML(name, name2, date).replace('class="cmp-box"','class="rp-sec"');
   if(r.life) h+=`<div class="rp-sec"><h2>Número de la suerte: <em>${r.life.n}</em></h2><p>Días favorables de cada mes: ${luckyDays(r.life.n).join(", ")}.</p></div>`;
   if(r.life) h+=rpNum(r.life.n,"Camino de vida","Tu propósito principal y las lecciones de esta vida.",true);
   if(r.expr) h+=rpNum(r.expr.n,"Expresión","Tus talentos naturales y cómo te proyectás en el mundo.",true);
@@ -1171,8 +1521,9 @@ function compatHTML(){
   const n1=p1n.value.trim()||"Persona 1", n2=p2n.value.trim()||"Persona 2";
   const scoreEl=document.querySelector("#compatOut .pct"), lblEl=document.querySelector("#compatOut .lbl");
   const sec=(t,x,y,key)=>{ const k=rel(x,y); return `<div class="rp-sec"><h2>${t}: <em>${x} y ${y}</em>, ${REL[k][0].toLowerCase()}</h2><p><strong>${NUM[x].t}</strong> con <strong>${NUM[y].t.toLowerCase()}</strong>. ${RELTXT[key][k]}</p></div>`; };
-  let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Compatibilidad numerológica</div><h1>${esc(n1.split(" ")[0])} y ${esc(n2.split(" ")[0])}</h1>
+  let h=`<div class="rp"><div class="rp-h"><div class="rp-k">Índice simbólico de afinidad</div><h1>${esc(n1.split(" ")[0])} y ${esc(n2.split(" ")[0])}</h1>
     <div class="rp-sub">Generada el ${todayStr()}.</div></div>
+    <p class="rp-muted">Este índice se genera mediante reglas interpretativas de esta aplicación. No mide científicamente la calidad, duración o futuro de una relación.</p>
     <div class="rp-score"><b>${scoreEl?scoreEl.textContent:""}</b><div>${lblEl?lblEl.textContent:""}</div></div>
     <div class="rp-core" style="grid-template-columns:1fr 1fr">
       <div class="rp-cell"><b>${a.life.n}</b><span>${esc(n1)}${p1f.value?"<br>"+fmtDate(p1f.value):""}</span></div>
@@ -1240,11 +1591,10 @@ const ACT={
  descanso:{t:"Descansar o hacer un retiro",i:[7],b:[2,9],x:[]}
 };
 function verdict(act, pd){ const a=ACT[act]; return a.i.includes(pd)?"ideal":a.b.includes(pd)?"bien":a.x.includes(pd)?"evitar":"neutro"; }
-const VERD={ideal:["Muy favorable","v-ideal"],bien:["Favorable","v-bien"],neutro:["Neutral","v-neutro"],evitar:["Mejor otro día","v-evitar"]};
+const VERD={ideal:["Muy favorable","v-ideal"],bien:["Favorable","v-bien"],neutro:["Neutral","v-neutro"],evitar:["Energía menos afín","v-evitar"]};
 
 /* ---------- PERFIL ---------- */
 function yoLife(yo){ const r=calc(yo.n||"", yo.f); return r.life?r.life.n:null; }
-function goTab(id){ const b=document.querySelector(`nav button[data-tab="${id}"]`); if(b) b.click(); }
 function paintPerfil(){
   const box=document.getElementById("hoyPerfil"), yo=getYo();
   if(yo && yo.f){
@@ -1306,7 +1656,7 @@ function paintBuenDia(){
   const why={ideal:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) es de los que más apoyan esta actividad.`,
     bien:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) acompaña bien esta actividad.`,
     neutro:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) no la impulsa ni la frena: depende más de tu preparación.`,
-    evitar:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) pide otra cosa: ${DIA[pd].f.toLowerCase()} Si podés elegir, mirá las fechas sugeridas.`}[v];
+    evitar:`Tu día personal ${pd} (${DIA[pd].t.toLowerCase()}) pide otra cosa: ${DIA[pd].f.toLowerCase()} Puede requerir mayor preparación de tu parte. Si podés elegir, mirá las fechas sugeridas, y revisá también las circunstancias reales antes de decidir.`}[v];
   const best=[], today=new Date(); today.setHours(0,0,0,0);
   for(let i=0;i<=30 && best.length<6;i++){ const d=new Date(today); d.setDate(d.getDate()+i); if(verdict(act,personalFor(yo.f,d).pd)==="ideal") best.push(d); }
   for(let i=0;i<=30 && best.length<6;i++){ const d=new Date(today); d.setDate(d.getDate()+i); if(verdict(act,personalFor(yo.f,d).pd)==="bien" && !best.some(b=>+b===+d)) best.push(d); }
@@ -1315,23 +1665,38 @@ function paintBuenDia(){
     <p><strong>${ACT[act].t}</strong> el ${longDate(date)}. ${why}</p>
     <h4>Mejores fechas en los próximos 30 días</h4>
     <div class="quickp">${best.map(d=>`<button class="chip ${verdict(act,personalFor(yo.f,d).pd)==="ideal"?"chip-gold":""}" type="button" data-bd="${ymd(d)}">${d.toLocaleDateString("es-CR",{weekday:"short",day:"numeric",month:"short"})}</button>`).join("")}</div>
-    <p class="hint">Las fechas doradas son las más favorables. Es una guía para reflexionar: en decisiones de salud, dinero o legales, apoyate también en información y asesoría concreta.</p></div>`;
+    <p class="hint">Las fechas doradas son las más favorables. Es una guía para reflexionar: en decisiones de salud, dinero o legales, apoyate también en información y asesoría concreta.</p>
+    <div class="disclaimer soft">No pospongas ni tomes una decisión importante únicamente por este resultado. Considerá también fechas límite, preparación, información, costos, salud y asesoría profesional cuando corresponda.</div></div>`;
 }
 document.getElementById("bdOut").addEventListener("click",e=>{ const d=e.target.dataset.bd; if(d){ document.getElementById("bdDate").value=d; paintBuenDia(); }});
 
 /* ---------- BITÁCORA ---------- */
 const MOOD={b:["Bien","mood-b"],r:["Regular","mood-r"],d:["Difícil","mood-d"]};
+const COIN={si:["Coincidió","mood-b"],parcial:["Coincidió parcialmente","mood-r"],no:["No coincidió","mood-d"]};
+function moodButtons(kind, current){
+  return Object.keys(MOOD).map(k=>`<button class="slot mood ${MOOD[k][1]}" type="button" data-m-${kind}="${k}" aria-pressed="${current===k}"><span>${MOOD[k][0]}</span></button>`).join("");
+}
 function paintBita(){
-  const yo=getYo(); if(!yo||!yo.f) return;
-  const all=getBita(), key=ymd(new Date()), today=all[key];
+  const box=document.getElementById("bitaBox"); if(!box) return;
+  const yo=getYo();
+  if(!yo||!yo.f){ box.innerHTML=`<div class="empty" style="padding:16px 0">Primero guardá tu perfil en la pestaña Hoy. <button class="chip" type="button" data-go="hoy">Ir a Hoy</button></div>`; return; }
+  const all=getBita(), key=ymd(new Date()), today=all[key]||{};
   const entries=Object.keys(all).sort().reverse();
-  let h=`<p style="color:var(--muted);max-width:62ch">Anotá cómo te fue cada día. Con el tiempo vas a ver si tus días buenos coinciden con ciertos números: así comprobás por vos misma qué tanto te resuena.</p>
-    <div class="mood-row">${Object.keys(MOOD).map(k=>`<button class="slot mood ${MOOD[k][1]}" type="button" data-mood="${k}" aria-pressed="${today&&today.m===k}"><span>${MOOD[k][0]}</span></button>`).join("")}</div>
-    <label for="bitaNote" style="margin-top:12px">Nota del día (opcional)</label>
-    <input id="bitaNote" placeholder="Algo que pasó, cómo te sentiste…" value="${today&&today.n?esc(today.n):""}">
-    <p style="margin-top:10px"><button class="btn" type="button" id="bitaSave">Guardar el día</button> <span class="hint" id="bitaMsg"></span></p>`;
-  // patrones
-  const stats={}; entries.forEach(k=>{ const e=all[k]; (stats[e.pd]=stats[e.pd]||{b:0,r:0,d:0})[e.m]++; });
+  let h = `<p style="color:var(--muted);max-width:62ch">Anotá cómo te fue cada día. Con el tiempo vas a ver si tus días buenos coinciden con ciertos números, y si lo que la carta sugería se cumplió o no.</p>
+    <div class="bita-mini"><h3>Esta mañana</h3>
+      <label id="lblMIni">¿Cómo estás?</label><div class="mood-row" role="group" aria-labelledby="lblMIni">${moodButtons("ini", today.emocionInicial)}</div>
+      <label for="bitaEspera" style="margin-top:10px">¿Qué esperás que ocurra hoy?</label><input id="bitaEspera" value="${esc(today.espera||"")}" placeholder="Ej.: espero que la reunión salga bien">
+      <label for="bitaActividad" style="margin-top:10px">Actividad o decisión importante planeada</label><input id="bitaActividad" value="${esc(today.actividad||"")}" placeholder="Ej.: firmar el contrato">
+      <p style="margin-top:10px"><button class="btn" type="button" id="bitaSaveAM">Guardar mañana</button> <span class="hint" id="bitaMsgAM"></span></p></div>
+    <div class="bita-mini"><h3>Al finalizar el día</h3>
+      <label id="lblMFin">¿Cómo terminaste?</label><div class="mood-row" role="group" aria-labelledby="lblMFin">${moodButtons("fin", today.emocionFinal)}</div>
+      <label for="bitaOcurrio" style="margin-top:10px">¿Qué ocurrió realmente?</label><input id="bitaOcurrio" value="${esc(today.queOcurrio||"")}" placeholder="Contá qué pasó">
+      <label for="bitaCoin" style="margin-top:10px">¿La interpretación coincidió?</label>
+      <select id="bitaCoin"><option value="">Sin evaluar</option><option value="si" ${today.coincidencia==="si"?"selected":""}>Coincidió</option><option value="parcial" ${today.coincidencia==="parcial"?"selected":""}>Coincidió parcialmente</option><option value="no" ${today.coincidencia==="no"?"selected":""}>No coincidió</option></select>
+      <label for="bitaNota" style="margin-top:10px">Nota libre</label><input id="bitaNota" value="${esc(today.n||"")}" placeholder="Cualquier otra observación">
+      <p style="margin-top:10px"><button class="btn" type="button" id="bitaSavePM">Guardar cierre</button> <span class="hint" id="bitaMsgPM"></span></p></div>
+    <div class="bita-tools"><button class="chip" type="button" id="bitaCSV">Exportar CSV</button><button class="chip" type="button" id="bitaPDF">Exportar PDF</button></div>`;
+  const stats={}; entries.forEach(k=>{ const e=all[k]; const m=e.m||e.emocionFinal||e.emocionInicial; if(!m) return; (stats[e.pd]=stats[e.pd]||{b:0,r:0,d:0})[m]++; });
   h+=`<h3 class="sub">Tus patrones</h3>`;
   if(entries.length<7){ h+=`<p class="hint">Llevás ${entries.length} ${entries.length===1?"día anotado":"días anotados"}. Con al menos 7 empiezan a verse los patrones.</p>`; }
   else{
@@ -1342,22 +1707,64 @@ function paintBita(){
     if(cand.length){ const good=cand.slice().sort((a,b)=>b[1]-a[1])[0], hard=cand.slice().sort((a,b)=>b[2]-a[2])[0];
       h+=`<p style="margin-top:12px">${good[1]>0?`Hasta ahora, tus días personales <strong>${good[0]}</strong> son los que mejor te van. `:""}${hard[2]>0&&hard[0]!==good[0]?`Los días <strong>${hard[0]}</strong> suelen ser los más retadores: esos días conviene bajar el ritmo.`:""}</p>`; }
   }
+  if(entries.length>=30){
+    const withCoin = entries.map(k=>all[k]).filter(e=>e.coincidencia);
+    h+=`<h3 class="sub">Precisión percibida</h3>`;
+    if(withCoin.length){
+      const c={si:0,parcial:0,no:0}; withCoin.forEach(e=>c[e.coincidencia]++);
+      const tot=withCoin.length;
+      h += `<div class="coin-row"><div class="coin-cell"><b>${c.si}</b>Coincidieron</div><div class="coin-cell"><b>${c.parcial}</b>Parciales</div><div class="coin-cell"><b>${c.no}</b>No coincidieron</div></div>
+        <p>De ${tot} ${tot===1?"día":"días"} en que registraste si la interpretación se cumplió, ${Math.round(c.si/tot*100)}% coincidió totalmente, ${Math.round(c.parcial/tot*100)}% parcialmente y ${Math.round(c.no/tot*100)}% no coincidió.</p>
+        <p class="hint">Tené en cuenta los tres resultados, no solo los aciertos: eso te da una lectura honesta de qué tan útil es esto para vos.</p>`;
+    } else { h += `<p class="hint">Ya llevás ${entries.length} registros. Marcá si la interpretación coincidió, en el cierre del día, para ver acá tu tendencia.</p>`; }
+  }
   if(entries.length) h+=`<h3 class="sub">Últimos días</h3><div class="bita-list">${entries.slice(0,7).map(k=>{ const e=all[k];
-    return `<div class="bita-item"><span class="kc kc-sm">${e.pd}</span><div><strong>${cap1(longDate(parseYmd(k)))}</strong> <span class="mood-tag ${MOOD[e.m][1]}">${MOOD[e.m][0]}</span>${e.n?`<br><span class="hint">${esc(e.n)}</span>`:""}</div></div>`; }).join("")}</div>`;
-  document.getElementById("bitaBox").innerHTML=h;
+    return `<div class="bita-item"><span class="kc kc-sm">${e.pd}</span><div><strong>${cap1(longDate(parseYmd(k)))}</strong> <span class="mood-tag ${MOOD[e.m][1]}">${MOOD[e.m][0]}</span>${e.coincidencia?` <span class="mood-tag ${COIN[e.coincidencia][1]}">${COIN[e.coincidencia][0]}</span>`:""}${e.n?`<br><span class="hint">${esc(e.n)}</span>`:""}</div></div>`; }).join("")}</div>`;
+  box.innerHTML=h;
 }
-let bitaSel=null;
+let bitaSel={};
 document.getElementById("bitaBox").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
-  if(b.dataset.mood){ bitaSel=b.dataset.mood; document.querySelectorAll("#bitaBox .mood").forEach(x=>x.setAttribute("aria-pressed", x===b)); }
-  if(b.id==="bitaSave"){
-    const yo=getYo(), all=getBita(), key=ymd(new Date());
-    const m=bitaSel||(all[key]&&all[key].m);
-    if(!m){ document.getElementById("bitaMsg").textContent="Elegí cómo te fue: bien, regular o difícil."; return; }
-    all[key]={m,n:document.getElementById("bitaNote").value.trim(),pd:personalFor(yo.f,new Date()).pd};
-    setBita(all); bitaSel=null; paintBita(); document.getElementById("bitaMsg").textContent="Guardado.";
+  if(b.dataset.go){ goTab(b.dataset.go); return; }
+  if(b.dataset.mIni){ bitaSel.mIni=b.dataset.mIni; document.querySelectorAll("#bitaBox [data-m-ini]").forEach(x=>x.setAttribute("aria-pressed", x===b)); }
+  if(b.dataset.mFin){ bitaSel.mFin=b.dataset.mFin; document.querySelectorAll("#bitaBox [data-m-fin]").forEach(x=>x.setAttribute("aria-pressed", x===b)); }
+  if(b.id==="bitaSaveAM"){
+    const yo=getYo(), all=getBita(), key=ymd(new Date()), cur=all[key]||{};
+    const emocionInicial = bitaSel.mIni || cur.emocionInicial;
+    if(!emocionInicial){ document.getElementById("bitaMsgAM").textContent="Elegí cómo estás."; return; }
+    all[key]={...cur, emocionInicial, espera:document.getElementById("bitaEspera").value.trim(), actividad:document.getElementById("bitaActividad").value.trim(), pd:personalFor(yo.f,new Date()).pd, m: cur.m||emocionInicial};
+    setBita(all); document.getElementById("bitaMsgAM").textContent="Guardado."; paintBita();
   }
+  if(b.id==="bitaSavePM"){
+    const yo=getYo(), all=getBita(), key=ymd(new Date()), cur=all[key]||{};
+    const emocionFinal = bitaSel.mFin || cur.emocionFinal;
+    if(!emocionFinal){ document.getElementById("bitaMsgPM").textContent="Elegí cómo terminaste."; return; }
+    const coincidencia = document.getElementById("bitaCoin").value || undefined;
+    all[key]={...cur, emocionFinal, queOcurrio:document.getElementById("bitaOcurrio").value.trim(), coincidencia, n:document.getElementById("bitaNota").value.trim(), pd:personalFor(yo.f,new Date()).pd, m: emocionFinal};
+    setBita(all); document.getElementById("bitaMsgPM").textContent="Guardado."; paintBita();
+  }
+  if(b.id==="bitaCSV") exportBitaCSV();
+  if(b.id==="bitaPDF") pdfBita("download", b);
 });
+function exportBitaCSV(){
+  const all=getBita(), keys=Object.keys(all).sort();
+  const q = v => `"${String(v||"").replace(/"/g,'""')}"`;
+  const rows=[["fecha","dia_personal","estado_inicial","espera","actividad_planeada","estado_final","que_ocurrio","coincidencia","nota"].join(",")];
+  keys.forEach(k=>{ const e=all[k];
+    rows.push([k, e.pd||"", e.emocionInicial||"", q(e.espera), q(e.actividad), e.emocionFinal||e.m||"", q(e.queOcurrio), e.coincidencia||"", q(e.n)].join(",")); });
+  saveBlob(new Blob([rows.join("\n")],{type:"text/csv;charset=utf-8"}), "bitacora-numerologia-"+ymd(new Date())+".csv");
+}
+function bitaHTML(){
+  const all=getBita(), keys=Object.keys(all).sort().reverse();
+  const rows = keys.map(k=>{ const e=all[k];
+    return `<tr><td>${fmtDate(k)}</td><td>${e.pd||""}</td><td>${e.emocionInicial?MOOD[e.emocionInicial][0]:""}</td><td>${e.emocionFinal?MOOD[e.emocionFinal][0]:(e.m?MOOD[e.m][0]:"")}</td><td>${e.coincidencia?COIN[e.coincidencia][0]:""}</td><td>${esc(e.n||e.queOcurrio||"")}</td></tr>`; }).join("");
+  const h = `<div class="rp"><div class="rp-h"><div class="rp-k">Bitácora de numerología</div><h1>Tu bitácora</h1><div class="rp-sub">Generada el ${todayStr()}. ${keys.length} registros.</div></div>
+    <table style="width:100%;border-collapse:collapse;font-size:9pt"><thead><tr style="text-align:left;border-bottom:1px solid #ccc"><th style="padding:3px 6px">Fecha</th><th style="padding:3px 6px">Día pers.</th><th style="padding:3px 6px">Inicio</th><th style="padding:3px 6px">Cierre</th><th style="padding:3px 6px">Coincidencia</th><th style="padding:3px 6px">Nota</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="rp-foot">Numerología pitagórica. Una herramienta de reflexión y autoconocimiento.</div></div>`;
+  return {html:h, title:"Bitacora numerologia"};
+}
+function pdfBita(mode,btn){ const r=bitaHTML(); pdfFrom(r.html, r.title, mode, btn); }
+
 
 /* ---------- CALENDARIO ---------- */
 let calRef=new Date(); calRef.setDate(1);
@@ -1414,7 +1821,7 @@ function paintEtapas(){
 }
 document.getElementById("etBox").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b&&b.dataset.go) goTab(b.dataset.go); });
 
-function paintAllDia(){ paintPerfil(); paintHoy(); paintCal(); paintEtapas(); }
+function paintAllDia(){ paintPerfil(); paintHoy(); paintCal(); paintEtapas(); paintAccionHoy(); paintBita(); paintPlan(); }
 paintBuenDiaForm();
 paintAllDia();
 
@@ -1466,6 +1873,123 @@ function saveBlob(blob,name){
   setTimeout(()=>URL.revokeObjectURL(url),4000);
 }
 
+/* ==================== APRENDER ==================== */
+const LESSONS=[
+{id:1,t:"Qué es y qué no es la numerología",
+ ex:"La numerología es una tradición simbólica que asigna significados a los números derivados de tu nombre y tu fecha de nacimiento. Se usa desde hace siglos como herramienta de autoconocimiento y reflexión.",
+ form:"",
+ ej:"El nombre Ana, en el sistema pitagórico, se traduce a números (A=1, N=5, A=1) y esos números se interpretan simbólicamente.",
+ pr:"Elegí un número que te llame la atención (tu edad, tu casa, tu teléfono) y anotá qué sentís al verlo, antes de aprender su significado.",
+ q:[{q:"¿La numerología predice el futuro con certeza científica?",a:"No. Es una tradición simbólica y de reflexión, sin evidencia científica comprobada."},{q:"¿En qué se basa el sistema pitagórico?",a:"En asignar un número del 1 al 9 a cada letra del alfabeto y a los datos de nacimiento."}]},
+{id:2,t:"Tabla pitagórica",
+ ex:"Cada letra del alfabeto corresponde a un número del 1 al 9, repitiéndose el ciclo. A=1, B=2… I=9, J=1, K=2, y así sucesivamente.",
+ form:"Letra → número según su posición en el ciclo de 9.",
+ ej:"L es la letra número 12: 12 se reduce a 1+2=3, por eso L=3.",
+ pr:"Escribí tu nombre y anotá el número de cada letra usando la tabla de la pestaña Mi carta.",
+ q:[{q:"¿Qué número le corresponde a la letra S?",a:"1 (S es la letra 19, y 1+9=10, 1+0=1)."},{q:"¿Cuántos números distintos usa este sistema?",a:"Nueve: del 1 al 9."}]},
+{id:3,t:"Cómo se calcula el camino de vida",
+ ex:"El camino de vida es tu número más importante: describe tu propósito y las lecciones centrales de tu vida. Sale exclusivamente de tu fecha de nacimiento.",
+ form:"Reducí por separado el día, el mes y el año a un solo dígito (salvo 11, 22 o 33), y sumá los tres resultados. Reducí esa suma de nuevo.",
+ ej:"14 de marzo de 1988: día 14→5, mes 3→3, año 1988→1+9+8+8=26→8. 5+3+8=16→1+6=7. Camino de vida: 7.",
+ pr:"Calculá tu propio camino de vida a mano y compará el resultado con el que te da la app en Mi carta.",
+ q:[{q:"¿De qué dato sale el camino de vida?",a:"Únicamente de la fecha de nacimiento."},{q:"¿Qué números no se reducen del todo?",a:"11, 22 y 33: los números maestros."}]},
+{id:4,t:"Expresión, alma y personalidad",
+ ex:"Estos tres números salen de las letras de tu nombre completo de nacimiento. La expresión usa todas las letras (tus talentos), el deseo del alma usa solo las vocales (tu motivación íntima) y la personalidad usa solo las consonantes (cómo te perciben).",
+ form:"Sumá los valores de las letras correspondientes (todas, vocales o consonantes) y reducí el total.",
+ ej:"En \"Ana\": vocales A,A → deseo del alma. Consonante N → personalidad. Todas las letras juntas → expresión.",
+ pr:"Separá tu nombre en vocales y consonantes, y calculá cada número por separado.",
+ q:[{q:"¿Qué letras se usan para el deseo del alma?",a:"Solo las vocales del nombre."},{q:"¿Qué representa la expresión?",a:"Los talentos naturales y cómo te proyectás en el mundo."}]},
+{id:5,t:"Números maestros 11, 22 y 33",
+ ex:"Son considerados de vibración especial y no se reducen a un solo dígito. El 11 es intuición elevada, el 22 es capacidad de construir a gran escala, y el 33 es servicio y sanación desde el amor.",
+ form:"Si una suma intermedia da 11, 22 o 33, se detiene ahí la reducción, salvo que el cálculo siga sumando etapas posteriores.",
+ ej:"Si el mes y el día de nacimiento suman 22, ese 22 se mantiene como tal en vez de reducirse a 4.",
+ pr:"Revisá si algún número de tu carta es 11, 22 o 33. Si no tenés ninguno, pensá en alguien que sí y qué energía intensa suele mostrar.",
+ q:[{q:"¿Cuáles son los tres números maestros?",a:"11, 22 y 33."},{q:"¿Qué característica comparten?",a:"Una vibración más intensa, que pide equilibrio y cuidado emocional."}]},
+{id:6,t:"Lecciones kármicas",
+ ex:"Son los números del 1 al 9 que no aparecen en ninguna letra de tu nombre. No son un castigo: representan cualidades que la numerología dice que venís a desarrollar conscientemente.",
+ form:"Se listan los números del 1 al 9 y se marcan los que no corresponden a ninguna letra del nombre completo.",
+ ej:"Si tu nombre no tiene ninguna letra que valga 7 (como G, P o Y), el 7 es una de tus lecciones kármicas.",
+ pr:"Revisá tus lecciones kármicas en Mi carta y elegí una acción concreta en la sección Plan de acción.",
+ q:[{q:"¿De qué se calculan las lecciones kármicas?",a:"De las letras que faltan en el nombre completo de nacimiento."},{q:"¿Qué NO representan?",a:"Castigos ni acontecimientos negativos."}]},
+{id:7,t:"Cómo integrar una carta completa",
+ ex:"Una carta no se lee número por número de forma aislada: se buscan coincidencias y tensiones entre el camino de vida, la expresión, el alma y la personalidad para armar una interpretación coherente.",
+ form:"",
+ ej:"Si el camino de vida y la expresión son muy afines, la persona tiene coherencia entre su propósito y sus talentos naturales.",
+ pr:"Mirá la \"Lectura integrada\" de tu propia carta en Mi carta y anotá con tus palabras qué te dice sobre vos.",
+ q:[{q:"¿Por qué no alcanza con leer un solo número?",a:"Porque el sentido completo aparece en cómo se relacionan entre sí."},{q:"¿Qué compara la app en la lectura integrada?",a:"El camino de vida con la expresión, y el alma con la personalidad, entre otras cosas."}]},
+{id:8,t:"Año, mes y día personal",
+ ex:"Además del camino de vida (fijo de por vida), existen ciclos más cortos: el año personal (un tema de 1 a 9 años), el mes personal y el día personal, que cambian todo el tiempo.",
+ form:"Año personal: se suma el día y el mes de nacimiento (reducidos) con el año calendario actual (reducido). Mes y día personal se calculan sumando ese año personal con el mes o el día en curso.",
+ ej:"Si tu año personal es 3, ese año favorece la expresión, la creatividad y la vida social.",
+ pr:"Mirá tu día personal de hoy en la pestaña Hoy y notá si la descripción te resuena con cómo te sentís.",
+ q:[{q:"¿Qué ciclo es fijo toda la vida?",a:"El camino de vida. El año, mes y día personal cambian."},{q:"¿Esta app calcula el año personal por año calendario o de cumpleaños a cumpleaños?",a:"Por año calendario, de enero a diciembre."}]},
+{id:9,t:"Pináculos y desafíos",
+ ex:"La vida se divide en cuatro grandes etapas llamadas pináculos, cada una con su propia energía, y cuatro desafíos que marcan la lección central de cada etapa.",
+ form:"Los pináculos salen de combinar el día, mes y año de nacimiento en distintas sumas; los desafíos, de las diferencias entre esos mismos valores.",
+ ej:"Alguien puede vivir su segunda etapa (pináculo) con energía de constructor (4) y un desafío de expresarse con libertad.",
+ pr:"Revisá tus etapas de vida en la pestaña Etapas y ubicá en cuál estás ahora.",
+ q:[{q:"¿Cuántos pináculos tiene una vida, según este sistema?",a:"Cuatro."},{q:"¿Qué muestra el desafío de cada etapa?",a:"La lección principal que toca trabajar en esos años."}]},
+{id:10,t:"Nombre de nacimiento y nombre de uso",
+ ex:"El nombre de nacimiento es la base fija de tu carta. Si usás un nombre distinto en tu vida diaria (profesional, de casada, un apodo), ese nombre también tiene su propia energía, y compararlos muestra distintas facetas tuyas.",
+ form:"",
+ ej:"Alguien nacida como \"Liliana Patricia\" que hoy se presenta como \"Liliana\" puede tener una expresión distinta con cada nombre, aunque su camino de vida no cambie.",
+ pr:"Si usás un nombre distinto al de nacimiento, cargalo en Mi carta y mirá la comparación.",
+ q:[{q:"¿Qué número NUNCA cambia entre un nombre y otro?",a:"El camino de vida, porque depende solo de la fecha de nacimiento."},{q:"¿Invalida el nombre de uso al nombre de nacimiento?",a:"No: ambos pueden coexistir y mostrar facetas distintas de la identidad."}]},
+{id:11,t:"Compatibilidad responsable",
+ ex:"La compatibilidad numerológica compara los números centrales de dos personas para describir afinidades, energías complementarias y diferencias que piden más comunicación. No mide científicamente el futuro de una relación.",
+ form:"",
+ ej:"Dos caminos de vida que se complementan pueden funcionar muy bien en pareja si valoran sus diferencias en vez de querer cambiarlas.",
+ pr:"Probá la pestaña Compatibilidad con alguien cercano y conversen sobre qué tan bien describe la relación real.",
+ q:[{q:"¿La compatibilidad numerológica decide si una relación debe continuar o terminar?",a:"No. Es una guía de reflexión, nunca una instrucción para tomar esa decisión."},{q:"¿Qué compara principalmente el índice de afinidad de esta app?",a:"El camino de vida, el deseo del alma y la expresión de ambas personas."}]},
+{id:12,t:"Cómo realizar una lectura ética",
+ ex:"Leer la carta de otra persona implica responsabilidad: comunicar los desafíos sin generar miedo, dejar claro que es una herramienta de reflexión, y nunca reemplazar decisiones médicas, legales o financieras con una interpretación numerológica.",
+ form:"",
+ ej:"En vez de decir \"tu número dice que vas a fracasar\", una lectura ética dice \"esta energía te invita a trabajar la paciencia antes de decidir\".",
+ pr:"Antes de tu próxima lectura a otra persona, escribí en Casos el motivo de la consulta y revisá que tu lenguaje sea cuidadoso y no determinante.",
+ q:[{q:"¿Qué never debería reemplazar una lectura numerológica?",a:"Tratamientos médicos, asesoría psicológica, decisiones financieras u orientación legal."},{q:"¿Qué autorización necesitás antes de registrar a alguien en Casos?",a:"El permiso de esa persona para guardar su información."}]}
+];
+const LKEY="numerologia_aprendizaje";
+function getApr(){ try{ const v=JSON.parse(localStorage.getItem(LKEY)); if(v&&typeof v==="object") return v; }catch(e){} return {}; }
+function setApr(v){ try{ localStorage.setItem(LKEY, JSON.stringify(v)) }catch(e){} cloudPush("aprendizaje", v); }
+function paintAprender(){
+  const done=getApr(), n=Object.values(done).filter(Boolean).length, box=document.getElementById("aprBox");
+  let h=`<p class="lead">Aprendé numerología paso a paso.</p>
+    <p style="color:var(--muted);max-width:64ch">Doce lecciones cortas, de lo básico a la ética de una lectura. La numerología es una tradición simbólica de reflexión y autoconocimiento, no una ciencia ni una predicción garantizada.</p>
+    <p><strong>${n} de ${LESSONS.length}</strong> lecciones completadas</p><div class="apr-bar"><i style="width:${n/LESSONS.length*100}%"></i></div>`;
+  h += LESSONS.map(L=>`<details class="lesson" data-id="${L.id}"><summary><b>${L.id}. ${L.t}</b>${done[L.id]?`<span class="done">✓ Completada</span>`:`<span class="pend">Pendiente</span>`}</summary>
+    <div class="lbody">
+      <h5>Explicación</h5><p>${L.ex}</p>
+      ${L.form?`<h5>Fórmula o procedimiento</h5><p>${L.form}</p>`:""}
+      <h5>Ejemplo</h5><p>${L.ej}</p>
+      <h5>Ejercicio práctico</h5><p>${L.pr}</p>
+      <h5>¿Lo tenés claro?</h5>
+      <div class="qcheck">${L.q.map(item=>`<details><summary>${item.q}</summary><p class="hint">${item.a}</p></details>`).join("")}</div>
+      <p style="margin-top:12px"><label style="display:inline-flex;align-items:center;gap:8px;font-weight:500"><input type="checkbox" data-done="${L.id}" ${done[L.id]?"checked":""}> Marcar como completada</label></p>
+    </div></details>`).join("");
+  box.innerHTML=h;
+}
+document.getElementById("aprBox").addEventListener("change",e=>{
+  if(e.target.dataset.done){ const done=getApr(); done[e.target.dataset.done]=e.target.checked; setApr(done); paintAprender();
+    document.querySelector(`.lesson[data-id="${e.target.dataset.done}"]`).open=true; }
+});
+paintAprender();
+
+/* ==================== TRADICIONES Y PRÁCTICAS SIMBÓLICAS ==================== */
+const TRAD=[
+ {n:"Números repetidos (números espejo)",o:"Popularizada por corrientes de espiritualidad contemporánea; no forma parte del sistema pitagórico clásico.",u:"Se observa un número que se repite con frecuencia (como 1111 o 444) y se interpreta como una señal o sincronía relacionada con lo que se estaba pensando en ese momento."},
+ {n:"Numerología china",o:"Tradición asociada al feng shui y a la fonética del idioma chino.",u:"Se buscan números como el 8, asociado a la prosperidad por su sonido, en direcciones, teléfonos o placas; se evita el 4, asociado a la muerte."},
+ {n:"Códigos de Grabovoi",o:"Atribuidos a Grigori Grabovoi, un autor ruso; sin relación con la numerología pitagórica.",u:"Se escriben, repiten o visualizan secuencias numéricas específicas asociadas a una intención, como el dinero o la protección."},
+ {n:"Códigos Sagrados de Agesta",o:"Tradición de origen popular en Latinoamérica, asociada a ángeles y peticiones espirituales.",u:"Se repite o se escribe un código numérico mientras se sostiene una petición concreta, muchas veces acompañado de una afirmación positiva."},
+ {n:"Método 369",o:"Popularizado en redes sociales, inspirado en una frase atribuida a Nikola Tesla.",u:"Se escribe una misma intención 3 veces en la mañana, 6 en la tarde y 9 en la noche, durante 21 o 33 días seguidos."}
+];
+function paintTrad(){
+  document.getElementById("tradBox").innerHTML = `<p class="lead">Tradiciones y prácticas simbólicas.</p>
+    <p style="color:var(--muted);max-width:64ch">Esta app tiene como núcleo la numerología pitagórica. Las siguientes prácticas son tradiciones distintas, populares y muy usadas, pero no forman parte del mismo sistema.</p>
+    ${TRAD.map(t=>`<article class="trad-card"><h3>${t.n}</h3><div class="origen">${t.o}</div><p>${t.u}</p>
+      <div class="disclaimer">Es una práctica simbólica o espiritual, sin evidencia científica comprobada. No sustituye tratamientos médicos, asesoría psicológica, decisiones financieras ni orientación legal.</div></article>`).join("")}`;
+}
+paintTrad();
+
 /* ---------- SIGNIFICADOS ---------- */
 document.getElementById("sigList").innerHTML = [1,2,3,4,5,6,7,8,9,11,22,33].map(n=>{
   const m=NUM[n];
@@ -1474,10 +1998,24 @@ document.getElementById("sigList").innerHTML = [1,2,3,4,5,6,7,8,9,11,22,33].map(
 }).join("");
 
 /* ---------- PESTAÑAS Y TEMA ---------- */
-document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
-  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected", x===b));
+const GROUPS = {vida:["hoy","carta","cal","etapas","plan"], explorar:["compat","espejo","sig","trad"], practicar:["aprender","casos","bita","codigos","diario"]};
+function selectGroup(g){
+  document.querySelectorAll(".grp").forEach(b=>b.setAttribute("aria-selected", b.dataset.grp===g?"true":"false"));
+  document.querySelectorAll(".sub-nav").forEach(n=>{ n.hidden = n.dataset.forgrp!==g; });
+  const active = document.querySelector(`.sub-nav[data-forgrp="${g}"] button[aria-selected="true"]`) || document.querySelector(`.sub-nav[data-forgrp="${g}"] button`);
+  if(active) active.click();
+}
+document.querySelectorAll(".grp").forEach(b=>b.addEventListener("click",()=>selectGroup(b.dataset.grp)));
+document.querySelectorAll('.sub-nav button[role="tab"]').forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(`.sub-nav[data-forgrp="${b.closest(".sub-nav").dataset.forgrp}"] button`).forEach(x=>x.setAttribute("aria-selected", x===b?"true":"false"));
   document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on", t.id===b.dataset.tab));
 }));
+function goTab(id){
+  const g = Object.keys(GROUPS).find(k=>GROUPS[k].includes(id));
+  if(g){ document.querySelectorAll(".grp").forEach(b=>b.setAttribute("aria-selected", b.dataset.grp===g?"true":"false"));
+    document.querySelectorAll(".sub-nav").forEach(n=>{ n.hidden = n.dataset.forgrp!==g; }); }
+  const b=document.querySelector(`.sub-nav button[data-tab="${id}"]`); if(b) b.click();
+}
 const root$ = document.documentElement;
 try{ const t=localStorage.getItem("numerologia_tema"); if(t) root$.dataset.theme=t; }catch(e){}
 document.getElementById("theme").addEventListener("click",()=>{
