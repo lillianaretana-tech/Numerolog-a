@@ -716,6 +716,8 @@ function paintGrid(name){
 
 /* ---------- RENDER CARTA ---------- */
 const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtDate = d => { if(!d) return ""; const [y,m,dd]=d.split("-").map(Number); return new Date(y,m-1,dd).toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"}); };
+const todayStr = () => new Date().toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"});
 function vidaHTML(n){ const v=VIDA[n]; return `<dl class="vida"><dt>En el trabajo</dt><dd>${v.w}</dd><dt>En el amor</dt><dd>${v.l}</dd><dt>Consejo</dt><dd>${v.c}</dd></dl>`; }
 function row(n, title, what, calcText, extra, full){
   const m = NUM[n]; const isM = MASTER.includes(n);
@@ -1485,8 +1487,6 @@ document.getElementById("guiadaCuerpo").addEventListener("click",e=>{
 document.getElementById("guiadaBtn").addEventListener("click", openGuiada);
 
 /* ---------- IMPRESIÓN / PDF ---------- */
-const fmtDate = d => { if(!d) return ""; const [y,m,dd]=d.split("-").map(Number); return new Date(y,m-1,dd).toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"}); };
-const todayStr = () => new Date().toLocaleDateString("es-CR",{day:"numeric",month:"long",year:"numeric"});
 function rpNum(n,title,what,full){ const m=NUM[n];
   return `<div class="rp-sec"><h2>${title}: <em>${n}</em>, ${m.t}</h2><p class="rp-muted">${what}</p><p>${m.d}</p><p class="rp-muted">A trabajar: ${m.s}</p>${full?`<dl><dt>Trabajo</dt><dd>${VIDA[n].w}</dd><dt>Amor</dt><dd>${VIDA[n].l}</dd><dt>Consejo</dt><dd>${VIDA[n].c}</dd></dl>`:""}</div>`; }
 function doPrint(html, title){
