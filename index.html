@@ -152,6 +152,18 @@ select{width:100%;font:inherit;font-size:1rem;padding:11px 12px;border:1px solid
 td.me{outline:3px solid var(--plum);outline-offset:1px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+textarea{width:100%;font:inherit;font-size:1rem;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);resize:vertical}
+.caso-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.caso-card{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font:inherit;color:var(--ink);cursor:pointer}
+.caso-card:hover{border-color:var(--gold)}
+.caso-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+.caso-panel{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.caso-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.caso-head h3{font-family:var(--serif);font-size:1.6rem;font-weight:600;margin:0}
+.caso-head .acts{display:flex;gap:8px;flex-wrap:wrap}
+.segs{display:grid;gap:8px;margin-top:10px}
+.seg{border-top:1px solid var(--line);padding-top:8px}
+.seg p{margin:2px 0 0}
 .yo-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;color:var(--muted)}
 .yo-bar strong{color:var(--ink)}
 .daycard{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:16px;padding:18px 20px}
@@ -300,6 +312,7 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <button role="tab" aria-selected="false" data-tab="etapas">Etapas de vida</button>
   <button role="tab" aria-selected="false" data-tab="espejo">Números repetidos</button>
   <button role="tab" aria-selected="false" data-tab="compat">Compatibilidad</button>
+  <button role="tab" aria-selected="false" data-tab="casos">Casos</button>
   <button role="tab" aria-selected="false" data-tab="codigos">Códigos e intenciones</button>
   <button role="tab" aria-selected="false" data-tab="diario">Diario 369</button>
   <button role="tab" aria-selected="false" data-tab="sig">Significados</button>
@@ -376,6 +389,18 @@ dialog#acct::backdrop{background:rgba(20,14,40,.45)}
   <h2 class="h2">Tabla de afinidad entre caminos de vida</h2>
   <div class="mwrap"><table class="matrix" id="matrix"></table></div>
   <div class="legend"><span><i class="c-nat"></i>Afinidad natural</span><span><i class="c-comp"></i>Se complementan</span><span><i class="c-ret"></i>Relación retadora</span></div>
+</section>
+
+<!-- CASOS -->
+<section class="tab" id="casos">
+  <p class="lead">Tus lecturas a otras personas.</p>
+  <p style="color:var(--muted);max-width:64ch">Registrá cada consulta que hagas: a quién, por qué, qué le dijiste. Con el tiempo anotá el seguimiento, qué se cumplió y qué no. Es tu cuaderno de práctica para ir afinando tu forma de leer.</p>
+  <details id="casoNew" class="add">
+    <summary style="grid-template-columns:1fr"><b>Registrar un caso nuevo</b></summary>
+    <div id="casoForm"></div>
+  </details>
+  <div id="casosList" style="margin-top:20px"></div>
+  <div id="casoDetail" class="caso-panel" style="display:none"></div>
 </section>
 
 <!-- CÓDIGOS -->
@@ -751,6 +776,81 @@ function renderCompat(){
   out.innerHTML=h;
 }
 document.getElementById("compatOut").addEventListener("click",e=>{ const i=e.target.id; if(i==="pdfCompat") pdfCompat("share",e.target); else if(i==="dlCompat") pdfCompat("download",e.target); else if(i==="prCompat") printCompat(); });
+
+/* ==================== CASOS (lecturas a otras personas) ==================== */
+const CASKEY="numerologia_casos";
+function getCasos(){ try{ const c=JSON.parse(localStorage.getItem(CASKEY)); if(Array.isArray(c)) return c; }catch(e){} return []; }
+function setCasos(list){ try{ localStorage.setItem(CASKEY, JSON.stringify(list)) }catch(e){} cloudPush("casos", list); }
+let casoSel=null;
+function casoNums(c){ if(!c.f) return null; return calc(c.n||"", c.f); }
+function casoCard(c){
+  const r=casoNums(c);
+  return `<button class="caso-card" type="button" data-open="${c.id}">
+    <div class="caso-top"><strong>${esc(c.n||"Sin nombre")}</strong>${r&&r.life?`<span class="kc kc-sm">${r.life.n}</span>`:""}</div>
+    <p class="hint">${esc(c.motivo||"Sin motivo registrado")}</p>
+    <p class="hint">${fmtDate(c.creado.slice(0,10))} · ${c.seguimientos.length} seguimiento${c.seguimientos.length===1?"":"s"}</p></button>`;
+}
+function paintCasos(){
+  const list=getCasos().slice().sort((a,b)=>b.creado.localeCompare(a.creado));
+  const box=document.getElementById("casosList");
+  box.innerHTML = list.length? `<div class="caso-grid">${list.map(casoCard).join("")}</div>` : `<div class="empty" style="padding:16px 0">Todavía no registraste ningún caso.</div>`;
+  paintCasoDetail();
+}
+function paintCasoForm(){
+  document.getElementById("casoForm").innerHTML=`<div class="fields">
+      <div><label for="csN">Nombre de la persona</label><input id="csN" autocomplete="off"></div>
+      <div><label for="csF">Fecha de nacimiento (opcional)</label><input id="csF" type="date"></div></div>
+    <label for="csMotivo" style="margin-top:10px">Motivo de la consulta</label>
+    <input id="csMotivo" placeholder="Ej.: quiere saber si es buen momento para cambiar de trabajo">
+    <label for="csNotas" style="margin-top:10px">Notas de la lectura</label>
+    <textarea id="csNotas" rows="3" placeholder="Lo que le contaste, tu interpretación, lo que más resonó…"></textarea>
+    <p style="margin-top:12px"><button class="btn" type="button" id="csCrear">Guardar caso</button> <button class="chip" type="button" id="csCancel">Cancelar</button> <span class="hint" id="csMsg"></span></p>`;
+}
+function paintCasoDetail(){
+  const box=document.getElementById("casoDetail");
+  const c=getCasos().find(x=>x.id===casoSel);
+  if(!c){ box.innerHTML=""; box.style.display="none"; return; }
+  box.style.display="";
+  const r=casoNums(c);
+  let nums="";
+  if(r&&r.life){
+    const cells=[["Camino de vida",r.life],["Expresión",r.expr],["Alma",r.soul],["Personalidad",r.pers]].filter(x=>x[1]);
+    nums=`<div class="rp-core" style="grid-template-columns:repeat(${cells.length},1fr);margin:14px 0">${cells.map(x=>`<div class="rp-cell"><b>${x[1].n}</b><span>${x[0]}</span></div>`).join("")}</div>`;
+  }
+  box.innerHTML=`<div class="caso-head"><h3>${esc(c.n||"Sin nombre")}</h3><div class="acts">
+      <button class="chip" type="button" id="csGoCarta">Ver carta completa</button>
+      <button class="chip x" type="button" id="csDel">Eliminar caso</button></div></div>
+    <p class="hint">Consulta del ${fmtDate(c.creado.slice(0,10))}${c.f?` · Nacimiento: ${fmtDate(c.f)}`:""}</p>
+    ${nums}
+    <p><strong>Motivo:</strong> ${esc(c.motivo)||"—"}</p>
+    <p><strong>Notas de la lectura:</strong><br>${esc(c.notas||"—").replace(/\n/g,"<br>")}</p>
+    <h4 class="sub" style="margin-top:18px;font-size:1.1rem">Seguimiento</h4>
+    <p class="hint">Anotá con el tiempo qué se cumplió, qué no, y cómo le fue a la persona. Así vas afinando tu forma de leer.</p>
+    <div class="segs">${c.seguimientos.length? c.seguimientos.slice().reverse().map(s=>`<div class="seg"><span class="hint">${fmtDate(s.fecha)}</span><p>${esc(s.texto)}</p></div>`).join("") : ""}</div>
+    <label for="csSeg" style="margin-top:8px">Agregar seguimiento</label>
+    <input id="csSeg" placeholder="Ej.: le ofrecieron el trabajo justo en su día personal 8">
+    <p style="margin-top:8px"><button class="btn" type="button" id="csAddSeg">Agregar</button></p>`;
+}
+document.getElementById("casosList").addEventListener("click",e=>{ const b=e.target.closest("[data-open]"); if(b){ casoSel=b.dataset.open; paintCasoDetail(); document.getElementById("casoDetail").scrollIntoView({behavior:"smooth",block:"start"}); }});
+document.getElementById("casoDetail").addEventListener("click",e=>{
+  const id=e.target.id, list=getCasos(), c=list.find(x=>x.id===casoSel); if(!c) return;
+  if(id==="csDel"){ if(confirm("¿Eliminar este caso y su seguimiento?")){ setCasos(list.filter(x=>x.id!==casoSel)); casoSel=null; paintCasos(); } }
+  if(id==="csGoCarta"){ nombre.value=c.n||""; fecha.value=c.f||""; goTab("carta"); render(); }
+  if(id==="csAddSeg"){ const t=document.getElementById("csSeg").value.trim(); if(!t) return;
+    c.seguimientos.push({fecha:ymd(new Date()),texto:t}); setCasos(list); paintCasoDetail(); }
+});
+document.getElementById("casoForm").addEventListener("click",e=>{
+  if(e.target.id==="csCancel"){ document.getElementById("casoNew").open=false; }
+  if(e.target.id==="csCrear"){
+    const n=document.getElementById("csN").value.trim();
+    if(!n){ document.getElementById("csMsg").textContent="Ponele al menos un nombre al caso."; return; }
+    const list=getCasos();
+    list.push({id:"k"+Date.now(), n, f:document.getElementById("csF").value, motivo:document.getElementById("csMotivo").value.trim(), notas:document.getElementById("csNotas").value.trim(), creado:new Date().toISOString(), seguimientos:[]});
+    setCasos(list); document.getElementById("casoNew").open=false; paintCasoForm(); paintCasos();
+    casoSel=list[list.length-1].id; paintCasoDetail();
+  }
+});
+paintCasoForm(); paintCasos();
 function paintMatrix(x,y){
   x=x&&root(x); y=y&&root(y);
   let h="<tr><th></th>"+[1,2,3,4,5,6,7,8,9].map(n=>`<th>${n}</th>`).join("")+"</tr>";
@@ -994,7 +1094,8 @@ async function cloudPull(){
   setSaved(perf); setCodes(cods); if(dia) setD(dia);   // sube la versión unificada
   const yo = cloud.yo || getYo() || null; if(yo) setYo(yo);
   setBita(Object.assign({}, cloud.bitacora||{}, getBita()));
-  paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia(); setAcctBtn("ok");
+  const casos = cloud.casos ? mergeBy(cloud.casos, getCasos(), "id") : getCasos(); setCasos(casos);
+  paintSaved(); paintCodes(); paintD(); paintQuickP(); paintAllDia(); if(typeof paintCasos==="function") paintCasos(); setAcctBtn("ok");
 }
 function acctMsg(t){ document.getElementById("acctMsg").textContent=t||""; }
 function paintAcct(){
